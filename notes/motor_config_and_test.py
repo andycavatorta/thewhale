@@ -1894,10 +1894,10 @@ def exception_receiver_stub(msg):
     print("exception_receiver_stub",msg)
 
 test_controller = Controller(
-        data_receiver, 
-        status_receiver, 
-        exception_receiver,
-        boards_config, 
-        motor_1_config, 
-        motor_2_config, 
+        data_receiver_stub, 
+        status_receiver_stub, 
+        exception_receiver_stub,
+        {}, #boards_config
+        {}, #motor_1_config 
+        {}, #motor_2_config
     )
