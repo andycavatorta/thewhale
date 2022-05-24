@@ -35,7 +35,7 @@ class Board(threading.Thread):
             stopbits=serial.STOPBITS_ONE,
             parity=serial.PARITY_NONE,
         )
-
+        print("self.serial=",self.serial)
         self.states = {
             "B":None,
             "BKD":None,
