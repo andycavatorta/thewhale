@@ -26,7 +26,7 @@ class Board(threading.Thread):
         self.add_to_controller_queue = add_to_controller_queue
         self.boards_config = boards_config
         self.mcu_id = ""
-        self.name = ""
+        #self.name = ""
         self.queue = queue.Queue()
         self.serial = serial.Serial(
             port=self.serial_device_path,
@@ -605,10 +605,10 @@ class Board(threading.Thread):
 
 #@capture_exceptions.Class
 class Motor(threading.Thread):
-    def __init__(self,name,board,channel,motors_config,status_receiver):
+    def __init__(self,board,channel,motors_config,status_receiver):
         threading.Thread.__init__(self)
         self.board = board
-        self.name = name
+        #self.name = name
         self.channel = channel
         self.motors_config = motors_config
         self.status_receiver = status_receiver
@@ -1783,7 +1783,7 @@ class Motor(threading.Thread):
 
     def run(self):
         while True:
-            print(self.name, self.get_motor_amps())
+            #print(self.name, self.get_motor_amps())
             time.sleep(1)
             #try:
             serial_command, value, callback = self.queue.get(block=True, timeout=None) #, timeout=0.5)
@@ -1865,14 +1865,12 @@ class Controller(threading.Thread):
         # todo: apply settings
         self.motors = [
             Motor(
-                motor_name,
                 self.board,
                 1,
                 motor_1_config,
                 self.status_receiver
             ),
             Motor(
-                motor_name,
                 self.board,
                 2,
                 motor_2_config,
