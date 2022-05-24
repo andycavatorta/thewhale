@@ -1879,6 +1879,12 @@ class Controller(threading.Thread):
                 self.status_receiver
             ),
         ]
+    def get_device_id_list(self):
+        matching_mcu_serial_device_paths = []
+        for mcu_serial_device_path_pattern in self.mcu_serial_device_path_patterns:
+            matching_mcu_serial_device_paths.extend(glob.glob(mcu_serial_device_path_pattern))
+        return matching_mcu_serial_device_paths
+
     def add_to_queue(self, board_name, channel, method, resp_str):
         self.queue.put(( board_name, channel, method, resp_str))
     def run(self):
