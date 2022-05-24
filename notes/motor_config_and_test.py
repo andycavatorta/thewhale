@@ -1857,15 +1857,12 @@ class Controller(threading.Thread):
         if len(self.mcu_serial_device_paths) > 1:
             print("This library supports only one controller at a time.")
             return
-
         self.board = Board(
             mcu_serial_device_path, 
             self, 
             self.add_to_queue,
             self.boards_config)
-
         # todo: apply settings
-
         self.motors = [
             Motor(
                 motor_name,
@@ -1876,7 +1873,7 @@ class Controller(threading.Thread):
             ),
             Motor(
                 motor_name,
-                self.board
+                self.board,
                 2,
                 motor_2_config,
                 self.status_receiver
@@ -1889,15 +1886,12 @@ class Controller(threading.Thread):
             board_name, channel, method, resp_str = self.queue.get(True)
             print("Controllers.run", board_name, channel, method, resp_str)
 
-
-
 def data_receiver_stub(msg):
     print("data_receiver_stub",msg)
 def status_receiver_stub(msg):
     print("status_receiver_stub",msg)
 def exception_receiver_stub(msg):
     print("exception_receiver_stub",msg)
-
 
 test_controller = Controller(
         data_receiver, 
@@ -1907,5 +1901,3 @@ test_controller = Controller(
         motor_1_config, 
         motor_2_config, 
     )
-
-
