@@ -1858,7 +1858,7 @@ class Controller(threading.Thread):
             print("This library supports only one controller at a time.")
             return
         self.board = Board(
-            self.mcu_serial_device_paths, 
+            self.mcu_serial_device_paths[0], 
             self, 
             self.add_to_queue,
             self.boards_config)
