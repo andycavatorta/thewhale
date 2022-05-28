@@ -2082,7 +2082,6 @@ class Controller(threading.Thread):
         }
         return config_d
 
-
     def get_runtime_errors(self, verbose=False):
         runtime_errors = {}
         runtime_fault_flags = self.board.get_runtime_fault_flags(True)
@@ -2121,21 +2120,21 @@ class Controller(threading.Thread):
         for mcu_serial_device_path_pattern in self.mcu_serial_device_path_patterns:
             matching_mcu_serial_device_paths.extend(glob.glob(mcu_serial_device_path_pattern))
         return matching_mcu_serial_device_paths
-    """
+
     def add_to_queue(self, system_int, method, resp_str):
         self.queue.put(( board_name, channel, method, resp_str))
-    """
-
     def run(self):
         last_runtime_errors = {}
         while True:
             time.sleep(.75)
-            runtime_errors = self.get_runtime_errors()
-            if last_runtime_errors != runtime_errors:
-                print("runtime_errors",runtime_errors)
-            runtime_errors = last_runtime_errors
-
-
+            try:
+                board_name, channel, method, resp_str = self.queue.get(False)
+                print("Controllers.run", board_name, channel, method, resp_str)
+            except queue.Empty:
+                runtime_errors = self.get_runtime_errors()
+                if last_runtime_errors != runtime_errors:
+                    print("runtime_errors",runtime_errors)
+                runtime_errors = last_runtime_errors
 
 def data_receiver_stub(msg):
     print("data_receiver_stub",msg)
