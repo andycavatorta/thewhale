@@ -2131,6 +2131,7 @@ class Controller(threading.Thread):
                 board_name, channel, method, resp_str = self.queue.get(False)
                 print("Controllers.run", board_name, channel, method, resp_str)
             except queue.Empty:
+                print("foo")
                 runtime_errors = self.get_runtime_errors()
                 if last_runtime_errors != runtime_errors:
                     print("runtime_errors",runtime_errors)
