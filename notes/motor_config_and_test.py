@@ -2134,7 +2134,7 @@ class Controller(threading.Thread):
                 runtime_errors = self.get_runtime_errors()
                 if last_runtime_errors != runtime_errors:
                     print("runtime_errors",runtime_errors)
-                runtime_errors = last_runtime_errors
+                last_runtime_errors = runtime_errors
 
 def data_receiver_stub(msg):
     print("data_receiver_stub",msg)
