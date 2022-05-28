@@ -2126,7 +2126,7 @@ class Controller(threading.Thread):
     def run(self):
         last_runtime_errors = {}
         while True:
-            time.sleep(.75)
+            time.sleep(.5)
             try:
                 board_name, channel, method, resp_str = self.queue.get(False)
                 print("Controllers.run", board_name, channel, method, resp_str)
