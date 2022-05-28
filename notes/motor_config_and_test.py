@@ -2084,20 +2084,58 @@ class Controller(threading.Thread):
 
 
     def get_runtime_errors(self, verbose=False):
-        pass
+        runtime_errors = {}
+        runtime_fault_flags = self.board.get_runtime_fault_flags(True)
+        if runtime_fault_flags["overheat"] != 0:
+            runtime_errors["overheat"] = runtime_fault_flags["overheat"]
+        if runtime_fault_flags["overvoltage"] != 0:
+            runtime_errors["overvoltage"] = runtime_fault_flags["overvoltage"]
+        if runtime_fault_flags["undervoltage"] != 0:
+            runtime_errors["undervoltage"] = runtime_fault_flags["undervoltage"]
+        if runtime_fault_flags["short_circuit"] != 0:
+            runtime_errors["short_circuit"] = runtime_fault_flags["short_circuit"]
+        if runtime_fault_flags["emergency_stop"] != 0:
+            runtime_errors["emergency_stop"] = runtime_fault_flags["emergency_stop"]
+        if runtime_fault_flags["brushless_sensor_fault"] != 0:
+            runtime_errors["brushless_sensor_fault"] = runtime_fault_flags["brushless_sensor_fault"]
+        if runtime_fault_flags["MOSFET_failure"] != 0:
+            runtime_errors["MOSFET_failure"] = runtime_fault_flags["MOSFET_failure"]
+        if runtime_fault_flags["default_configuration_loaded_at_startup"] != 0:
+            runtime_errors["default_configuration_loaded_at_startup"] = runtime_fault_flags["default_configuration_loaded_at_startup"]
+        motor_1_closed_loop_error = self.motors[0].get_closed_loop_error(True)
+        if motor_1_closed_loop_error >= 100:
+            runtime_errors["motor_1_closed_loop_error"] = motor_1_closed_loop_error
+        motor_2_closed_loop_error = self.motors[1].get_closed_loop_error(True)
+        if motor_2_closed_loop_error >= 100:
+            runtime_errors["motor_2_closed_loop_error"] = motor_2_closed_loop_error
+        return runtime_errors
+        #self.board.get_volts(True)
+        #self.motors[0].get_motor_amps(True)
+        #self.motors[0].get_expected_motor_position(True)
+        #self.motors[0].get_encoder_counter_absolute(True)
+        #self.motors[0].get_encoder_motor_speed_in_rpm(True)
+
 
     def get_device_id_list(self):
         matching_mcu_serial_device_paths = []
         for mcu_serial_device_path_pattern in self.mcu_serial_device_path_patterns:
             matching_mcu_serial_device_paths.extend(glob.glob(mcu_serial_device_path_pattern))
         return matching_mcu_serial_device_paths
-
+    """
     def add_to_queue(self, system_int, method, resp_str):
         self.queue.put(( board_name, channel, method, resp_str))
+    """
+
     def run(self):
+        last_runtime_errors = {}
         while True:
-            board_name, channel, method, resp_str = self.queue.get(True)
-            print("Controllers.run", board_name, channel, method, resp_str)
+            time.sleep(.75)
+            runtime_errors = self.get_runtime_errors()
+            if last_runtime_errors != runtime_errors:
+                print("runtime_errors",runtime_errors)
+            runtime_errors = last_runtime_errors
+
+
 
 def data_receiver_stub(msg):
     print("data_receiver_stub",msg)
