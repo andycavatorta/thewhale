@@ -1973,7 +1973,6 @@ class Controller(threading.Thread):
         self.queue = queue.Queue()
         self.mcu_serial_device_paths = self.get_device_id_list()
         #self.status_receiver("self.mcu_serial_device_paths",self.mcu_serial_device_paths)
-        self.start()
         # create board objects and read their mcu_ids
         print("self.mcu_serial_device_paths=",self.mcu_serial_device_paths)
         if len(self.mcu_serial_device_paths) == 0:
@@ -2002,6 +2001,7 @@ class Controller(threading.Thread):
                 self.status_receiver
             ),
         ]
+        self.start()
     def get_whole_config(self):
         config_d = {
             "board":{
