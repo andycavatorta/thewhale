@@ -122,7 +122,6 @@ class Board(threading.Thread):
     #    SAFETY                                  #
     ##############################################
 
-
     def get_runtime_fault_flags(self, force_update = False):
         """
         Reports the status of the controller fault conditions that can occur during operation. The
@@ -1877,13 +1876,97 @@ class Controller(threading.Thread):
                 self.status_receiver
             ),
         ]
+    def get_whole_config(self):
+        config_d = {
+            "board":{
+                "brake_activation_delay":self.board.get_brake_activation_delay(True),
+                "command_priorities":self.board.get_command_priorities(True),
+                "lock_status":self.board.get_lock_status(True),
+                "mixed_mode":self.board.get_mixed_mode(True),
+                "overvoltage_cutoff_threhold":self.board.get_overvoltage_cutoff_threhold(True),
+                "overvoltage_hysteresis":self.board.get_overvoltage_hysteresis(True),
+                "pwm_frequency":self.board.get_pwm_frequency(True),
+                "rs232_bit_rate":self.board.get_rs232_bit_rate(True),
+                "runtime_fault_flags":self.board.get_runtime_fault_flags(True),
+                "script_auto_start":self.board.get_script_auto_start(True),
+                "serial_data_watchdog":self.board.get_serial_data_watchdog(True),
+                "serial_echo":self.board.get_serial_echo(True),
+                "short_circuit_detection_threshold":self.board.get_short_circuit_detection_threshold(True),
+                "undervoltage_limit":self.board.get_undervoltage_limit(True),
+                "user_boolean_value":self.board.get_user_boolean_value(True),
+                "user_variable":self.board.get_user_variable(True),
+                "volts":self.board.get_volts(True),
+            },
+            "motor_1":{
+                "closed_loop_error":self.motors[0].get_closed_loop_error(True),
+                "closed_loop_error_detection":self.motors[0].get_closed_loop_error_detection(True),
+                "current_limit":self.motors[0].get_current_limit(True),
+                "current_limit_action":self.motors[0].get_current_limit_action(True),
+                "current_limit_amps":self.motors[0].get_current_limit_amps(True),
+                "current_limit_min_period":self.motors[0].get_current_limit_min_period(True),
+                "default_velocity_in_position_mode":self.motors[0].get_default_velocity_in_position_mode(True),
+                "encoder_high_count_limit":self.motors[0].get_encoder_high_count_limit(True),
+                "encoder_high_limit_action":self.motors[0].get_encoder_high_limit_action(True),
+                "encoder_low_count_limit":self.motors[0].get_encoder_low_count_limit(True),
+                "encoder_low_limit_action":self.motors[0].get_encoder_low_limit_action(True),
+                "encoder_ppr_value":self.motors[0].get_encoder_ppr_value(True),
+                "encoder_usage":self.motors[0].get_encoder_usage(True),
+                "max_power_forward":self.motors[0].get_max_power_forward(True),
+                "max_power_reverse":self.motors[0].get_max_power_reverse(True),
+                "max_rpm":self.motors[0].get_max_rpm(True),
+                "motor_acceleration_rate":self.motors[0].get_motor_acceleration_rate(True),
+                "motor_deceleration_rate":self.motors[0].get_motor_deceleration_rate(True),
+                "operating_mode":self.motors[0].get_operating_mode(True),
+                "pid_differential_gain":self.motors[0].get_pid_differential_gain(True),
+                "pid_integral_cap":self.motors[0].get_pid_integral_cap(True),
+                "pid_integral_gain":self.motors[0].get_pid_integral_gain(True),
+                "pid_proportional_gain":self.motors[0].get_pid_proportional_gain(True),
+                "runtime_status_flags":self.motors[0].get_runtime_status_flags(True),
+                "sensor_type_select":self.motors[0].get_sensor_type_select(True),
+                "stall_detection":self.motors[0].get_stall_detection(True),
+            },
+            "motor_2":{
+                "closed_loop_error":self.motors[1].get_closed_loop_error(True),
+                "closed_loop_error_detection":self.motors[1].get_closed_loop_error_detection(True),
+                "current_limit":self.motors[1].get_current_limit(True),
+                "current_limit_action":self.motors[1].get_current_limit_action(True),
+                "current_limit_amps":self.motors[1].get_current_limit_amps(True),
+                "current_limit_min_period":self.motors[1].get_current_limit_min_period(True),
+                "default_velocity_in_position_mode":self.motors[1].get_default_velocity_in_position_mode(True),
+                "encoder_high_count_limit":self.motors[1].get_encoder_high_count_limit(True),
+                "encoder_high_limit_action":self.motors[1].get_encoder_high_limit_action(True),
+                "encoder_low_count_limit":self.motors[1].get_encoder_low_count_limit(True),
+                "encoder_low_limit_action":self.motors[1].get_encoder_low_limit_action(True),
+                "encoder_ppr_value":self.motors[1].get_encoder_ppr_value(True),
+                "encoder_usage":self.motors[1].get_encoder_usage(True),
+                "max_power_forward":self.motors[1].get_max_power_forward(True),
+                "max_power_reverse":self.motors[1].get_max_power_reverse(True),
+                "max_rpm":self.motors[1].get_max_rpm(True),
+                "motor_acceleration_rate":self.motors[1].get_motor_acceleration_rate(True),
+                "motor_deceleration_rate":self.motors[1].get_motor_deceleration_rate(True),
+                "operating_mode":self.motors[1].get_operating_mode(True),
+                "pid_differential_gain":self.motors[1].get_pid_differential_gain(True),
+                "pid_integral_cap":self.motors[1].get_pid_integral_cap(True),
+                "pid_integral_gain":self.motors[1].get_pid_integral_gain(True),
+                "pid_proportional_gain":self.motors[1].get_pid_proportional_gain(True),
+                "runtime_status_flags":self.motors[1].get_runtime_status_flags(True),
+                "sensor_type_select":self.motors[1].get_sensor_type_select(True),
+                "stall_detection":self.motors[1].get_stall_detection(True),
+            }
+        }
+        return config_d
+
+
+    def get_runtime_errors(self, verbose=False):
+        pass
+
     def get_device_id_list(self):
         matching_mcu_serial_device_paths = []
         for mcu_serial_device_path_pattern in self.mcu_serial_device_path_patterns:
             matching_mcu_serial_device_paths.extend(glob.glob(mcu_serial_device_path_pattern))
         return matching_mcu_serial_device_paths
 
-    def add_to_queue(self, board_name, channel, method, resp_str):
+    def add_to_queue(self, system_int, method, resp_str):
         self.queue.put(( board_name, channel, method, resp_str))
     def run(self):
         while True:
