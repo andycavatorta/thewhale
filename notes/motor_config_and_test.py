@@ -706,7 +706,7 @@ class Board(threading.Thread):
                     #print(">>2",serial_command, resp)
                     if len(resp)!=2:
                         if resp == ['-']:
-                        print("message failure in serial_command",serial_command)   
+                            print("message failure in serial_command",serial_command)   
                     else:
                         if callback is not None:
                             callback(resp[1], event)
