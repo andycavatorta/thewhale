@@ -1994,7 +1994,7 @@ class Controller(threading.Thread):
                 "lock_status":self.board.get_lock_status(True),
                 "mixed_mode":self.board.get_mixed_mode(True),
                 "overvoltage_cutoff_threhold":self.board.get_overvoltage_cutoff_threhold(True),
-                "overvoltage_hysteresis":self.board.get_overvoltage_hysteresis(True),
+                #"overvoltage_hysteresis":self.board.get_overvoltage_hysteresis(True),
                 "pwm_frequency":self.board.get_pwm_frequency(True),
                 "rs232_bit_rate":self.board.get_rs232_bit_rate(True),
                 "runtime_fault_flags":self.board.get_runtime_fault_flags(True),
