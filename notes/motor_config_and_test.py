@@ -1547,7 +1547,7 @@ class Motor(threading.Thread):
         (ATRIG) must be exceeded before the Amps Trigger Action (ATGA) is called. This parame-
         ter is used to prevent Amps Trigger Actions to be taken in case of short duration spikes.
         """
-        serial_command = "^ATGD {} {}".format(self.channel, mililseconds)
+        serial_command = "^ATGD {} {}".format(self.channel, milliseconds)
         self.board.add_to_queue(serial_command)
 
     def get_current_limit_min_period(self, force_update = False):
