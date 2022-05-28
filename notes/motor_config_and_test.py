@@ -154,6 +154,7 @@ class Board(threading.Thread):
             "ECHOF":None,
             "EE":None,
             "FF":None,
+            "FID":None,
             "LK":None,
             "MXMD":None,
             "OVH":None,
@@ -532,6 +533,19 @@ class Board(threading.Thread):
 
     def _store_mcu_id_(self, values_str, event):
         self.states["UID"] = values_str
+        self.mcu_id = values_str
+        event.set()
+
+    def get_firmware_version(self, force_update = False):
+        if self.states["FID"] is None or force_update:
+            event = threading.Event()
+            serial_command = "?FID"
+            self.add_to_queue(serial_command, event, self._store_mcu_id_)
+            event.wait()
+        return self.states["FID"]
+
+    def _store_firmware_version_(self, values_str, event):
+        self.states["FID"] = values_str
         self.mcu_id = values_str
         event.set()
 
