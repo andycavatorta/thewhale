@@ -13,6 +13,116 @@ import sys
 import time
 import threading
 
+example_config = {
+    "board": {
+        "brake_activation_delay": "250",
+        "command_priorities": "0:4:4:4",
+        "lock_status": "0",
+        "mixed_mode": "0:0",
+        "overvoltage_cutoff_threhold": "600",
+        "overvoltage_hysteresis": "50",
+        "pwm_frequency": "160",
+        "rs232_bit_rate": "0",
+        "runtime_fault_flags": {
+            "overheat": 0,
+            "overvoltage": 0,
+            "undervoltage": 0,
+            "short_circuit": 0,
+            "emergency_stop": 0,
+            "brushless_sensor_fault": 0,
+            "MOSFET_failure": 0,
+            "default_configuration_loaded_at_startup": 0,
+        },
+        "script_auto_start": "0",
+        "serial_data_watchdog": "0",
+        "serial_echo": "0",
+        "short_circuit_detection_threshold": "1",
+        "undervoltage_limit": "100",
+        "user_boolean_value": "0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0",
+        "user_variable": "0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0:0",
+        "volts": "120:237:4949",
+    },
+    "motor_1": {
+        "closed_loop_error": 0,
+        "closed_loop_error_detection": 2,
+        "current_limit": "200",
+        "current_limit_action": "0",
+        "current_limit_amps": "750",
+        "current_limit_min_period": "500",
+        "default_velocity_in_position_mode": "1500",
+        "encoder_high_count_limit": 2000,
+        "encoder_high_limit_action": 0,
+        "encoder_low_count_limit": -2000,
+        "encoder_low_limit_action": 0,
+        "encoder_ppr_value": "1024",
+        "encoder_usage": "18",
+        "max_power_forward": "100",
+        "max_power_reverse": "100",
+        "max_rpm": "10",
+        "motor_acceleration_rate": "200",
+        "motor_deceleration_rate": "200",
+        "operating_mode": "0",
+        "pid_differential_gain": "100",
+        "pid_integral_cap": "100",
+        "pid_integral_gain": "100",
+        "pid_proportional_gain": "100",
+        "runtime_status_flags": {
+            "amps_limit_activated": 0,
+            "motor_stalled": 0,
+            "loop_error_detected": 0,
+            "safety_stop_active": 0,
+            "forward_limit_triggered": 0,
+            "reverse_limit_triggered": 0,
+            "amps_trigger_activated": 0,
+        },
+        "sensor_type_select": "",
+        "stall_detection": 2,
+    },
+    "motor_2": {
+        "closed_loop_error": 0,
+        "closed_loop_error_detection": 2,
+        "current_limit": "200",
+        "current_limit_action": "0",
+        "current_limit_amps": "750",
+        "current_limit_min_period": "500",
+        "default_velocity_in_position_mode": "1000",
+        "encoder_high_count_limit": 20000,
+        "encoder_high_limit_action": 0,
+        "encoder_low_count_limit": -20000,
+        "encoder_low_limit_action": 0,
+        "encoder_ppr_value": "1024",
+        "encoder_usage": "34",
+        "max_power_forward": "100",
+        "max_power_reverse": "100",
+        "max_rpm": "1000",
+        "motor_acceleration_rate": "20000",
+        "motor_deceleration_rate": "20000",
+        "operating_mode": "1",
+        "pid_differential_gain": "100",
+        "pid_integral_cap": "100",
+        "pid_integral_gain": "100",
+        "pid_proportional_gain": "100",
+        "runtime_status_flags": {
+            "amps_limit_activated": 0,
+            "motor_stalled": 0,
+            "loop_error_detected": 0,
+            "safety_stop_active": 0,
+            "forward_limit_triggered": 0,
+            "reverse_limit_triggered": 0,
+            "amps_trigger_activated": 0,
+        },
+        "sensor_type_select": "",
+        "stall_detection": 2,
+    },
+}
+
+
+
+
+
+
+
+
 class Board(threading.Thread):
     def __init__(
             self, 
@@ -590,13 +700,13 @@ class Board(threading.Thread):
                     pass
                     # todo: do we need to pass affirmation?
                 elif resp[0]=="-":
-                    print("todo: response == '-' pass message of failure")
+                    print("message failure in serial_command",serial_command)
                 else:# this is a command echo string.  now fetch command response
                     resp = self._readSerial_()
                     #print(">>2",serial_command, resp)
                     if len(resp)!=2:
                         if resp == ['-']:
-                            print("todo: response == '-' pass message of failure")
+                        print("message failure in serial_command",serial_command)   
                     else:
                         if callback is not None:
                             callback(resp[1], event)
@@ -1988,3 +2098,4 @@ test_controller = Controller(
         {}, #motor_1_config 
         {}, #motor_2_config
     )
+
