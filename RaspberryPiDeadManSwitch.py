@@ -9,5 +9,5 @@ while count < 50:
     time.sleep(.1)
     GPIO.output(4, False)
     time.sleep(.1)
-    #count+=1
+    count+=1
 
