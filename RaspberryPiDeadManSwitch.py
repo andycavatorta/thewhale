@@ -5,9 +5,9 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(4, GPIO.OUT)
 count = 0
 while count < 50:
-    GPIO.output(4, GPIO.HIGH)
+    GPIO.output(4, True)
     time.sleep(1)
-    GPIO.output(8, GPIO.LOW)
+    GPIO.output(4, False)
     time.sleep(1)
     #count+=1
 
