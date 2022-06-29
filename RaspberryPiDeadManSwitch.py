@@ -5,7 +5,7 @@ from time import sleep
 # Teensy reads this and turns on PSU with 5v DC 
 # System power is cut if the signal from the Pi is lost
 
-GPIO.setmode(GPIO.BOARD) 
+GPIO.setmode(GPIO.BCM) 
 GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
 
 # Infinite 10 Hz Square Wave
