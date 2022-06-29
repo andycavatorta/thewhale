@@ -1,13 +1,18 @@
 import RPi.GPIO as GPIO
-import time
+from time import sleep
 
-GPIO.setmode(GPIO.BCM) 
-GPIO.setup(4, GPIO.OUT)
-count = 0
-while count < 50:
-    GPIO.output(4, True)
-    time.sleep(.1)
-    GPIO.output(4, False)
-    time.sleep(.1)
-    count+=1
+# Dead Man's Switch component for Pi Controller. Continuously outputs a square wave at 10 Hz 
+# Teensy reads this and turns on PSU with 5v DC 
+# System power is cut if the signal from the Pi is lost
+
+GPIO.setmode(GPIO.BOARD) 
+GPIO.setup(8, GPIO.OUT, initial=GPIO.LOW)
+
+# Infinite 10 Hz Square Wave
+while True:               
+    GPIO.output(8, GPIO.HIGH)
+    sleep(0.1)      # pause time in seconds
+    GPIO.output(8, GPIO.LOW)
+    sleep(0.1)
+
 
