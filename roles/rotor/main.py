@@ -1,6 +1,3 @@
-
-
-
 # start-up self check
     # check safety features (serial watchdog, PID loop error)
     # check states
@@ -13,7 +10,6 @@
     # if no message from controller, emergency stop
     # send message if watchdog queries successful
 
-# 
 
 
 
@@ -23,8 +19,12 @@ sys.path.append(os.path.split(app_path)[0])
 
 import settings
 from thirtybirds3 import thirtybirds
-from thirtybirds3.adapters.roboteq_SDC import roboteq_SDC
+from thirtybirds3.adapters.actuators.roboteq import sdc
 
+class Error_Types():
+    MOTOR_FAULT = "motor fault"
+    COMPUTER_FAULT = "computer fault"
+    PID_ERROR = "pid error"
 
 class Main(threading.Thread):
         def __init__(
@@ -33,149 +33,175 @@ class Main(threading.Thread):
         ):
         self.hostname = hostname
         threading.Thread.__init__(self)
-        self.controller = roboteq_SDC.Controller(
-            self.data_receiver, 
-            self.status_receiver, 
-            self.exception_receiver,
-            {}, #boards_config
-            {}, #motor_1_config 
-            {}, #motor_2_config
+        self.tb = thirtybirds.Thirtybirds(
+            settings, 
+            app_path,
+            self.network_message_handler,
+            self.network_status_change_handler,
+            self.exception_handler
         )
-        config_queries_t =[
-            "board":{
-                self.controller.board.get_brake_activation_delay
-                self.controller.board.get_command_priorities
-                self.controller.board.get_firmware_version
-                self.controller.board.get_mcu_id
-                self.controller.board.get_mixed_mode
-                self.controller.board.get_overvoltage_cutoff_threhold
-                self.controller.board.get_overvoltage_hysteresis
-                self.controller.board.get_pwm_frequency
-                self.controller.board.get_rs232_bit_rate
-                self.controller.board.get_runtime_fault_flags
-                self.controller.board.get_script_auto_start
-                self.controller.board.get_serial_data_watchdog
-                self.controller.board.get_serial_echo
-                self.controller.board.get_short_circuit_detection_threshold
-                self.controller.board.get_undervoltage_limit
-            
-            self.controller.motors[0].get_closed_loop_error_detection
-            self.controller.motors[0].get_config_flags
-            self.controller.motors[0].get_current_limit
-            self.controller.motors[0].get_current_limit_action
-            self.controller.motors[0].get_current_limit_amps
-            self.controller.motors[0].get_current_limit_min_period
-            self.controller.motors[0].get_default_velocity_in_position_mode
-            self.controller.motors[0].get_encoder_high_count_limit
-            self.controller.motors[0].get_encoder_high_limit_action
-            self.controller.motors[0].get_encoder_low_count_limit
-            self.controller.motors[0].get_encoder_low_limit_action
-            self.controller.motors[0].get_encoder_ppr_value
-            self.controller.motors[0].get_encoder_usage
-            self.controller.motors[0].get_max_power_forward
-            self.controller.motors[0].get_max_power_reverse
-            self.controller.motors[0].get_max_rpm
-            self.controller.motors[0].get_motor_acceleration_rate
-            self.controller.motors[0].get_motor_deceleration_rate
-            self.controller.motors[0].get_operating_mode
-            self.controller.motors[0].get_pid_differential_gain
-            self.controller.motors[0].get_pid_integral_cap
-            self.controller.motors[0].get_pid_integral_gain
-            self.controller.motors[0].get_pid_proportional_gain
-            self.controller.motors[0].get_sensor_type_select
-            self.controller.motors[0].get_stall_detection
-            
-            self.controller.motors[1].get_closed_loop_error_detection
-            self.controller.motors[1].get_config_flags
-            self.controller.motors[1].get_current_limit
-            self.controller.motors[1].get_current_limit_action
-            self.controller.motors[1].get_current_limit_amps
-            self.controller.motors[1].get_current_limit_min_period
-            self.controller.motors[1].get_default_velocity_in_position_mode
-            self.controller.motors[1].get_encoder_high_count_limit
-            self.controller.motors[1].get_encoder_high_limit_action
-            self.controller.motors[1].get_encoder_low_count_limit
-            self.controller.motors[1].get_encoder_low_limit_action
-            self.controller.motors[1].get_encoder_ppr_value
-            self.controller.motors[1].get_encoder_usage
-            self.controller.motors[1].get_max_power_forward
-            self.controller.motors[1].get_max_power_reverse
-            self.controller.motors[1].get_max_rpm
-            self.controller.motors[1].get_motor_acceleration_rate
-            self.controller.motors[1].get_motor_deceleration_rate
-            self.controller.motors[1].get_operating_mode
-            self.controller.motors[1].get_pid_differential_gain
-            self.controller.motors[1].get_pid_integral_cap
-            self.controller.motors[1].get_pid_integral_gain
-            self.controller.motors[1].get_pid_proportional_gain
-            self.controller.motors[1].get_sensor_type_select
-            self.controller.motors[1].get_stall_detection
+        self.queue = queue.Queue()
+        self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
+        self.hosts = Hosts.Hosts(self.tb)
 
-            
-        ]
-        runtime_queries_t =[
-            self.controller.board.get_volts
+        ##### SUBSCRIPTIONS #####
+        # CONNECTIVITY
+        self.tb.subscribe_to_topic("connected")
+        self.tb.subscribe_to_topic("deadman")
+        #system tests
+        self.tb.subscribe_to_topic("response_computer_details")
+        # sing events
+        self.tb.subscribe_to_topic("event_sdc_fault")
 
-            self.controller.motors[0].get_closed_loop_error
-            self.controller.motors[0].get_encoder_counter_absolute
-            self.controller.motors[0].get_encoder_counter_relative
-            self.controller.motors[0].get_encoder_motor_speed_in_rpm
-            self.controller.motors[0].get_encoder_speed_relative
-            self.controller.motors[0].get_expected_motor_position
-            self.controller.motors[0].get_feedback
-            self.controller.motors[0].get_motor_amps
-            self.controller.motors[0].get_motor_power_output_applied
-            self.controller.motors[0].get_runtime_status_flags
-            self.controller.motors[0].get_temperature
-
-            self.controller.motors[1].get_closed_loop_error
-            self.controller.motors[1].get_encoder_counter_absolute
-            self.controller.motors[1].get_encoder_counter_relative
-            self.controller.motors[1].get_encoder_motor_speed_in_rpm
-            self.controller.motors[1].get_encoder_speed_relative
-            self.controller.motors[1].get_expected_motor_position
-            self.controller.motors[1].get_feedback
-            self.controller.motors[1].get_motor_amps
-            self.controller.motors[1].get_motor_power_output_applied
-            self.controller.motors[1].get_runtime_status_flags
-            self.controller.motors[1].get_temperature
-
-            
-        ]
         self.start()
 
-    def start_up_self_test(self):
+
+    def get_computer_start_status(self):
+        return {
+            "hostname":self.tb.get_hostname(),
+            "local_ip":self.tb.get_local_ip(),
+            "online_status":self.tb.get_online_status(),
+            "connections":self.tb.check_connections(),
+            "os_version":self.tb.get_os_version(),
+            "tb_git_timestamp":self.tb.tb_get_git_timestamp(),
+            "tb_scripts_version":self.tb.tb_get_scripts_version(),
+            "app_git_timestamp":self.tb.app_get_git_timestamp(),
+            "app_scripts_version":self.tb.app_get_scripts_version(),
+        }
+
+    def get_computer_runtime_status(self):
+        return {
+            "core_temp":self.tb.get_core_temp(),
+            "wifi_strength":self.tb.get_wifi_strength(),
+            "core_voltage":self.tb.get_core_voltage(),
+            "system_cpu":self.tb.get_system_cpu(),
+            "system_uptime":self.tb.get_system_uptime(),
+            "system_disk":self.tb.get_system_disk(),
+            "memory_free":self.tb.get_memory_free(),
+        }
+
+    def get_sdc_start_status(self):
         """
-        ?FID None Read Firmware ID
-        ?FIN None Read Firmware ID (numerical)
-        ?A Channel Read Motor Amps
-        ?E Channel Read Closed Loop Error
-        ?F Channel Read Feedback
-        ?FM Channel Read Runtime Status Flag
-        ?FS None Read Status Flags
-        ?P Channel Read Motor Power Output Applied
-        ?SR Channel Read Encoder Speed Relative
+        get_runtime_status_flags
+            "amps_limit_activated":
+            "motor_stalled":
+            "loop_error_detected":
+            "safety_stop_active":
+            "forward_limit_triggered":
+            "reverse_limit_triggered":
+            "amps_trigger_activated":
+
+        get_runtime_fault_flags
+            "overheat":
+            "overvoltage":
+            "undervoltage":
+            "short_circuit":
+            "emergency_stop":
+            "brushless_sensor_fault":
+            "MOSFET_failure":
+            "default_configuration_loaded_at_startup":
         """
+        flags_sdc = []
+        flags_motor1 = []
+        flags_motor2 = []
+        fault_flags_d = sdc.sdc.get_runtime_fault_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_sdc.append(key_value[0])
+        fault_flags_d = sdc.sdc.motor_1.get_runtime_status_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_motor1.append(key_value[0])
+        fault_flags_d = sdc.sdc.motor_2.get_runtime_status_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_motor2.append(key_value[0])
+        return {
+            "flags_sdc":flags_sdc,
+            "flags_motor1":flags_motor1,
+            "flags_motor2":flags_motor2,
+            "encoder_ppr_value_motor1":sdc.sdc.motor_1.get_encoder_ppr_value()
+            "operating_mode_motor1":sdc.sdc.motor_1.get_operating_mode()
+            "pid_differential_gain_motor1":sdc.sdc.motor_1.get_pid_differential_gain()
+            "pid_integral_gain_motor1":sdc.sdc.motor_1.get_pid_integral_gain()
+            "pid_proportional_gain_motor1":sdc.sdc.motor_1.get_pid_proportional_gain()
+            "encoder_ppr_value_motor2":sdc.sdc.motor_1.get_encoder_ppr_value()
+            "operating_mode_motor2":sdc.sdc.motor_1.get_operating_mode()
+            "pid_differential_gain_motor2":sdc.sdc.motor_1.get_pid_differential_gain()
+            "pid_integral_gain_motor2":sdc.sdc.motor_1.get_pid_integral_gain()
+            "pid_proportional_gain_motor2":sdc.sdc.motor_1.get_pid_proportional_gain()
+            "firmware_version":sdc.sdc.get_firmware_version()
+        }
 
-        # check safety features (serial watchdog, PID loop error)
-        # check states
-
-
-    def runtime_self_test(self):
+    def get_sdc_runtime_status(self):
         """
-        ?A Channel Read Motor Amps
-        ?E Channel Read Closed Loop Error
-        ?F Channel Read Feedback
-        ?FM Channel Read Runtime Status Flag
-        ?FS None Read Status Flags
-        ?P Channel Read Motor Power Output Applied
-        ?SR Channel Read Encoder Speed Relative
+        get_runtime_status_flags
+            "amps_limit_activated":
+            "motor_stalled":
+            "loop_error_detected":
+            "safety_stop_active":
+            "forward_limit_triggered":
+            "reverse_limit_triggered":
+            "amps_trigger_activated":
+
+        get_runtime_fault_flags
+            "overheat":
+            "overvoltage":
+            "undervoltage":
+            "short_circuit":
+            "emergency_stop":
+            "brushless_sensor_fault":
+            "MOSFET_failure":
+            "default_configuration_loaded_at_startup":
         """
+        flags_sdc = []
+        flags_motor1 = []
+        flags_motor2 = []
+        fault_flags_d = sdc.sdc.get_runtime_fault_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_sdc.append(key_value[0])
+        fault_flags_d = sdc.sdc.motor_1.get_runtime_status_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_motor1.append(key_value[0])
+        fault_flags_d = sdc.sdc.motor_2.get_runtime_status_flags()
+        for key_value in fault_flags_d.items():
+            if key_value[1] == True:
+                flags_motor2.append(key_value[0])
+        return {
+            "flags_sdc":flags_sdc,
+            "flags_motor1":flags_motor1,
+            "flags_motor2":flags_motor2,
+            "temperature":sdc.sdc.get_temperature(),
+            "volts":sdc.sdc.get_volts(),
+            "duty_cycle":sdc.sdc.motor_1.get_duty_cycle(),
+            "closed_loop_error":sdc.sdc.motor_1.get_closed_loop_error(),
+            "encoder_speed_relative":sdc.sdc.motor_1.get_encoder_speed_relative(),
+        }
+
+
+    ##### THIRTYBIRDS CALLBACKS #####
+    def network_message_handler(self, topic, message, origin, destination):
+        self.add_to_queue(topic, message, origin, destination)
+
+    def exception_handler(self, exception):
+        print("exception_handler",exception)
+
+    def network_status_change_handler(self, status, hostname):
+        self.add_to_queue(b"respond_host_connected",status,hostname, False)
+
+    def add_to_queue(self, topic, message, origin, destination):
+        self.queue.put((topic, message, origin, destination))
+
+    def run(self):
+        while True:
+            try:
+                topic, message, origin, destination = self.queue.get(True)
+                if topic==b"deadman":
+                    self.safety_enable.add_to_queue(topic, message, origin, destination)
+                    continue
 
 
 
-
-
-
-
-
+main = Main()

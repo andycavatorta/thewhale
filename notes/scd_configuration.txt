@@ -22,7 +22,7 @@ sdc.sdc.apply_config_to_sdc(
             "encoder_high_limit_action": 0,
             "encoder_low_count_limit": -42000,
             "encoder_low_limit_action": 0,
-            "encoder_ppr_value": 512,
+            "encoder_ppr_value": 51,
             "encoder_usage": 2,
             "max_power_forward": 100,
             "max_power_reverse": 100,
@@ -48,7 +48,7 @@ sdc.sdc.apply_config_to_sdc(
             "encoder_high_limit_action": 0,
             "encoder_low_count_limit": -42000,
             "encoder_low_limit_action": 0,
-            "encoder_ppr_value": 512,
+            "encoder_ppr_value": 51,
             "encoder_usage": 2,
             "max_power_forward": 100,
             "max_power_reverse": 100,
@@ -75,8 +75,123 @@ sdc.sdc.set_serial_echo(0)
 
 sdc.sdc.read_config_from_sdc()
 
-sdc.sdc.motor_2.set_sensor_type_select(18)
 
+sdc.sdc.motor_2.set_sensor_type_select(18)
 sdc.sdc.save_configuration_in_eeprom()
 
+sdc.sdc.motor_1.go_to_speed_or_relative_position(60)
+sdc.sdc.motor_2.go_to_speed_or_relative_position(60)
+
+
+sdc.sdc.motor_1.go_to_speed_or_relative_position(100)
+sdc.sdc.motor_2.go_to_speed_or_relative_position(100)
+
 sdc.sdc.motor_1.go_to_speed_or_relative_position(0)
+sdc.sdc.motor_2.go_to_speed_or_relative_position(0)
+
+
+from thirtybirds3.adapters.actuators.roboteq import sdc
+sdc.sdc.apply_config_to_sdc(
+    {
+        "motor_1": {
+            "encoder_ppr_value": 51,
+        },
+        "motor_2": {
+            "encoder_ppr_value": 51,
+        },
+    }
+)
+sdc.sdc.save_configuration_in_eeprom()
+
+
+
+=========================================================
+
+top grid:
+hostname / online_status
+local_ip
+
+exceptions
+status
+messages (from controller)
+
+system_cpu
+memory_free
+system_disk
+core_temp
+
+system_uptime
+wifi_strength
+core_voltage
+
+tb_git_timestamp
+tb_scripts_version
+app_git_timestamp
+app_scripts_version
+os_version
+
+text box: 
+can show exceptions, status, messages
+
+=========================================================
+
+hostname / connected_status
+
+emergency_stop_button / emergency_stop(detected)
+overheat / temperature
+overvoltage / undervoltage
+short_circuit
+
+motor_1
+    operating_mode AAAAAAAAAAAAA
+    current_command AAAA N NN
+    closed_loop_error [----------]
+    volts / duty_cycle [----------]
+    encoder_speed_relative [----------]
+
+    loop_error_detected @
+    amps_limit_activated @
+    motor_stalled @
+    safety_stop_active @
+    forward_limit_triggered @
+    reverse_limit_triggered @
+    amps_trigger_activated @
+    MOSFET_failure @
+    default_configuration_loaded_at_startup @
+
+    encoder_ppr_value ####
+    pid_differential_gain ##
+    pid_integral_gain ##
+    pid_proportional_gain ##
+
+motor_2
+    operating_mode AAAAAAAAAAAAA
+    current_command AAAA N NN
+    closed_loop_error [----------]
+    volts / duty_cycle [----------]
+    encoder_speed_relative [----------]
+
+    loop_error_detected @
+    amps_limit_activated @
+    motor_stalled @
+    safety_stop_active @
+    forward_limit_triggered @
+    reverse_limit_triggered @
+    amps_trigger_activated @
+    MOSFET_failure @
+    default_configuration_loaded_at_startup @
+
+    encoder_ppr_value ####
+    pid_differential_gain ##
+    pid_integral_gain ##
+    pid_proportional_gain ##
+
+firmware_version
+
+
+
+
+
+
+
+

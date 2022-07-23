@@ -13,7 +13,7 @@ foo = ClassFoo(reports.foo_config)
 
 class Deadman():
     DURATION = 0.1
-    GPIO = 4
+    GPIO = 8
 
 class Roles():
     hosts={
