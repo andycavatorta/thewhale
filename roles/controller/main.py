@@ -194,6 +194,7 @@ class Main(threading.Thread):
         return self.current_mode
 
     def safety_enable_handler(self, state_bool):
+        pass
         # when all computers are present
         # when power turns on or off
         # self.add_to_queue(b"event_safety_enable", state_bool, "", "")
