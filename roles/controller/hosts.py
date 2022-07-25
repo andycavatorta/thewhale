@@ -371,7 +371,7 @@ class Rotor(Host):
             if detail_name == "default_configuration_loaded_at_startup":
                 self.set_default_configuration_loaded_at_startup(computer_details[detail_name])
 
-    def get_query details(self):
+    def get_query_details(self):
         return {
             "controller_connected":self.get_controller_connected(),
             "motor_1_duty_cycle":self.get_motor_1_duty_cycle(),
