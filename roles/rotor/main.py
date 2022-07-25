@@ -29,12 +29,8 @@ from thirtybirds3 import thirtybirds
 from thirtybirds3.adapters.actuators.roboteq import sdc
 
 class Main(threading.Thread):
-    def __init__(
-            self,
-        hostname,
-    ):
+    def __init__(self):
         threading.Thread.__init__(self)
-        self.hostname = hostname
         self.tb = thirtybirds.Thirtybirds(
             settings, 
             app_path,
