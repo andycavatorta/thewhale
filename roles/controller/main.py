@@ -140,18 +140,19 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_tb_git_timestamp")
         self.tb.subscribe_to_topic("event_uptime")
 
-
+        """
         self.modes = {
             "error":Mode_Error(self.tb, self.hosts, self.set_current_mode, self.safety_enable.set_active),
             "waiting_for_connections":Mode_Waiting_For_Connections(self.tb, self.hosts, self.set_current_mode),
             "system_tests":Mode_System_Tests(self.tb, self.hosts, self.set_current_mode),
-            "sing":Mode_Money(self.tb, self.hosts, self.set_current_mode),
+            "sing":Mode_Play(self.tb, self.hosts, self.set_current_mode),
             #"ending":Mode_ending(self.tb, self.hosts, self.set_current_mode),
         }
         #self.dashboard = dashboard.init()
         self.current_mode_name = self.mode_names.WAITING_FOR_CONNECTIONS
         self.current_mode = self.modes["waiting_for_connections"]
         self.current_mode.begin()
+        """
         self.start()
         self.poller
 
@@ -170,6 +171,7 @@ class Main(threading.Thread):
 
     ##### MODE MANAGEMENT #####
     def set_current_mode(self,mode_name):
+        return
         print("current_mode",self.current_mode,"new mode",mode_name)
         self.tb.publish("cmd_set_mode",mode_name)
         self.current_mode_name = mode_name
