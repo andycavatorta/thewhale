@@ -52,8 +52,8 @@ from roles.controller.mode_system_tests import Mode_System_Tests
 #from roles.controller.mode_play import Mode_Play
 
 class Poller(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self, tb)
+    def __init__(self, tb):
+        threading.Thread.__init__(self)
         self.tb = tb
         self.start()
 
