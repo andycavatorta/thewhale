@@ -176,8 +176,8 @@ class Main(threading.Thread):
                     continue
                 print(topic, message, origin, destination)
                 if topic==b"request_computer_start_status":
-                    self.request_computer_start_status
-
+                    status = self.get_computer_start_status()
+                    print(status)
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
