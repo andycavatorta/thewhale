@@ -49,7 +49,7 @@ import roles.controller.hosts as Hosts
 from roles.controller.mode_error import Mode_Error
 from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Connections
 from roles.controller.mode_system_tests import Mode_System_Tests
-from roles.controller.mode_play import Mode_Play
+#from roles.controller.mode_play import Mode_Play
 
 class Poller(threading.Thread):
     def __init__(self):
