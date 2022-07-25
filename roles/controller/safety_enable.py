@@ -10,9 +10,9 @@ import settings
 class Safety_Enable(threading.Thread):
     def __init__(self, handler):
         threading.Thread.__init__(self)
-        GPIO.setmode(GPIO.BCM)
-        GPIO.setup(settings.Deadman.GPIO, GPIO.OUT )
-        GPIO.output(settings.Deadman.GPIO, GPIO.HIGH)
+        GPIO.setmode(GPIO.BCM) 
+        GPIO.setup(8, GPIO.OUT )
+        GPIO.output(8, GPIO.HIGH)
         self.enabled = False # used for detecting when state changes
         self.active = True # used for setting the general state to on or off
         self.queue = queue.Queue()

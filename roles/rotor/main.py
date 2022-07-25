@@ -10,21 +10,12 @@
     # if no message from controller, emergency stop
     # send message if watchdog queries successful
 
-
-
-
-
 app_path = os.path.dirname((os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 sys.path.append(os.path.split(app_path)[0])
 
 import settings
 from thirtybirds3 import thirtybirds
 from thirtybirds3.adapters.actuators.roboteq import sdc
-
-class Error_Types():
-    MOTOR_FAULT = "motor fault"
-    COMPUTER_FAULT = "computer fault"
-    PID_ERROR = "pid error"
 
 class Main(threading.Thread):
         def __init__(
@@ -41,18 +32,13 @@ class Main(threading.Thread):
             self.exception_handler
         )
         self.queue = queue.Queue()
-        self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
-        self.hosts = Hosts.Hosts(self.tb)
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
-        #system tests
-        self.tb.subscribe_to_topic("response_computer_details")
-        # sing events
-        self.tb.subscribe_to_topic("event_sdc_fault")
-
+        self.tb.subscribe_to_topic("request_computer_start_status")
+        self.tb.subscribe_to_topic("request_sdc_start_status")
         self.start()
 
 
@@ -81,26 +67,6 @@ class Main(threading.Thread):
         }
 
     def get_sdc_start_status(self):
-        """
-        get_runtime_status_flags
-            "amps_limit_activated":
-            "motor_stalled":
-            "loop_error_detected":
-            "safety_stop_active":
-            "forward_limit_triggered":
-            "reverse_limit_triggered":
-            "amps_trigger_activated":
-
-        get_runtime_fault_flags
-            "overheat":
-            "overvoltage":
-            "undervoltage":
-            "short_circuit":
-            "emergency_stop":
-            "brushless_sensor_fault":
-            "MOSFET_failure":
-            "default_configuration_loaded_at_startup":
-        """
         flags_sdc = []
         flags_motor1 = []
         flags_motor2 = []
@@ -201,7 +167,8 @@ class Main(threading.Thread):
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
-
-
+                print(topic, message, origin, destination)
+                if topic==b"request_computer_start_status":
+                    self.request_computer_start_status
 
 main = Main()

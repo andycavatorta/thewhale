@@ -1,23 +1,28 @@
 """
 systems:
 
-#thirtybirds
+local system report
+report collection system
 
-remote power switch
 deadman
 
-note mapper
-midi sources:
-  keyboard (live)
-  test sequence
-  today's song segment
-    get today's date
-    get file with corresponding name
-    spool file
+remote power switch
 
-midi receiver:
-pass midi event to note mapper
-send messages to rotors
+http interface
+    deets!
+
+modes:
+
+remote MIDI receiver
+
+local MIDI spooler
+    selector
+    MIDI files
+    automatic loader
+    test sequence loader
+
+note-to-motor-command interface
+
 """
 
 #!/usr/bin/python
@@ -38,7 +43,6 @@ sys.path.append(os.path.split(app_path)[0])
 import settings
 from thirtybirds3 import thirtybirds
 
-import roles.controller.tests as tests
 import roles.controller.safety_enable as Safety_Enable
 import roles.controller.hosts as Hosts
 
@@ -47,6 +51,16 @@ from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Conne
 from roles.controller.mode_system_tests import Mode_System_Tests
 from roles.controller.mode_sing import Mode_Sing
 
+class Poller(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self, tb)
+        self.tb = tb
+
+    def run(self):
+        while True:
+            time.sleep(5)
+            tb.publish("request_computer_start_status","")
+            tb.publish("request_sdc_start_status","")
 
 class Main(threading.Thread):
     class mode_names:
@@ -72,12 +86,61 @@ class Main(threading.Thread):
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
-        #system tests
-        self.tb.subscribe_to_topic("response_computer_details")
-        # sing events
-        self.tb.subscribe_to_topic("event_sdc_fault")
+        self.tb.subscribe_to_topic("event_brushless_sensor_fault")
+        self.tb.subscribe_to_topic("event_controller_connected")
+        self.tb.subscribe_to_topic("event_controller_connected")
+        self.tb.subscribe_to_topic("event_default_configuration_loaded_at_startup")
+        self.tb.subscribe_to_topic("event_emergency_stop")
+        self.tb.subscribe_to_topic("event_exceptions")
+        self.tb.subscribe_to_topic("event_last_deadman")
+        self.tb.subscribe_to_topic("event_messages")
+        self.tb.subscribe_to_topic("event_MOSFET_failure")
+        self.tb.subscribe_to_topic("event_motor_1_amps_limit_activated")
+        self.tb.subscribe_to_topic("event_motor_1_amps_trigger_activated")
+        self.tb.subscribe_to_topic("event_motor_1_closed_loop_error")
+        self.tb.subscribe_to_topic("event_motor_1_duty_cycle")
+        self.tb.subscribe_to_topic("event_motor_1_encoder_counter_absolute")
+        self.tb.subscribe_to_topic("event_motor_1_encoder_motor_speed_in_rpm")
+        self.tb.subscribe_to_topic("event_motor_1_forward_limit_triggered")
+        self.tb.subscribe_to_topic("event_motor_1_loop_error_detected")
+        self.tb.subscribe_to_topic("event_motor_1_motor_amps")
+        self.tb.subscribe_to_topic("event_motor_1_motor_stalled")
+        self.tb.subscribe_to_topic("event_motor_1_reverse_limit_triggered")
+        self.tb.subscribe_to_topic("event_motor_1_safety_stop_active")
+        self.tb.subscribe_to_topic("event_motor_1_temperature")
+        self.tb.subscribe_to_topic("event_motor_2_amps_limit_activated")
+        self.tb.subscribe_to_topic("event_motor_2_amps_trigger_activated")
+        self.tb.subscribe_to_topic("event_motor_2_closed_loop_error")
+        self.tb.subscribe_to_topic("event_motor_2_duty_cycle")
+        self.tb.subscribe_to_topic("event_motor_2_encoder_counter_absolute")
+        self.tb.subscribe_to_topic("event_motor_2_encoder_motor_speed_in_rpm")
+        self.tb.subscribe_to_topic("event_motor_2_forward_limit_triggered")
+        self.tb.subscribe_to_topic("event_motor_2_loop_error_detected")
+        self.tb.subscribe_to_topic("event_motor_2_motor_amps")
+        self.tb.subscribe_to_topic("event_motor_2_motor_stalled")
+        self.tb.subscribe_to_topic("event_motor_2_reverse_limit_triggered")
+        self.tb.subscribe_to_topic("event_motor_2_safety_stop_active")
+        self.tb.subscribe_to_topic("event_motor_2_temperature")
+        self.tb.subscribe_to_topic("event_overheat")
+        self.tb.subscribe_to_topic("event_overvoltage")
+        self.tb.subscribe_to_topic("event_short_circuit")
+        self.tb.subscribe_to_topic("event_status")
+        self.tb.subscribe_to_topic("event_undervoltage")
+        self.tb.subscribe_to_topic("event_app_git_timestamp")
+        self.tb.subscribe_to_topic("event_core_temp")
+        self.tb.subscribe_to_topic("event_core_voltage")
+        self.tb.subscribe_to_topic("event_ip")
+        self.tb.subscribe_to_topic("event_memory_free")
+        self.tb.subscribe_to_topic("event_os_version")
+        self.tb.subscribe_to_topic("event_query_details")
+        self.tb.subscribe_to_topic("event_ready")
+        self.tb.subscribe_to_topic("event_runtime")
+        self.tb.subscribe_to_topic("event_system_cpu")
+        self.tb.subscribe_to_topic("event_system_disk")
+        self.tb.subscribe_to_topic("event_tb_git_timestamp")
+        self.tb.subscribe_to_topic("event_uptime")
 
-        self.email_message_data = []
+
         self.modes = {
             "error":Mode_Error(self.tb, self.hosts, self.set_current_mode, self.safety_enable.set_active),
             "waiting_for_connections":Mode_Waiting_For_Connections(self.tb, self.hosts, self.set_current_mode),
@@ -90,6 +153,7 @@ class Main(threading.Thread):
         self.current_mode = self.modes["waiting_for_connections"]
         self.current_mode.begin()
         self.start()
+        self.poller
 
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
@@ -99,7 +163,7 @@ class Main(threading.Thread):
         print("exception_handler",exception)
 
     def network_status_change_handler(self, status, hostname):
-        self.add_to_queue(b"respond_host_connected",status,hostname, False)
+        self.add_to_queue(b"response_host_connected",status,hostname, False)
 
     def add_to_queue(self, topic, message, origin, destination):
         self.queue.put((topic, message, origin, destination))
@@ -132,7 +196,7 @@ class Main(threading.Thread):
     def safety_enable_handler(self, state_bool):
         # when all computers are present
         # when power turns on or off
-        self.add_to_queue(b"event_safety_enable", state_bool, "", "")
+        # self.add_to_queue(b"event_safety_enable", state_bool, "", "")
 
     def run(self):
         while True:
@@ -141,10 +205,11 @@ class Main(threading.Thread):
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
-
+                print(topic, message, origin, destination)
                 self.hosts.dispatch(topic, message, origin, destination)
                 #self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 self.current_mode.add_to_queue(topic, message, origin, destination)
+
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()

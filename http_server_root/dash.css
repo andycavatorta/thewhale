@@ -138,8 +138,6 @@ svg {
   z-index: 2;
 }
 
-
-
 .cell_button_0{
   stroke: white;
   stroke-width: 2px;
@@ -152,7 +150,6 @@ svg {
   opacity: 0.10;
   cursor: default;
 }
-
 
 .cell_button_0:hover {
   opacity: 0.20;
@@ -183,5 +180,6 @@ svg {
   height:600px;
   fill: #33ff33;
   z-index: -1;
+  opacity: 0.10;
 }
 
