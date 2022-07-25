@@ -55,6 +55,7 @@ class Poller(threading.Thread):
     def __init__(self):
         threading.Thread.__init__(self, tb)
         self.tb = tb
+        self.start()
 
     def run(self):
         while True:
@@ -154,7 +155,7 @@ class Main(threading.Thread):
         self.current_mode.begin()
         """
         self.start()
-        self.poller
+        self.poller = Poller(self.tb)
 
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
