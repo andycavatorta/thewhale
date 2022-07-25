@@ -22,24 +22,24 @@ class Main(threading.Thread):
                 self,
             hostname,
         ):
-        self.hostname = hostname
-        threading.Thread.__init__(self)
-        self.tb = thirtybirds.Thirtybirds(
-            settings, 
-            app_path,
-            self.network_message_handler,
-            self.network_status_change_handler,
-            self.exception_handler
-        )
-        self.queue = queue.Queue()
+            threading.Thread.__init__(self)
+            self.hostname = hostname
+            self.tb = thirtybirds.Thirtybirds(
+                settings, 
+                app_path,
+                self.network_message_handler,
+                self.network_status_change_handler,
+                self.exception_handler
+            )
+            self.queue = queue.Queue()
 
-        ##### SUBSCRIPTIONS #####
-        # CONNECTIVITY
-        self.tb.subscribe_to_topic("connected")
-        self.tb.subscribe_to_topic("deadman")
-        self.tb.subscribe_to_topic("request_computer_start_status")
-        self.tb.subscribe_to_topic("request_sdc_start_status")
-        self.start()
+            ##### SUBSCRIPTIONS #####
+            # CONNECTIVITY
+            self.tb.subscribe_to_topic("connected")
+            self.tb.subscribe_to_topic("deadman")
+            self.tb.subscribe_to_topic("request_computer_start_status")
+            self.tb.subscribe_to_topic("request_sdc_start_status")
+            self.start()
 
 
     def get_computer_start_status(self):
