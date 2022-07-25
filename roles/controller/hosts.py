@@ -493,7 +493,7 @@ class Rotor(Host):
     def set_motor_1_motor_stalled(self, motor_1_motor_stalled):
         self.motor_1_motor_stalled = motor_1_motor_stalled
     def get_motor_1_motor_stalled(self):
-        return self.
+        return self.motor_1_motor_stalled
 
     def set_motor_1_loop_error_detected(self, motor_1_loop_error_detected):
         self.motor_1_loop_error_detected = motor_1_loop_error_detected
