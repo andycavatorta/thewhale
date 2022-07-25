@@ -146,6 +146,7 @@ class Main(threading.Thread):
             "encoder_speed_relative":sdc.sdc.motor_1.get_encoder_speed_relative(),
         }
 
+
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
         self.add_to_queue(topic, message, origin, destination)
