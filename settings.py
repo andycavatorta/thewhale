@@ -18,13 +18,13 @@ class Deadman():
 class Roles():
     hosts={
         "controller":"controller",
-        "rotor0102":"rotor",
-        "rotor0304":"rotor",
-        "rotor0506":"rotor",
-        "rotor0708":"rotor",
-        "rotor0910":"rotor",
-        "rotor1112":"rotor",
-        "rotor1314":"rotor",
+        "rotors0102":"rotor",
+        "rotors0304":"rotor",
+        "rotors0506":"rotor",
+        "rotors0708":"rotor",
+        "rotors0910":"rotor",
+        "rotors1112":"rotor",
+        "rotors1314":"rotor",
     }
 
 class Reporting():
