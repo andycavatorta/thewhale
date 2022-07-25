@@ -177,7 +177,7 @@ class Main(threading.Thread):
                 print(topic, message, origin, destination)
                 if topic==b"request_computer_start_status":
                     status = self.get_computer_start_status()
-                    print(status)
+                    self.tb.publish("response_computer_start_status",status)
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
