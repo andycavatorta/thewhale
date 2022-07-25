@@ -589,22 +589,22 @@ class Hosts():
     def __init__(self, tb ):
         self.tb = tb
         self.controller = Controller("controller", tb)
-        self.rotor0102 = Rotor("rotor0102", tb)
-        self.rotor0304 = Rotor("rotor0304", tb)
-        self.rotor0506 = Rotor("rotor0506", tb)
-        self.rotor0708 = Rotor("rotor0708", tb)
-        self.rotor0910 = Rotor("rotor0910", tb)
-        self.rotor1112 = Rotor("rotor1112", tb)
-        self.rotor1314 = Rotor("rotor1314", tb)
+        self.rotors0102 = Rotor("rotors0102", tb)
+        self.rotors0304 = Rotor("rotors0304", tb)
+        self.rotors0506 = Rotor("rotors0506", tb)
+        self.rotors0708 = Rotor("rotors0708", tb)
+        self.rotors0910 = Rotor("rotors0910", tb)
+        self.rotors1112 = Rotor("rotors1112", tb)
+        self.rotors1314 = Rotor("rotors1314", tb)
         self.hostnames = {
             'controller':self.controller,
-            'rotor0102':self.rotor0102,
-            'rotor0304':self.rotor0304,
-            'rotor0506':self.rotor0506,
-            'rotor0708':self.rotor0708,
-            'rotor0910':self.rotor0910,
-            'rotor1112':self.rotor1112,
-            'rotor1314':self.rotor1314,
+            'rotors0102':self.rotors0102,
+            'rotors0304':self.rotors0304,
+            'rotors0506':self.rotors0506,
+            'rotors0708':self.rotors0708,
+            'rotors0910':self.rotors0910,
+            'rotors1112':self.rotors1112,
+            'rotors1314':self.rotors1314,
         }
 
         self.dispatch(b"response_computer_details", self.controller.get_computer_details(), "controller", "controller")
