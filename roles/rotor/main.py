@@ -86,17 +86,17 @@ class Main(threading.Thread):
             "flags_sdc":flags_sdc,
             "flags_motor1":flags_motor1,
             "flags_motor2":flags_motor2,
-            "encoder_ppr_value_motor1":sdc.sdc.motor_1.get_encoder_ppr_value()
-            "operating_mode_motor1":sdc.sdc.motor_1.get_operating_mode()
-            "pid_differential_gain_motor1":sdc.sdc.motor_1.get_pid_differential_gain()
-            "pid_integral_gain_motor1":sdc.sdc.motor_1.get_pid_integral_gain()
-            "pid_proportional_gain_motor1":sdc.sdc.motor_1.get_pid_proportional_gain()
-            "encoder_ppr_value_motor2":sdc.sdc.motor_1.get_encoder_ppr_value()
-            "operating_mode_motor2":sdc.sdc.motor_1.get_operating_mode()
-            "pid_differential_gain_motor2":sdc.sdc.motor_1.get_pid_differential_gain()
-            "pid_integral_gain_motor2":sdc.sdc.motor_1.get_pid_integral_gain()
-            "pid_proportional_gain_motor2":sdc.sdc.motor_1.get_pid_proportional_gain()
-            "firmware_version":sdc.sdc.get_firmware_version()
+            "encoder_ppr_value_motor1":sdc.sdc.motor_1.get_encoder_ppr_value(),
+            "operating_mode_motor1":sdc.sdc.motor_1.get_operating_mode(),
+            "pid_differential_gain_motor1":sdc.sdc.motor_1.get_pid_differential_gain(),
+            "pid_integral_gain_motor1":sdc.sdc.motor_1.get_pid_integral_gain(),
+            "pid_proportional_gain_motor1":sdc.sdc.motor_1.get_pid_proportional_gain(),
+            "encoder_ppr_value_motor2":sdc.sdc.motor_1.get_encoder_ppr_value(),
+            "operating_mode_motor2":sdc.sdc.motor_1.get_operating_mode(),
+            "pid_differential_gain_motor2":sdc.sdc.motor_1.get_pid_differential_gain(),
+            "pid_integral_gain_motor2":sdc.sdc.motor_1.get_pid_integral_gain(),
+            "pid_proportional_gain_motor2":sdc.sdc.motor_1.get_pid_proportional_gain(),
+            "firmware_version":sdc.sdc.get_firmware_version(),
         }
 
     def get_sdc_runtime_status(self):
