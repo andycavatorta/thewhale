@@ -56,10 +56,6 @@ class Host():
         self.messages = []
         self.status = []
 
-
-    def set_static_details(self, computer_details):
-        for detail_name in computer_details:
-
     def set_batch_details(self, computer_details):
         """ this method will sort any batches of computer details """
         for detail_name in computer_details:
