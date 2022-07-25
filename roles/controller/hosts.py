@@ -245,7 +245,7 @@ class Controller(Host):
             "last_deadman":self.get_last_deadman(),
             "memory_free":self.tb.get_memory_free(), 
             "messages":[],
-            "ready":True.,
+            "ready":True,
             "runtime":self.tb.get_script_runtime(),
             "status":[],
             "system_cpu":self.tb.get_system_cpu(),
