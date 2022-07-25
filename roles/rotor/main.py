@@ -13,6 +13,15 @@
 app_path = os.path.dirname((os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 sys.path.append(os.path.split(app_path)[0])
 
+import glob
+import os
+import queue
+import RPi.GPIO as GPIO 
+import serial
+import sys
+import time
+import threading
+
 import settings
 from thirtybirds3 import thirtybirds
 from thirtybirds3.adapters.actuators.roboteq import sdc
@@ -170,5 +179,10 @@ class Main(threading.Thread):
                 print(topic, message, origin, destination)
                 if topic==b"request_computer_start_status":
                     self.request_computer_start_status
+
+
+            except Exception as e:
+                exc_type, exc_value, exc_traceback = sys.exc_info()
+                print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
 
 main = Main()
