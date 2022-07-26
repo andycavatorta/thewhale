@@ -51,6 +51,10 @@ from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Conne
 from roles.controller.mode_system_tests import Mode_System_Tests
 #from roles.controller.mode_play import Mode_Play
 
+GPIO.setmode(GPIO.BCM)
+GPIO.output(8, GPIO.LOW)    
+
+
 class Poller(threading.Thread):
     def __init__(self, tb):
         threading.Thread.__init__(self)
