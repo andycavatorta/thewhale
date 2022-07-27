@@ -46,7 +46,23 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("deadman")
         self.tb.subscribe_to_topic("request_computer_start_status")
         self.tb.subscribe_to_topic("request_sdc_start_status")
+
+        self.scd = sdc.SDC(
+            self.sdc_data_receiver,
+            self.sdc_status_receiver, 
+            self.sdc_exception_receiver,
+            {}, #config
+        )
         self.start()
+
+    def sdc_data_receiver(self, msg):
+        print("sdc_data_receiver", msg)
+
+    def sdc_status_receiver(self, msg1, msg2):
+        print("sdc_status_receiver", msg1, msg2)
+
+    def sdc_exception_receiver(self, msg):
+        print("sdc_exception_receiver", msg)
 
 
     def get_computer_start_status(self):
