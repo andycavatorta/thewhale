@@ -195,6 +195,10 @@ class Main(threading.Thread):
                     status = self.get_computer_start_status()
                     self.tb.publish("response_computer_start_status",status)
 
+                if topic==b"request_computer_start_status":
+                    status = self.get_sdc_start_status()
+                    self.tb.publish("response_sdc_start_status",status)
+
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))

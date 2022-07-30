@@ -52,8 +52,9 @@ from roles.controller.mode_system_tests import Mode_System_Tests
 #from roles.controller.mode_play import Mode_Play
 
 GPIO.setmode(GPIO.BCM)
-GPIO.output(8, GPIO.LOW)    
+GPIO.output(8, GPIO.LOW)
 
+#role_module.GPIO.output(8, GPIO.HIGH)
 
 class Poller(threading.Thread):
     def __init__(self, tb):
