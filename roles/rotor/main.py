@@ -93,15 +93,15 @@ class Main(threading.Thread):
         flags_sdc = []
         flags_motor1 = []
         flags_motor2 = []
-        fault_flags_d = sdc.sdc.get_runtime_fault_flags()
+        fault_flags_d = self.sdc.get_runtime_fault_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_sdc.append(key_value[0])
-        fault_flags_d = sdc.sdc.motor_1.get_runtime_status_flags()
+        fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_motor1.append(key_value[0])
-        fault_flags_d = sdc.sdc.motor_2.get_runtime_status_flags()
+        fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_motor2.append(key_value[0])
@@ -109,17 +109,17 @@ class Main(threading.Thread):
             "flags_sdc":flags_sdc,
             "flags_motor1":flags_motor1,
             "flags_motor2":flags_motor2,
-            "encoder_ppr_value_motor1":sdc.sdc.motor_1.get_encoder_ppr_value(),
-            "operating_mode_motor1":sdc.sdc.motor_1.get_operating_mode(),
-            "pid_differential_gain_motor1":sdc.sdc.motor_1.get_pid_differential_gain(),
-            "pid_integral_gain_motor1":sdc.sdc.motor_1.get_pid_integral_gain(),
-            "pid_proportional_gain_motor1":sdc.sdc.motor_1.get_pid_proportional_gain(),
-            "encoder_ppr_value_motor2":sdc.sdc.motor_1.get_encoder_ppr_value(),
-            "operating_mode_motor2":sdc.sdc.motor_1.get_operating_mode(),
-            "pid_differential_gain_motor2":sdc.sdc.motor_1.get_pid_differential_gain(),
-            "pid_integral_gain_motor2":sdc.sdc.motor_1.get_pid_integral_gain(),
-            "pid_proportional_gain_motor2":sdc.sdc.motor_1.get_pid_proportional_gain(),
-            "firmware_version":sdc.sdc.get_firmware_version(),
+            "encoder_ppr_value_motor1":self.sdc.motor_1.get_encoder_ppr_value(),
+            "operating_mode_motor1":self.sdc.motor_1.get_operating_mode(),
+            "pid_differential_gain_motor1":self.sdc.motor_1.get_pid_differential_gain(),
+            "pid_integral_gain_motor1":self.sdc.motor_1.get_pid_integral_gain(),
+            "pid_proportional_gain_motor1":self.sdc.motor_1.get_pid_proportional_gain(),
+            "encoder_ppr_value_motor2":self.sdc.motor_1.get_encoder_ppr_value(),
+            "operating_mode_motor2":self.sdc.motor_1.get_operating_mode(),
+            "pid_differential_gain_motor2":self.sdc.motor_1.get_pid_differential_gain(),
+            "pid_integral_gain_motor2":self.sdc.motor_1.get_pid_integral_gain(),
+            "pid_proportional_gain_motor2":self.sdc.motor_1.get_pid_proportional_gain(),
+            "firmware_version":self.sdc.get_firmware_version(),
         }
 
     def get_sdc_runtime_status(self):
@@ -146,15 +146,15 @@ class Main(threading.Thread):
         flags_sdc = []
         flags_motor1 = []
         flags_motor2 = []
-        fault_flags_d = sdc.sdc.get_runtime_fault_flags()
+        fault_flags_d = self.sdc.get_runtime_fault_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_sdc.append(key_value[0])
-        fault_flags_d = sdc.sdc.motor_1.get_runtime_status_flags()
+        fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_motor1.append(key_value[0])
-        fault_flags_d = sdc.sdc.motor_2.get_runtime_status_flags()
+        fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
         for key_value in fault_flags_d.items():
             if key_value[1] == True:
                 flags_motor2.append(key_value[0])
@@ -162,11 +162,11 @@ class Main(threading.Thread):
             "flags_sdc":flags_sdc,
             "flags_motor1":flags_motor1,
             "flags_motor2":flags_motor2,
-            "temperature":sdc.sdc.get_temperature(),
-            "volts":sdc.sdc.get_volts(),
-            "duty_cycle":sdc.sdc.motor_1.get_duty_cycle(),
-            "closed_loop_error":sdc.sdc.motor_1.get_closed_loop_error(),
-            "encoder_speed_relative":sdc.sdc.motor_1.get_encoder_speed_relative(),
+            "temperature":self.sdc.get_temperature(),
+            "volts":self.sdc.get_volts(),
+            "duty_cycle":self.sdc.motor_1.get_duty_cycle(),
+            "closed_loop_error":self.sdc.motor_1.get_closed_loop_error(),
+            "encoder_speed_relative":self.sdc.motor_1.get_encoder_speed_relative(),
         }
 
 
