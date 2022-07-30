@@ -47,7 +47,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("request_computer_start_status")
         self.tb.subscribe_to_topic("request_sdc_start_status")
 
-        self.scd = sdc.SDC(
+        self.sdc = sdc.SDC(
             self.sdc_data_receiver,
             self.sdc_status_receiver, 
             self.sdc_exception_receiver,
