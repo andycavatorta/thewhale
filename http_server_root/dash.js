@@ -29,8 +29,8 @@ var interface = {};
 const block_grid_x = [
   0,
   20,
-  140,
-  250,
+  120,
+  220,
   575,
   750,
   875,
@@ -471,8 +471,8 @@ class Row{
   constructor(dom_parent, y_position
     ) {
     this.dom_parent = dom_parent;
-    this.restart = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 100)
-    this.reboot = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 100)
+    this.restart = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 80)
+    this.reboot = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 80)
     this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 260)
     this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 260)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
