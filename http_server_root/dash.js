@@ -194,6 +194,9 @@ function websocket_message_handler(evt) {
           //console.log("connections",message["connections"]) //[true, {"controller": true}]
           //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
         break;
+      case "response_computer_runtime_status":
+          console.log(message)
+        break;
     }
 }
 function websocket_error_handler(evt) {

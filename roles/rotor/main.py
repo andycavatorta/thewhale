@@ -191,9 +191,14 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 print(topic, message, origin, destination)
+                
                 if topic==b"request_computer_start_status":
                     status = self.get_computer_start_status()
                     self.tb.publish("response_computer_start_status",status)
+
+                if topic==b"request_computer_runtime_status":
+                    status = self.get_computer_runtime_status()
+                    self.tb.publish("response_computer_runtime_status",status)
 
                 if topic==b"request_computer_start_status":
                     status = self.get_sdc_start_status()

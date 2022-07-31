@@ -67,6 +67,7 @@ class Poller(threading.Thread):
         while True:
             time.sleep(5)
             self.tb.publish("request_computer_start_status","")
+            self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_start_status","")
 
 class Main(threading.Thread):
@@ -147,6 +148,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_tb_git_timestamp")
         self.tb.subscribe_to_topic("event_uptime")
         self.tb.subscribe_to_topic("response_computer_start_status")
+        self.tb.subscribe_to_topic("request_computer_runtime_status")
         self.tb.subscribe_to_topic("response_sdc_start_status")
 
         """
@@ -221,8 +223,6 @@ class Main(threading.Thread):
                 self.hosts.dispatch(topic, message, origin, destination)
                 self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 #self.current_mode.add_to_queue(topic, message, origin, destination)
-
-
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
