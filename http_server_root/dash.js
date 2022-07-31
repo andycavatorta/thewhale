@@ -431,7 +431,7 @@ class Block_Display_Graph{
 
 class Block_Push_Button{
   constructor(dom_parent, listener, coordinates, override_text, width) {
-    this.display_text = "";
+    this.override_text = override_text;
     this.dom_parent = dom_parent;
     this.priority = 0
     this.container = create_group(
@@ -459,7 +459,7 @@ class Block_Push_Button{
   hover_state_on(e){
     self = e.target.class_ref
     console.log(e.target.class_ref)
-    self.override_text("reboot")
+    self.override_text()
   }
   hover_state_off(e){
     self = e.target.class_ref
@@ -530,10 +530,10 @@ class Row{
   constructor(dom_parent, y_position
     ) {
     this.dom_parent = dom_parent;
-    this.restart = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 80)
-    this.reboot = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 80)
-    this.tb_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 230)
-    this.app_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 230)
+    this.restart = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "restart", 80)
+    this.reboot = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "reboot", 80)
+    this.tb_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "git pull", 230)
+    this.app_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], "git pull", 230)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
     this.exceptions = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
     this.status = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
