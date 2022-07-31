@@ -52,6 +52,7 @@ from roles.controller.mode_system_tests import Mode_System_Tests
 from http_server_root import dashboard
 
 GPIO.setmode(GPIO.BCM)
+GPIO.setup(8, GPIO.OUT)
 GPIO.output(8, GPIO.LOW)
 
 #role_module.GPIO.output(8, GPIO.HIGH)
@@ -147,7 +148,6 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_uptime")
         self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_sdc_start_status")
-
 
         """
         self.modes = {
