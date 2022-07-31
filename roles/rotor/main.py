@@ -44,8 +44,10 @@ class Main(threading.Thread):
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
+        self.tb.subscribe_to_topic("request_computer_runtime_status")
         self.tb.subscribe_to_topic("request_computer_start_status")
         self.tb.subscribe_to_topic("request_sdc_start_status")
+
 
         self.sdc = sdc.SDC(
             self.sdc_data_receiver,
@@ -191,7 +193,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 print(topic, message, origin, destination)
-                
+
                 if topic==b"request_computer_start_status":
                     status = self.get_computer_start_status()
                     self.tb.publish("response_computer_start_status",status)
