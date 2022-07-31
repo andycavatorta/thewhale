@@ -188,7 +188,7 @@ function websocket_message_handler(evt) {
           hosts[origin].ip_local.set_text(message["local_ip"])
           hosts[origin].tb_git_time.set_text(message["tb_git_timestamp"])
           hosts[origin].app_git_time.set_text(message["app_git_timestamp"])
-          let os_version_str = message[os_version["name"]] + " " + message[os_version["version"]]
+          let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
           hosts[origin].os_version.set_text(os_version_str)
           //console.log("online_status",message["online_status"])
           //console.log("connections",message["connections"]) //[true, {"controller": true}]
