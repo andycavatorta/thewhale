@@ -86,7 +86,7 @@ class Main(threading.Thread):
             "wifi_strength":self.tb.get_wifi_strength(),
             "core_voltage":self.tb.get_core_voltage(),
             "system_cpu":self.tb.get_system_cpu(),
-            "system_uptime":self.tb.get_system_uptime(),
+            "system_uptime":self.tb.get_os_uptime(),
             "system_runtime":self.tb.get_script_runtime(),
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
