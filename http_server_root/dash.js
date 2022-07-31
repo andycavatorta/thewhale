@@ -195,12 +195,13 @@ function websocket_message_handler(evt) {
           //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
         break;
       case "response_computer_runtime_status":
-          hosts[origin].app_git_time.set_text(message["core_temp"])
-          hosts[origin].app_git_time.set_text(message["core_voltage"])
-          hosts[origin].app_git_time.set_text(message["system_cpu"])
-          hosts[origin].app_git_time.set_text(message["system_uptime"])// "2022-06-30 21:05:37"
-          hosts[origin].app_git_time.set_text(message["system_disk"][0])//[37196000.0, 926900000.0]
-          hosts[origin].app_git_time.set_text(message["memory_free"][0])//[37196000.0, 926900000.0]
+          hosts[origin].temp.set_text(message["core_temp"])
+          hosts[origin].voltage.set_text(message["core_voltage"])
+          hosts[origin].cpu.set_text(message["system_cpu"])
+          hosts[origin].reboot.set_text(message["system_uptime"])// "2022-06-30 21:05:37"
+          hosts[origin].restart.set_text(message["system_uptime"])// "2022-06-30 21:05:37"
+          hosts[origin].disk.set_text(message["system_disk"][0])//[37196000.0, 926900000.0]
+          hosts[origin].mem.set_text(message["memory_free"][0])//[37196000.0, 926900000.0]
         break;
     }
 }
@@ -480,7 +481,8 @@ class Row{
     this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "8888MB", 100)
     this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
     this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
-    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "Linux feral 5.15.0-41-generic", 280)
+    this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "0.0C", 80)
+    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 280)
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
@@ -540,8 +542,8 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[1]], "mem")
   new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[1]], "disk")
   new Block_Title_Horizontal(canvas, [block_grid_x[13],block_grid_y[1]], "core")
-  new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[1]], "OS")
-  new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[1]], "")
+  new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[1]], "temp")
+  new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[1]], "OS")
 
   new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[2]], "controller")
   new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[3]], "rotors0102")
