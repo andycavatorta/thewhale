@@ -195,12 +195,12 @@ function websocket_message_handler(evt) {
           //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
         break;
       case "response_computer_runtime_status":
-          console.log("",message["core_temp"])
-          console.log("",message["core_voltage"])
-          console.log("",message["system_cpu"])
-          console.log("",message["system_uptime"]) // "2022-06-30 21:05:37"
-          console.log("",message["system_disk"][0]) //[2177540096, 7539929088]
-          console.log("",message["memory_free"][0]) //[37196000.0, 926900000.0]
+          hosts[origin].app_git_time.set_text(message["core_temp"])
+          hosts[origin].app_git_time.set_text(message["core_voltage"])
+          hosts[origin].app_git_time.set_text(message["system_cpu"])
+          hosts[origin].app_git_time.set_text(message["system_uptime"])// "2022-06-30 21:05:37"
+          hosts[origin].app_git_time.set_text(message["system_disk"][0])//[37196000.0, 926900000.0]
+          hosts[origin].app_git_time.set_text(message["memory_free"][0])//[37196000.0, 926900000.0]
         break;
     }
 }
