@@ -148,7 +148,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_tb_git_timestamp")
         self.tb.subscribe_to_topic("event_uptime")
         self.tb.subscribe_to_topic("response_computer_start_status")
-        self.tb.subscribe_to_topic("request_computer_runtime_status")
+        self.tb.subscribe_to_topic("response_computer_runtime_status")
         self.tb.subscribe_to_topic("response_sdc_start_status")
 
         """
