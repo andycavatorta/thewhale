@@ -27,6 +27,7 @@ note-to-motor-command interface
 
 #!/usr/bin/python
 
+import codecs
 import glob
 import os
 import queue
