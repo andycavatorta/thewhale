@@ -28,11 +28,11 @@ var websocket;
 var interface = {};
 const block_grid_x = [
   0,
-  20,
+  20, 
   120,
   220,
-  575,
-  750,
+  470,
+  720,
   875,
   1025,
   1150,
@@ -473,8 +473,8 @@ class Row{
     this.dom_parent = dom_parent;
     this.restart = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 80)
     this.reboot = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 80)
-    this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 260)
-    this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 260)
+    this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 230)
+    this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 230)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
     this.exceptions = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
     this.status = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
