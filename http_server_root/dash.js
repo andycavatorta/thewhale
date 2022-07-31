@@ -185,18 +185,15 @@ function websocket_message_handler(evt) {
           console.log("firmware_version",message["firmware_version"])
         break;
       case "response_computer_start_status":
-          console.log("hostname",message["hostname"])
-          console.log("local_ip",message["local_ip"])
           hosts[origin].ip_local.set_text(message["local_ip"])
-          console.log("online_status",message["online_status"])
-          console.log("connections",message["connections"]) //[true, {"controller": true}]
-          console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
-          console.log("tb_git_timestamp",message["tb_git_timestamp"]) // "Sun Jul 31 12:17:32 2022 -0400\n"
-          console.log("tb_scripts_version",message["tb_scripts_version"])
-          console.log("app_git_timestamp",message["app_git_timestamp"]) // "Sun Jul 31 09:22:12 2022 -0400\n"
-          console.log("app_scripts_version",message["app_scripts_version"])
+          hosts[origin].tb_git_time.set_text(message["tb_git_timestamp"])
+          hosts[origin].app_git_time.set_text(message["app_git_timestamp"])
+          let os_version_str = message[os_version["name"]] + " " + message[os_version["version"]]
+          hosts[origin].os_version.set_text(os_version_str)
+          //console.log("online_status",message["online_status"])
+          //console.log("connections",message["connections"]) //[true, {"controller": true}]
+          //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
         break;
-
     }
 }
 function websocket_error_handler(evt) {
