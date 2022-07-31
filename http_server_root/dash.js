@@ -188,7 +188,7 @@ function try_to_connect() {
 }
 
 timers = {
-    //retry_connection: window.setInterval(try_to_connect, 1000)
+    retry_connection: window.setInterval(try_to_connect, 1000)
 }
 function update_display_values(data){
   console.log(data)

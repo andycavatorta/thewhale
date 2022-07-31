@@ -37,7 +37,6 @@ import sys
 import time
 import threading
 
-
 app_path = os.path.dirname((os.path.dirname(os.path.dirname(os.path.realpath(__file__)))))
 sys.path.append(os.path.split(app_path)[0])
 
