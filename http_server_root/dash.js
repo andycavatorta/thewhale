@@ -170,13 +170,34 @@ function websocket_message_handler(evt) {
         break;
       case "response_sdc_start_status":
           console.log("flags_sdc",message["flags_sdc"])
+          console.log("flags_motor1",message["flags_motor1"])
+          console.log("flags_motor2",message["flags_motor2"])
+          console.log("encoder_ppr_value_motor1",message["encoder_ppr_value_motor1"])
+          console.log("operating_mode_motor1",message["operating_mode_motor1"])
+          console.log("pid_differential_gain_motor1",message["pid_differential_gain_motor1"])
+          console.log("pid_integral_gain_motor1",message["pid_integral_gain_motor1"])
+          console.log("pid_proportional_gain_motor1",message["pid_proportional_gain_motor1"])
+          console.log("encoder_ppr_value_motor2",message["encoder_ppr_value_motor2"])
+          console.log("operating_mode_motor2",message["operating_mode_motor2"])
+          console.log("pid_differential_gain_motor2",message["pid_differential_gain_motor2"])
+          console.log("pid_integral_gain_motor2",message["pid_integral_gain_motor2"])
+          console.log("pid_proportional_gain_motor2",message["pid_proportional_gain_motor2"])
+          console.log("firmware_version",message["firmware_version"])
         break;
       case "response_computer_start_status":
+          console.log("hostname",message["hostname"])
+          console.log("local_ip",message["local_ip"])
+          console.log("online_status",message["online_status"])
+          console.log("connections",message["connections"]) //[true, {"controller": true}]
+          console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
+          console.log("tb_git_timestamp",message["tb_git_timestamp"]) // "Sun Jul 31 12:17:32 2022 -0400\n"
+          console.log("tb_scripts_version",message["tb_scripts_version"])
+          console.log("app_git_timestamp",message["app_git_timestamp"]) // "Sun Jul 31 09:22:12 2022 -0400\n"
+          console.log("app_scripts_version",message["app_scripts_version"])
         break;
 
 
-//data received["response_sdc_start_status", {"flags_sdc": [], "flags_motor1": [], "flags_motor2": [], "encoder_ppr_value_motor1": 51, "operating_mode_motor1": 1, "pid_differential_gain_motor1": 1.0, "pid_integral_gain_motor1": 2.0, "pid_proportional_gain_motor1": 1.0, "encoder_ppr_value_motor2": 51, "operating_mode_motor2": 1, "pid_differential_gain_motor2": 1.0, "pid_integral_gain_motor2": 2.0, "pid_proportional_gain_motor2": 1.0, "firmware_version": "Roboteq v1.8d SDC2XXX 1/8/2018"}, "rotors0102"]
-//data received["response_computer_start_status", {"hostname": "rotors0102", "local_ip": "192.168.1.9", "online_status": true, "connections": [true, {"controller": true}], "os_version": {"name": "ubuntu", "version": "22.04"}, "tb_git_timestamp": "Sun Jul 31 12:17:32 2022 -0400\n", "tb_scripts_version": 0.0, "app_git_timestamp": "Sun Jul 31 09:22:12 2022 -0400\n", "app_scripts_version": 0.0}, "rotors0102"]
+
 
 
 
@@ -519,22 +540,22 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[1]], "")
 
   new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[2]], "controller")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[3]], "rotor0102")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[4]], "rotor0304")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[5]], "rotor0506")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[6]], "rotor0708")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[7]], "rotor0910")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[8]], "rotor1112")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[9]], "rotor1314")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[3]], "rotors0102")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[4]], "rotors0304")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[5]], "rotors0506")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[6]], "rotors0708")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[7]], "rotors0910")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[8]], "rotors1112")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[9]], "rotors1314")
 
   hosts["controller"] = new Row(canvas, block_grid_y[2])
-  hosts["rotor0102"] = new Row(canvas, block_grid_y[3])
-  hosts["rotor0304"] = new Row(canvas, block_grid_y[4])
-  hosts["rotor0506"] = new Row(canvas, block_grid_y[5])
-  hosts["rotor0708"] = new Row(canvas, block_grid_y[6])
-  hosts["rotor0910"] = new Row(canvas, block_grid_y[7])
-  hosts["rotor1112"] = new Row(canvas, block_grid_y[8])
-  hosts["rotor1314"] = new Row(canvas, block_grid_y[9])
+  hosts["rotors0102"] = new Row(canvas, block_grid_y[3])
+  hosts["rotors0304"] = new Row(canvas, block_grid_y[4])
+  hosts["rotors0506"] = new Row(canvas, block_grid_y[5])
+  hosts["rotors0708"] = new Row(canvas, block_grid_y[6])
+  hosts["rotors0910"] = new Row(canvas, block_grid_y[7])
+  hosts["rotors1112"] = new Row(canvas, block_grid_y[8])
+  hosts["rotors1314"] = new Row(canvas, block_grid_y[9])
 
   //status_details = new Details_Display(canvas, [20,500], "exception_details_rect")
   //msg_details = new Details_Display(canvas, [20,500], "exception_details_rect")
