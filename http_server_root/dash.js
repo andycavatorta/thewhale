@@ -430,9 +430,10 @@ class Block_Display_Graph{
 }
 
 class Block_Push_Button{
-  constructor(dom_parent, listener, coordinates, display_text, width) {
-    this.display_text = display_text;
+  constructor(dom_parent, listener, coordinates, override_text, width) {
+    this.display_text = "";
     this.dom_parent = dom_parent;
+    this.priority = 0
     this.container = create_group(
       this.dom_parent,
       {
@@ -458,14 +459,24 @@ class Block_Push_Button{
   hover_state_on(e){
     self = e.target.class_ref
     console.log(e.target.class_ref)
-    self.set_text("reboot")
+    self.override_text("reboot")
   }
   hover_state_off(e){
     self = e.target.class_ref
     console.log(e.target.class_ref)
+    self.restore_text()
   }
-  set_text(value){
+  set_text(display_text){
+    this.display_text = display_text
     let textnode = document.createTextNode(value);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  };
+  override_text(){
+    let textnode = document.createTextNode(this.override_text);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  };
+  restore_text(){
+    let textnode = document.createTextNode(this.display_text);
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   };
   set_priority(value){ //-1,0,1
