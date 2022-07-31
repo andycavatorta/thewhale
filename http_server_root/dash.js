@@ -430,8 +430,8 @@ class Block_Display_Graph{
 }
 
 class Block_Push_Button{
-  constructor(dom_parent, listener, coordinates, override_text, width) {
-    this.override_text = override_text;
+  constructor(dom_parent, listener, coordinates, action_text, width) {
+    this.action_text = action_text;
     this.dom_parent = dom_parent;
     this.priority = 0
     this.container = create_group(
@@ -472,7 +472,7 @@ class Block_Push_Button{
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   };
   override_text(){
-    let textnode = document.createTextNode(this.override_text);
+    let textnode = document.createTextNode(this.action_text);
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   };
   restore_text(){
