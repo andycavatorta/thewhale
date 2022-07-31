@@ -201,7 +201,7 @@ function websocket_message_handler(evt) {
           console.log("",message["system_uptime"]) // "2022-06-30 21:05:37"
           console.log("",message["system_disk"][0]) //[2177540096, 7539929088]
           console.log("",message["memory_free"][0]) //[37196000.0, 926900000.0]
-B        break;
+        break;
     }
 }
 function websocket_error_handler(evt) {
