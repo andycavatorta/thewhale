@@ -468,7 +468,7 @@ class Block_Push_Button{
   }
   set_text(display_text){
     this.display_text = display_text
-    let textnode = document.createTextNode(value);
+    let textnode = document.createTextNode(display_text);
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   };
   override_text(){
