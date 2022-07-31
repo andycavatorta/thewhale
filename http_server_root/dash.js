@@ -187,6 +187,7 @@ function websocket_message_handler(evt) {
       case "response_computer_start_status":
           console.log("hostname",message["hostname"])
           console.log("local_ip",message["local_ip"])
+          hosts[origin].ip_local.set_text(message["local_ip"])
           console.log("online_status",message["online_status"])
           console.log("connections",message["connections"]) //[true, {"controller": true}]
           console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
@@ -195,11 +196,6 @@ function websocket_message_handler(evt) {
           console.log("app_git_timestamp",message["app_git_timestamp"]) // "Sun Jul 31 09:22:12 2022 -0400\n"
           console.log("app_scripts_version",message["app_scripts_version"])
         break;
-
-
-
-
-
 
     }
 }
@@ -480,6 +476,9 @@ class Row{
     this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
     this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
     this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "Linux feral 5.15.0-41-generic", 280)
+  }
+  set_local_ip(value){
+    this.ip_local.set_text(value)
   }
 }
 
