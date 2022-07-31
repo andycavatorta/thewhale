@@ -168,6 +168,18 @@ function websocket_message_handler(evt) {
     switch (topic) {
       case "deadman":
         break;
+      case "response_sdc_start_status":
+          console.log(flags_sdc,message["flags_sdc"])
+        break;
+      case "response_computer_start_status":
+        break;
+
+
+//data received["response_sdc_start_status", {"flags_sdc": [], "flags_motor1": [], "flags_motor2": [], "encoder_ppr_value_motor1": 51, "operating_mode_motor1": 1, "pid_differential_gain_motor1": 1.0, "pid_integral_gain_motor1": 2.0, "pid_proportional_gain_motor1": 1.0, "encoder_ppr_value_motor2": 51, "operating_mode_motor2": 1, "pid_differential_gain_motor2": 1.0, "pid_integral_gain_motor2": 2.0, "pid_proportional_gain_motor2": 1.0, "firmware_version": "Roboteq v1.8d SDC2XXX 1/8/2018"}, "rotors0102"]
+//data received["response_computer_start_status", {"hostname": "rotors0102", "local_ip": "192.168.1.9", "online_status": true, "connections": [true, {"controller": true}], "os_version": {"name": "ubuntu", "version": "22.04"}, "tb_git_timestamp": "Sun Jul 31 12:17:32 2022 -0400\n", "tb_scripts_version": 0.0, "app_git_timestamp": "Sun Jul 31 09:22:12 2022 -0400\n", "app_scripts_version": 0.0}, "rotors0102"]
+
+
+
     }
 }
 function websocket_error_handler(evt) {
