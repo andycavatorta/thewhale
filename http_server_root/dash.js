@@ -31,18 +31,18 @@ const block_grid_x = [
   20,
   140,
   250,
-  500,
-  700,
-  775,
-  925,
-  1050,
-  1175,
-  1300,
-  1375,
-  1485,
-  1600,
+  575,
+  750,
+  875,
+  1025,
+  1150,
+  1275,
+  1400,
+  1475,
+  1585,
   1700,
-  2800,
+  1800,
+  2000,
   ];
 const block_grid_y = [
   0,
@@ -473,8 +473,8 @@ class Row{
     this.dom_parent = dom_parent;
     this.restart = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 100)
     this.reboot = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 100)
-    this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 160)
-    this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 160)
+    this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 260)
+    this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 260)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
     this.exceptions = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
     this.status = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
