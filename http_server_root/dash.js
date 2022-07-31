@@ -186,7 +186,7 @@ function websocket_message_handler(evt) {
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
-          let tb_date = new Date(int(message["tb_git_timestamp"])*1000)
+          let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
           hosts[origin].tb_git_time.set_text(tb_date.toLocaleString())
           hosts[origin].app_git_time.set_text(message["app_git_timestamp"])
           let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
