@@ -429,7 +429,54 @@ class Block_Display_Graph{
   }
 }
 
-class Block_Button{
+class Block_Push_Button{
+  constructor(dom_parent, listener, coordinates, display_text, width) {
+    this.display_text = display_text;
+    this.dom_parent = dom_parent;
+    this.container = create_group(
+      this.dom_parent,
+      {
+        class:"status_block_name_value",
+        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
+      }
+    );
+    this.text_container = create_text(this.container, this.display_text, {class:"status_block_value"});
+    this.set_text(this.display_text);
+    this.button_rect  = create_rectangle(
+      this.dom_parent,
+      {
+        class:"cell_button_0",
+        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
+      }
+    )
+    this.button_rect.class_ref = exception_details
+    this.button_rect.setAttribute("style",`width:`+width+`px`);
+    //this.button_rect.addEventListener("click",listener)
+    this.button_rect.addEventListener("mouseover",set_clickable)
+  }
+  hover_state_on(e){
+    self = e.target.class_ref
+    console.log(e.target.class_ref)
+    self.set_text("reboot")
+  }
+  hover_state_off(e){
+    self = e.target.class_ref
+    console.log(e.target.class_ref)
+  }
+  set_text(value){
+    let textnode = document.createTextNode(value);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  };
+  set_priority(value){ //-1,0,1
+    if (value==0){
+      this.button_rect.setAttribute("class",`cell_button_0`);
+    }
+    if (value==1){
+      this.button_rect.setAttribute("class",`cell_button_0`);
+    }
+  }
+}
+class Block_Toggle_Button{
   constructor(dom_parent, listener, coordinates, display_text, width) {
     this.display_text = display_text;
     this.dom_parent = dom_parent;
@@ -471,14 +518,14 @@ class Row{
   constructor(dom_parent, y_position
     ) {
     this.dom_parent = dom_parent;
-    this.restart = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 80)
-    this.reboot = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 80)
-    this.tb_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 230)
-    this.app_git_time = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 230)
+    this.restart = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "1000 h", 80)
+    this.reboot = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "1000 h", 80)
+    this.tb_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "...", 230)
+    this.app_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], ".!.", 230)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
-    this.exceptions = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
-    this.status = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
-    this.messages = new Block_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
+    this.exceptions = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
+    this.status = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
+    this.messages = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
     this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "100%", 60)
     this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "8888MB", 100)
     this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
