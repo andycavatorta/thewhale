@@ -36,13 +36,13 @@ const block_grid_x = [
   775,
   925,
   1050,
-  1175  ,
+  1175,
   1300,
   1375,
   1485,
   1600,
   1700,
-  2000,
+  2800,
   ];
 const block_grid_y = [
   0,
@@ -186,7 +186,8 @@ function websocket_message_handler(evt) {
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
-          hosts[origin].tb_git_time.set_text(message["tb_git_timestamp"])
+          let tb_date = new Date(int(message["tb_git_timestamp"])*1000)
+          hosts[origin].tb_git_time.set_text(tb_date.toLocaleString())
           hosts[origin].app_git_time.set_text(message["app_git_timestamp"])
           let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
           hosts[origin].os_version.set_text(os_version_str)
@@ -198,8 +199,8 @@ function websocket_message_handler(evt) {
           hosts[origin].temp.set_text(message["core_temp"])
           hosts[origin].voltage.set_text(message["core_voltage"])
           hosts[origin].cpu.set_text( parseFloat( message["system_cpu"] ).toFixed(2) )
-          hosts[origin].reboot.set_text( ( parseFloat( message["system_uptime"] )/3600).toFixed(2) )// "2022-06-30 21:05:37"
-          hosts[origin].restart.set_text( parseFloat( message["system_runtime"]).toFixed(2) )// "2022-06-30 21:05:37"
+          hosts[origin].reboot.set_text( ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
+          hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
           hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
           hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
         break;
