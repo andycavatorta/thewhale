@@ -432,6 +432,7 @@ class Block_Display_Graph{
 class Block_Push_Button{
   constructor(dom_parent, listener, coordinates, action_text, width) {
     this.action_text = action_text;
+    this.display_text = ""
     this.dom_parent = dom_parent;
     this.priority = 0
     this.container = create_group(
