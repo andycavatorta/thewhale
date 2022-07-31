@@ -449,7 +449,7 @@ class Block_Push_Button{
         transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
       }
     )
-    this.button_rect.class_ref = exception_details
+    this.button_rect.class_ref = this
     this.button_rect.setAttribute("style",`width:`+width+`px`);
     //this.button_rect.addEventListener("click",listener)
     this.button_rect.addEventListener("mouseover",this.hover_state_on)
