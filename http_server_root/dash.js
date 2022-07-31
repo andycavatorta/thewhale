@@ -198,7 +198,7 @@ function websocket_message_handler(evt) {
           hosts[origin].temp.set_text(message["core_temp"])
           hosts[origin].voltage.set_text(message["core_voltage"])
           hosts[origin].cpu.set_text(message["system_cpu"])
-          hosts[origin].reboot.set_text(message["system_uptime"])// "2022-06-30 21:05:37"
+          hosts[origin].reboot.set_text(float(message["system_uptime"]).toFixed(2))// "2022-06-30 21:05:37"
           hosts[origin].restart.set_text(message["system_runtime"])// "2022-06-30 21:05:37"
           hosts[origin].disk.set_text(message["system_disk"][0])//[37196000.0, 926900000.0]
           hosts[origin].mem.set_text(message["memory_free"][0])//[37196000.0, 926900000.0]
