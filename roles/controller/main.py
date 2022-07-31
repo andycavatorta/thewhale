@@ -49,7 +49,7 @@ import roles.controller.hosts as Hosts
 from roles.controller.mode_error import Mode_Error
 from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Connections
 from roles.controller.mode_system_tests import Mode_System_Tests
-#from roles.controller.mode_play import Mode_Play
+from http_server_root import dashboard
 
 GPIO.setmode(GPIO.BCM)
 GPIO.output(8, GPIO.LOW)
@@ -157,11 +157,11 @@ class Main(threading.Thread):
             "sing":Mode_Play(self.tb, self.hosts, self.set_current_mode),
             #"ending":Mode_ending(self.tb, self.hosts, self.set_current_mode),
         }
-        #self.dashboard = dashboard.init()
         self.current_mode_name = self.mode_names.WAITING_FOR_CONNECTIONS
         self.current_mode = self.modes["waiting_for_connections"]
         self.current_mode.begin()
         """
+        self.dashboard = dashboard.init()
         self.start()
         self.poller = Poller(self.tb)
 
@@ -219,7 +219,7 @@ class Main(threading.Thread):
                     continue
                 print(topic, message, origin, destination)
                 self.hosts.dispatch(topic, message, origin, destination)
-                #self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
+                self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 #self.current_mode.add_to_queue(topic, message, origin, destination)
 
 
