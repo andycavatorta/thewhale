@@ -74,8 +74,8 @@ def exception_receiver(message):
 
 def init(tb):
     global message_receiver
-    global tb_global
-    tb_global = tb
+    #global tb_global
+    #tb_global = tb
     server_address = ('0.0.0.0', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     httpd_thread = threading.Thread(target=httpd.serve_forever)
