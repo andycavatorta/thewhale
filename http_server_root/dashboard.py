@@ -15,11 +15,10 @@ class SimpleChat(WebSocket):
 
     def handleMessage(self):
        #print("got ws message", self.data)
-       print("handleMessage",self.data)
+       #print("handleMessage",self.data)
        data_decoded = json.loads(self.data)
-       print("handleMessage",data_decoded["topic"])
-       #upstream_queue.put((self.data["topic"], self.data["message"], "dashboard", self.data["target"]))
-       #upstream_queue.put
+       #print("handleMessage",data_decoded["topic"])
+       upstream_queue.put((data_decoded["topic"], data_decoded["message"], "dashboard", data_decoded["target"]))
        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
     def handleConnected(self):
