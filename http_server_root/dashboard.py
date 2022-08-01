@@ -14,26 +14,8 @@ clients = []
 class SimpleChat(WebSocket):
 
     def handleMessage(self):
-        #print("got ws message", self.data)
-        if self.data["target"] == "controller":
-            if self.data["topic"] == "pull thirtybirds":
-                tb_global.tb_pull_from_github()
-            if self.data["topic"] == "pull thewhale":
-                tb_global.app_pull_from_github()
-            if self.data["topic"] == "reboot":
-                tb_global.reboot()
-            if self.data["topic"] == "restart":
-                tb_global.restart("thewhale")
-        else:
-            if self.data["topic"] == "pull thirtybirds":
-                tb_global.publish("app_pull_from_github", "", self.data["topic"])
-            if self.data["topic"] == "pull thewhale":
-                tb_global.publish("tb_pull_from_github", "", self.data["topic"])
-            if self.data["topic"] == "reboot":
-                tb_global.publish("reboot", "", self.data["topic"])
-            if self.data["topic"] == "restart":
-                tb_global.publish("restart", "thewhale", self.data["topic"])
-        print("handleMessage",self.data,tb_global)
+       #print("got ws message", self.data)
+       print("handleMessage",self.data)
 
     def handleConnected(self):
         #print(self.address, 'connected')
@@ -90,10 +72,8 @@ def status_receiver(message):
 def exception_receiver(message):
     message_receiver.add_to_queue("exception_event",message)
 
-def init(tb):
+def init():
     global message_receiver
-    global tb_global
-    tb_global = tb
     server_address = ('0.0.0.0', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     httpd_thread = threading.Thread(target=httpd.serve_forever)
