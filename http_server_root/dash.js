@@ -464,8 +464,7 @@ class Block_Push_Button{
   }
   handle_click(e){
     self = e.target.class_ref
-    console.log(self)
-    console.log(self.action_text,self.hostname)
+    websocket_send(self.hostname,self.action_text,"")
   }
   hover_state_on(e){
     self = e.target.class_ref
@@ -632,7 +631,6 @@ function init() {
   hosts["rotors0910"] = new Row("rotors0910", block_grid_y[7])
   hosts["rotors1112"] = new Row("rotors1112", block_grid_y[8])
   hosts["rotors1314"] = new Row("rotors1314", block_grid_y[9])
-
   //status_details = new Details_Display(canvas, [20,500], "exception_details_rect")
   //msg_details = new Details_Display(canvas, [20,500], "exception_details_rect")
 }
