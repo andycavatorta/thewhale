@@ -15,9 +15,9 @@ class SimpleChat(WebSocket):
 
     def handleMessage(self):
        #print("got ws message", self.data)
-       print("handleMessage",self.data)
+       print("handleMessage",(self.data["topic"], self.data["message"], "dashboard", self.data["target"]))
        #upstream_queue.put((self.data["topic"], self.data["message"], "dashboard", self.data["target"]))
-       upstream_queue
+       #upstream_queue.put
        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
     def handleConnected(self):
