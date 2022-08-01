@@ -138,8 +138,8 @@ function websocket_send(target,topic,message) {
 function websocket_open(evt) {
     console.log("send test websocket message")
     try {
-        websocket.send("","","test message")
-
+        packet = JSON.stringify({ "target": "","topic": "","message": ""})
+        websocket.send(packet)
     } catch (e) {
         console.log(e)
     }
