@@ -72,7 +72,7 @@ def status_receiver(message):
 def exception_receiver(message):
     message_receiver.add_to_queue("exception_event",message)
 
-def init(tb):
+def init(upstream_queue):
     global message_receiver
     #global tb_global
     #tb_global = tb
