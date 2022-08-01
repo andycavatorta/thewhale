@@ -74,7 +74,7 @@ def exception_receiver(message):
 
 def init(upstream_queue):
     global message_receiver
-    #global tb_global
+    global upstream_queue
     #tb_global = tb
     server_address = ('0.0.0.0', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
