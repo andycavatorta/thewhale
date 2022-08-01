@@ -233,7 +233,7 @@ class Main(threading.Thread):
                             self.tb.app_pull_from_github
                     else:
                         print(",,,,,,,,,,,,,", topic, destination)
-                        self.tb.publish("restart", "", "dashboard", destination)
+                        self.tb.publish("restart", "")
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 
