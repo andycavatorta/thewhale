@@ -220,7 +220,8 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 print(topic, message, origin, destination)
-                if origin == "dashboard":
+                if origin == b"dashboard":
+                    print("*******************", topic)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -231,6 +232,7 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.app_pull_from_github
                     else:
+                        print(",,,,,,,,,,,,,", topic, destination)
                         self.tb.publish(topic, "", "dashboard", destination)
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
