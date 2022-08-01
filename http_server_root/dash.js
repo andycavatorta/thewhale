@@ -458,9 +458,14 @@ class Block_Push_Button{
     )
     this.button_rect.class_ref = this
     this.button_rect.setAttribute("style",`width:`+width+`px`);
-    //this.button_rect.addEventListener("click",listener)
+    this.button_rect.addEventListener("click",this.handle_click)
     this.button_rect.addEventListener("mouseover",this.hover_state_on)
     this.button_rect.addEventListener("mouseout",this.hover_state_off)
+  }
+  handle_click(e){
+    self = e.target.class_ref
+    console.log(self)
+    console.log(self.action_text,self.hostname)
   }
   hover_state_on(e){
     self = e.target.class_ref
