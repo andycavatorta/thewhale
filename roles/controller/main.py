@@ -233,7 +233,7 @@ class Main(threading.Thread):
                             self.tb.app_pull_from_github
                     else:
                         print(",,,,,,,,,,,,,", topic, destination)
-                        self.tb.publish("restart", "")
+                        self.tb.publish("restart", destination )
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 
@@ -243,3 +243,7 @@ class Main(threading.Thread):
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
 main = Main()
+
+
+
+
