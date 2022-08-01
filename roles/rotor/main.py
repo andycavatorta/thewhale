@@ -49,8 +49,8 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("request_sdc_start_status")
         self.tb.subscribe_to_topic("restart")
         self.tb.subscribe_to_topic("reboot")
-        self.tb.subscribe_to_topic("pull thirtybirds")
-        self.tb.subscribe_to_topic("pull thewhale")
+        #self.tb.subscribe_to_topic("pull thirtybirds")
+        #self.tb.subscribe_to_topic("pull thewhale")
 
         self.sdc = sdc.SDC(
             self.sdc_data_receiver,
