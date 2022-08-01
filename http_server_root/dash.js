@@ -538,21 +538,21 @@ class Block_Toggle_Button{
 class Row{
   constructor(hostname, y_position
     ) {
-    this.dom_parent = canvas;
-    this.restart = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[1],y_position], "restart", 80)
-    this.reboot = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[2],y_position], "reboot", 80)
-    this.tb_git_time = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[3],y_position], "git pull", 230)
-    this.app_git_time = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[4],y_position], "git pull", 230)
-    this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
-    this.exceptions = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
-    this.status = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
-    this.messages = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
-    this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "100%", 60)
-    this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "8888MB", 100)
-    this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
-    this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
-    this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "0.0C", 80)
-    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 280)
+    //this.dom_parent = canvas;
+    this.restart = new Block_Push_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[1],y_position], "restart", 80)
+    this.reboot = new Block_Push_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[2],y_position], "reboot", 80)
+    this.tb_git_time = new Block_Push_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[3],y_position], "git pull", 230)
+    this.app_git_time = new Block_Push_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[4],y_position], "git pull", 230)
+    this.ip_local = new Block_Display_Text(hostname, [block_grid_x[6],y_position], "192.168.0.200", 140)
+    this.exceptions = new Block_Toggle_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
+    this.status = new Block_Toggle_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
+    this.messages = new Block_Toggle_Button(hostname, hostname, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
+    this.cpu = new Block_Display_Text(hostname, [block_grid_x[10],y_position], "100%", 60)
+    this.mem = new Block_Display_Text(hostname, [block_grid_x[11],y_position], "8888MB", 100)
+    this.disk = new Block_Display_Text(hostname, [block_grid_x[12],y_position], "8888MB", 100)
+    this.voltage = new Block_Display_Text(hostname, [block_grid_x[13],y_position], "3.33V", 80)
+    this.temp = new Block_Display_Text(hostname, [block_grid_x[14],y_position], "0.0C", 80)
+    this.os_version = new Block_Display_Text(hostname, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 280)
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
