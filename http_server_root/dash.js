@@ -129,10 +129,12 @@ function websocket_connect() {
     }
 }
 
-function websocket_send(evt) {
-    websocket.send("Sample data ")
-    console.log(evt)
+function websocket_send(target,topic,message) {
+    packet = JSON.stringify({ "target": target,"topic": topic,"message": message})
+    console.log("websocket_send", packet)
+    websocket.send(packet)
 }
+
 function websocket_open(evt) {
     console.log("send test websocket message")
     try {
@@ -141,11 +143,11 @@ function websocket_open(evt) {
     } catch (e) {
         console.log(e)
     }
-
     window.clearInterval(timers.retry_connection)
     timers.retry_connection = false;
     console.log(evt)
 }
+
 function websocket_close() {
     if (timers.retry_connection == false) {
         //timers.retry_connection = window.setInterval(try_to_connect, 1000);
@@ -169,20 +171,22 @@ function websocket_message_handler(evt) {
       case "deadman":
         break;
       case "response_sdc_start_status":
-          console.log("flags_sdc",message["flags_sdc"])
-          console.log("flags_motor1",message["flags_motor1"])
-          console.log("flags_motor2",message["flags_motor2"])
-          console.log("encoder_ppr_value_motor1",message["encoder_ppr_value_motor1"])
-          console.log("operating_mode_motor1",message["operating_mode_motor1"])
-          console.log("pid_differential_gain_motor1",message["pid_differential_gain_motor1"])
-          console.log("pid_integral_gain_motor1",message["pid_integral_gain_motor1"])
-          console.log("pid_proportional_gain_motor1",message["pid_proportional_gain_motor1"])
-          console.log("encoder_ppr_value_motor2",message["encoder_ppr_value_motor2"])
-          console.log("operating_mode_motor2",message["operating_mode_motor2"])
-          console.log("pid_differential_gain_motor2",message["pid_differential_gain_motor2"])
-          console.log("pid_integral_gain_motor2",message["pid_integral_gain_motor2"])
-          console.log("pid_proportional_gain_motor2",message["pid_proportional_gain_motor2"])
-          console.log("firmware_version",message["firmware_version"])
+        /*
+        console.log("flags_sdc",message["flags_sdc"])
+        console.log("flags_motor1",message["flags_motor1"])
+        console.log("flags_motor2",message["flags_motor2"])
+        console.log("encoder_ppr_value_motor1",message["encoder_ppr_value_motor1"])
+        console.log("operating_mode_motor1",message["operating_mode_motor1"])
+        console.log("pid_differential_gain_motor1",message["pid_differential_gain_motor1"])
+        console.log("pid_integral_gain_motor1",message["pid_integral_gain_motor1"])
+        console.log("pid_proportional_gain_motor1",message["pid_proportional_gain_motor1"])
+        console.log("encoder_ppr_value_motor2",message["encoder_ppr_value_motor2"])
+        console.log("operating_mode_motor2",message["operating_mode_motor2"])
+        console.log("pid_differential_gain_motor2",message["pid_differential_gain_motor2"])
+        console.log("pid_integral_gain_motor2",message["pid_integral_gain_motor2"])
+        console.log("pid_proportional_gain_motor2",message["pid_proportional_gain_motor2"])
+        console.log("firmware_version",message["firmware_version"])
+        */
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
@@ -430,8 +434,9 @@ class Block_Display_Graph{
 }
 
 class Block_Push_Button{
-  constructor(dom_parent, listener, coordinates, action_text, width) {
+  constructor(dom_parent, hostname, listener, coordinates, action_text, width) {
     this.action_text = action_text;
+    this.hostname = hostname
     this.display_text = ""
     this.dom_parent = dom_parent;
     this.priority = 0
@@ -459,12 +464,10 @@ class Block_Push_Button{
   }
   hover_state_on(e){
     self = e.target.class_ref
-    console.log(e.target.class_ref)
     self.override_text()
   }
   hover_state_off(e){
     self = e.target.class_ref
-    console.log(e.target.class_ref)
     self.restore_text()
   }
   set_text(display_text){
@@ -490,7 +493,7 @@ class Block_Push_Button{
   }
 }
 class Block_Toggle_Button{
-  constructor(dom_parent, listener, coordinates, display_text, width) {
+  constructor(dom_parent, hostname, listener, coordinates, display_text, width) {
     this.display_text = display_text;
     this.dom_parent = dom_parent;
     this.container = create_group(
@@ -528,17 +531,17 @@ class Block_Toggle_Button{
 }
 
 class Row{
-  constructor(dom_parent, y_position
+  constructor(hostname, y_position
     ) {
-    this.dom_parent = dom_parent;
-    this.restart = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[1],y_position], "restart", 80)
-    this.reboot = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[2],y_position], "reboot", 80)
-    this.tb_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[3],y_position], "git pull", 230)
-    this.app_git_time = new Block_Push_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[4],y_position], "git pull", 230)
+    this.dom_parent = canvas;
+    this.restart = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[1],y_position], "restart", 80)
+    this.reboot = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[2],y_position], "reboot", 80)
+    this.tb_git_time = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[3],y_position], "git pull", 230)
+    this.app_git_time = new Block_Push_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[4],y_position], "git pull", 230)
     this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
-    this.exceptions = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
-    this.status = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
-    this.messages = new Block_Toggle_Button(this.dom_parent, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
+    this.exceptions = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
+    this.status = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
+    this.messages = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
     this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "100%", 60)
     this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "8888MB", 100)
     this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
@@ -574,7 +577,7 @@ class Details_Display{
   }
   toggle_visibility(e){
     self = e.target.class_ref
-    console.log(e.target.class_ref)
+    //console.log(e.target.class_ref)
     if(self.visible){
       self.hide()
     }else{
