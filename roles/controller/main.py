@@ -221,7 +221,8 @@ class Main(threading.Thread):
                     continue
                 print(topic, message, origin, destination)
                 self.hosts.dispatch(topic, message, origin, destination)
-                self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
+                if origin != "dashboard":
+                    self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 #self.current_mode.add_to_queue(topic, message, origin, destination)
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
