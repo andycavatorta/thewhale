@@ -19,7 +19,6 @@ class SimpleChat(WebSocket):
        data_decoded = json.loads(self.data)
        #print("handleMessage",data_decoded["topic"])
        upstream_queue.put((data_decoded["topic"], data_decoded["message"], "dashboard", data_decoded["target"]))
-       print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
     def handleConnected(self):
         #print(self.address, 'connected')

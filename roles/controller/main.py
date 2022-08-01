@@ -220,9 +220,22 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 print(topic, message, origin, destination)
-                self.hosts.dispatch(topic, message, origin, destination)
-                if origin != "dashboard":
+                if origin == "dashboard":
+                    if destination=="controller":
+                        if topic=="restart":
+                            self.tb.restart("thewhale")
+                        if topic=="reboot":
+                            self.tb.reboot()
+                        if topic=="pull thirtybirds":
+                            self.tb.tb_pull_from_github
+                        if topic=="pull thewhale":
+                            self.tb.app_pull_from_github
+                    else:
+                        self.tb.publish(topic, "", "dashboard", destination)
+                else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
+                
+                self.hosts.dispatch(topic, message, origin, destination)
                 #self.current_mode.add_to_queue(topic, message, origin, destination)
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
