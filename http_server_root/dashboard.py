@@ -15,7 +15,7 @@ class SimpleChat(WebSocket):
 
     def handleMessage(self):
        #print("got ws message", self.data)
-       print("handleMessage",self.data)
+       print("handleMessage",self.data,tb_global)
 
     def handleConnected(self):
         #print(self.address, 'connected')
@@ -72,8 +72,10 @@ def status_receiver(message):
 def exception_receiver(message):
     message_receiver.add_to_queue("exception_event",message)
 
-def init():
+def init(tb):
     global message_receiver
+    global tb_global
+    tb_global = tb
     server_address = ('0.0.0.0', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     httpd_thread = threading.Thread(target=httpd.serve_forever)

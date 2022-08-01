@@ -163,7 +163,7 @@ class Main(threading.Thread):
         self.current_mode = self.modes["waiting_for_connections"]
         self.current_mode.begin()
         """
-        self.dashboard = dashboard.init()
+        self.dashboard = dashboard.init(self.tb)
         self.start()
         self.poller = Poller(self.tb)
 
