@@ -138,7 +138,7 @@ function websocket_send(target,topic,message) {
 function websocket_open(evt) {
     console.log("send test websocket message")
     try {
-        websocket.send("Sending test message from dashboard client")
+        websocket.send("","","test message")
 
     } catch (e) {
         console.log(e)
