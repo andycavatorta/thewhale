@@ -24,15 +24,15 @@ class SimpleChat(WebSocket):
                 tb_global.reboot()
             if self.data["topic"] == "restart":
                 tb_global.restart("thewhale")
-
         else:
             if self.data["topic"] == "pull thirtybirds":
-                tb_global.reboot
+                tb_global.publish("app_pull_from_github", "", self.data["topic"])
             if self.data["topic"] == "pull thewhale":
-
+                tb_global.publish("tb_pull_from_github", "", self.data["topic"])
             if self.data["topic"] == "reboot":
-
+                tb_global.publish("reboot", "", self.data["topic"])
             if self.data["topic"] == "restart":
+                tb_global.publish("restart", "thewhale", self.data["topic"])
         print("handleMessage",self.data,tb_global)
 
     def handleConnected(self):
