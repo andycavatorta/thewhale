@@ -14,8 +14,26 @@ clients = []
 class SimpleChat(WebSocket):
 
     def handleMessage(self):
-       #print("got ws message", self.data)
-       print("handleMessage",self.data,tb_global)
+        #print("got ws message", self.data)
+        if self.data["target"] == "controller":
+            if self.data["topic"] == "pull thirtybirds":
+                tb_global.tb_pull_from_github()
+            if self.data["topic"] == "pull thewhale":
+                tb_global.app_pull_from_github()
+            if self.data["topic"] == "reboot":
+                tb_global.reboot()
+            if self.data["topic"] == "restart":
+                tb_global.restart("thewhale")
+
+        else:
+            if self.data["topic"] == "pull thirtybirds":
+                tb_global.reboot
+            if self.data["topic"] == "pull thewhale":
+
+            if self.data["topic"] == "reboot":
+
+            if self.data["topic"] == "restart":
+        print("handleMessage",self.data,tb_global)
 
     def handleConnected(self):
         #print(self.address, 'connected')
