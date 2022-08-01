@@ -220,7 +220,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 print(topic, message, origin, destination)
-                if origin == b"dashboard":
+                if origin == "dashboard":
                     print("*******************", topic)
                     if destination=="controller":
                         if topic=="restart":
