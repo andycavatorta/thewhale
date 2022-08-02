@@ -205,22 +205,9 @@ function websocket_message_handler(evt) {
         break;
       case "response_sdc_start_status":
         console.log(message)
-        /*
-        console.log("flags_sdc",message["flags_sdc"])
-        console.log("flags_motor1",message["flags_motor1"])
-        console.log("flags_motor2",message["flags_motor2"])
-        console.log("encoder_ppr_value_motor1",message["encoder_ppr_value_motor1"])
-        console.log("operating_mode_motor1",message["operating_mode_motor1"])
-        console.log("pid_differential_gain_motor1",message["pid_differential_gain_motor1"])
-        console.log("pid_integral_gain_motor1",message["pid_integral_gain_motor1"])
-        console.log("pid_proportional_gain_motor1",message["pid_proportional_gain_motor1"])
-        console.log("encoder_ppr_value_motor2",message["encoder_ppr_value_motor2"])
-        console.log("operating_mode_motor2",message["operating_mode_motor2"])
-        console.log("pid_differential_gain_motor2",message["pid_differential_gain_motor2"])
-        console.log("pid_integral_gain_motor2",message["pid_integral_gain_motor2"])
-        console.log("pid_proportional_gain_motor2",message["pid_proportional_gain_motor2"])
-        console.log("firmware_version",message["firmware_version"])
-        */
+        break;
+      case "response_sdc_runtime_status":
+        console.log(message)
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
