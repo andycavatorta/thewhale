@@ -228,9 +228,9 @@ class Main(threading.Thread):
                         if topic=="reboot":
                             self.tb.reboot()
                         if topic=="pull thirtybirds":
-                            self.tb.tb_pull_from_github
+                            self.tb.tb_pull_from_github()
                         if topic=="pull thewhale":
-                            self.tb.app_pull_from_github
+                            self.tb.app_pull_from_github()
                     else:
                         print(",,,,,,,,,,,,,", topic, destination)
                         self.tb.publish("restart", destination )
