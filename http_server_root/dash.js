@@ -88,7 +88,6 @@ function format_date(date_string){
   return year+":"+month+":"+date+" "+hours+":"+minutes+":"+seconds;
 }
 
-
 function format_df(df_a){
   //console.log(df_a)
   df_1 = parseInt(df_a[0]);
@@ -107,6 +106,28 @@ function makeColor(num, den, error) { // receive numerator, denominator, error o
   var color_str = "#" + red_str + green_str + blue_str;
   return color_str;
 }
+
+function padTo2Digits(num) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date) {
+  return (
+    [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-') +
+    ' ' +
+    [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes()),
+      padTo2Digits(date.getSeconds()),
+    ].join(':')
+  );
+}
+
+
 
 /* ========== N E T W O R K  ========== */
 
@@ -191,9 +212,9 @@ function websocket_message_handler(evt) {
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
           let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
-          hosts[origin].tb_git_time.set_text(tb_date.toISOString())
+          hosts[origin].tb_git_time.set_text( formatDate(tb_date))
           let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
-          hosts[origin].app_git_time.set_text(app_date.toISOString())
+          hosts[origin].app_git_time.set_text( formatDate(app_date))
           let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
           hosts[origin].os_version.set_text(os_version_str)
           //console.log("online_status",message["online_status"])
@@ -214,6 +235,10 @@ function websocket_message_handler(evt) {
         break;
     }
 }
+
+
+
+
 function websocket_error_handler(evt) {
     console.log("websocket_error_handler", evt)
     if (timers.retry_connection == false) {
