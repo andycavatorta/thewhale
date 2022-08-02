@@ -205,9 +205,28 @@ function websocket_message_handler(evt) {
         break;
       case "response_sdc_start_status":
         console.log(message)
+        controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
+        controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
+        controllers[origin].firmware_version.set_text(message["firmware_version"])
+        controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
+        controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
+        controllers[origin].pid_differential_gain_motor1.set_text(message["pid_differential_gain_motor1"])
+        controllers[origin].pid_differential_gain_motor2.set_text(message["pid_differential_gain_motor2"])
+        controllers[origin].pid_integral_gain_motor1.set_text(message["pid_integral_gain_motor1"])
+        controllers[origin].pid_integral_gain_motor2.set_text(message["pid_integral_gain_motor2"])
+        controllers[origin].pid_proportional_gain_motor1.set_text(message["pid_proportional_gain_motor1"])
+        controllers[origin].pid_proportional_gain_motor2.set_text(message["pid_proportional_gain_motor2"])
         break;
       case "response_sdc_runtime_status":
         console.log(message)
+        controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
+        controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
+        controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
+        controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
+        controllers[origin].encoder_speed_relative_1.set_text(message["encoder_ppr_value_motor1"])
+        controllers[origin].encoder_speed_relative_2.set_text(message[""])
+        controllers[origin].emergency_stop.set_text(message["emergency_stop"])
+        controllers[origin].volts.set_text(message["volts"])
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
@@ -601,7 +620,6 @@ class Row{
   }
 }
 
-
 class SDCRow{
   constructor(hostname, rotor1name, rotor2name, y_position_1, y_position_2
     ) {
@@ -609,6 +627,26 @@ class SDCRow{
     this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
     this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 140)
     this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 140)
+    this.volts = new Block_Display_Text(this.dom_parent, [block_grid_x[2],y_position_1], "", 140)
+    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[3],y_position_1], "", 140)
+    this.emergency_stop = new Block_Display_Text(this.dom_parent, [block_grid_x[4],y_position_1], "", 140)
+    this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "", 140)
+    this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_2], "", 140)
+    this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "", 140)
+    this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_2], "", 140)
+    this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "", 140)
+    this.closed_loop_error_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_2], "", 140)
+    this.pid_proportional_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
+    this.pid_proportional_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 140)
+    //this.pid_integral_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[],y_position_1], "", 140)
+    //this.pid_integral_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[],y_position_1], "", 140)
+    this.pid_differential_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_1], "", 140)
+    this.pid_differential_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 140)
+    this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 140)
+    this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 140)
+    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
+    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_2], "", 140)
+
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
