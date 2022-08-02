@@ -616,12 +616,12 @@ class Row{
 
 
 class SDCRow{
-  constructor(hostname, rotor1name, rotor2name, y_position
+  constructor(hostname, rotor1name, rotor2name, y_position_1, y_position_2
     ) {
     this.dom_parent = canvas;
-    this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position], hostname, 80)
-    this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position], rotor1name, 140)
-    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position+1], rotor2name, 140)
+    this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
+    this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 140)
+    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 140)
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
@@ -750,13 +750,13 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[10]], "?")
   new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[10]], "?")
 
-  controllers["rotors0102"] = new SDCRow("rotors0102","rotor01","rotor02", block_grid_y[11])
-  controllers["rotors0304"] = new SDCRow("rotors0304","rotor03","rotor04", block_grid_y[13])
-  controllers["rotors0506"] = new SDCRow("rotors0506","rotor05","rotor06", block_grid_y[15])
-  controllers["rotors0708"] = new SDCRow("rotors0708","rotor07","rotor08", block_grid_y[17])
-  controllers["rotors0910"] = new SDCRow("rotors0910","rotor09","rotor10", block_grid_y[19])
-  controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21])
-  controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23])
+  controllers["rotors0102"] = new SDCRow("rotors0102","rotor01","rotor02", block_grid_y[11], block_grid_y[12])
+  controllers["rotors0304"] = new SDCRow("rotors0304","rotor03","rotor04", block_grid_y[13], block_grid_y[14])
+  controllers["rotors0506"] = new SDCRow("rotors0506","rotor05","rotor06", block_grid_y[15], block_grid_y[16])
+  controllers["rotors0708"] = new SDCRow("rotors0708","rotor07","rotor08", block_grid_y[17], block_grid_y[18])
+  controllers["rotors0910"] = new SDCRow("rotors0910","rotor09","rotor10", block_grid_y[19], block_grid_y[20])
+  controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21], block_grid_y[22])
+  controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23], block_grid_y[24])
 }
 
 function check_for_stale_rows(){
