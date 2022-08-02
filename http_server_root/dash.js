@@ -595,7 +595,6 @@ class Row{
     this.os_version.set_priority(state)
   }
   check_if_timestamp_is_fresh(){
-    console.log(Math.abs(this.ts-(Date.now()/1000)))
     if( Math.abs(this.ts-(Date.now()/1000)) > 8 ){
       this.set_colors_active(0)
     }
@@ -686,7 +685,6 @@ function init() {
 
 
 function check_for_stale_rows(){
-  console.log("check_for_stale_rows")
   hosts["controller"].check_if_timestamp_is_fresh()
   hosts["rotors0102"].check_if_timestamp_is_fresh()
   hosts["rotors0304"].check_if_timestamp_is_fresh()

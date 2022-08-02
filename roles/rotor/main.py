@@ -86,7 +86,7 @@ class Main(threading.Thread):
     def get_computer_runtime_status(self):
         return {
             "core_temp":self.tb.get_core_temp(),
-            "wifi_strength":self.tb.get_wifi_strength(),
+            #"wifi_strength":self.tb.get_wifi_strength(),
             "core_voltage":self.tb.get_core_voltage(),
             "system_cpu":self.tb.get_system_cpu(),
             "system_uptime":self.tb.get_os_uptime(),
