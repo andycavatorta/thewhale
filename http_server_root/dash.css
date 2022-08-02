@@ -25,13 +25,13 @@ svg {
   stroke-width: 1;
 }
 #mode_title{
-  transform: translate(50px, 50px);
+  transform: translate(2000px, 50px);
 }
 #mode_value{
   transform: translate(50px, 50px);
 }
 #high_power_title{
-  transform: translate(2650px,50px);
+  transform: translate(20px,50px);
 }
 
 .carousel_segment{
@@ -121,7 +121,7 @@ svg {
 .status_block_title{
   width:180px;
   height:20px;
-  font-family: Jura;
+  font-family: Jura;mode_title
   font-size: 24px;
   fill: #cccccc;
   transform: translate(5px, 5px);

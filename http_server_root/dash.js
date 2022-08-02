@@ -634,12 +634,13 @@ class Details_Display{
   }
 }
 
+high_power_button = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[1],0], "24V POWER", 200)
+
 /* ########### D I S P L A Y S ########### */
 function init() {
   canvas = document.getElementById( "top_level" );
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
   interface.mode_title = create_text(canvas, "MODE: WAITING_FOR_CONNECTIONS", {class:"title_text",id:"mode_title"})
-  interface.high_power_title = create_text(canvas, "HIGH POWER: OFF", {class:"title_text",id:"high_power_title"})
 
   exception_details = new Details_Display(canvas, [20,500], "exception_details_rect")
 
