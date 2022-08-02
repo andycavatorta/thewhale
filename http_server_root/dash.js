@@ -192,6 +192,7 @@ function websocket_message_handler(evt) {
       case "deadman":
         break;
       case "response_sdc_start_status":
+        console.log(message)
         /*
         console.log("flags_sdc",message["flags_sdc"])
         console.log("flags_motor1",message["flags_motor1"])
