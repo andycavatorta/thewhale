@@ -167,6 +167,33 @@ class Main(threading.Thread):
         self.start()
         self.poller = Poller(self.tb)
 
+    def get_computer_start_status(self):
+        data = {
+            "hostname":self.tb.get_hostname(),
+            "local_ip":self.tb.get_local_ip(),
+            "online_status":self.tb.get_online_status(),
+            "connections":self.tb.check_connections(),
+            "os_version":self.tb.get_os_version(),
+            "tb_git_timestamp":self.tb.tb_get_git_timestamp(),
+            "tb_scripts_version":self.tb.tb_get_scripts_version(),
+            "app_git_timestamp":self.tb.app_get_git_timestamp(),
+            "app_scripts_version":self.tb.app_get_scripts_version(),
+        }
+        self.dashboard("response_computer_start_status", data, "controller")
+
+    def get_computer_runtime_status(self):
+        data = {
+            "core_temp":self.tb.get_core_temp(),
+            "wifi_strength":self.tb.get_wifi_strength(),
+            "core_voltage":self.tb.get_core_voltage(),
+            "system_cpu":self.tb.get_system_cpu(),
+            "system_uptime":self.tb.get_os_uptime(),
+            "system_runtime":self.tb.get_script_runtime(),
+            "system_disk":self.tb.get_system_disk(),
+            "memory_free":self.tb.get_memory_free(),
+        }
+        self.dashboard("response_computer_runtime_status", data, "controller")
+
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
         self.add_to_queue(topic, message, origin, destination)
