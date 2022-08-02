@@ -237,9 +237,9 @@ class Main(threading.Thread):
                         if topic=="reboot":
                             self.tb.publish("reboot", destination)
                         if topic=="pull thirtybirds":
-                            self.tb.publish("pull thirtybirds", destination)
+                            self.tb.publish("pull_thirtybirds", destination)
                         if topic=="pull thewhale":
-                            self.tb.publish("pull thewhale", destination)
+                            self.tb.publish("pull_thewhale", destination)
 
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)

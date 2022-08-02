@@ -49,8 +49,8 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("request_sdc_start_status")
         self.tb.subscribe_to_topic("restart")
         self.tb.subscribe_to_topic("reboot")
-        self.tb.subscribe_to_topic("pull thirtybirds")
-        self.tb.subscribe_to_topic("pull thewhale")
+        self.tb.subscribe_to_topic("pull_thirtybirds")
+        self.tb.subscribe_to_topic("pull_thewhale")
 
         self.sdc = sdc.SDC(
             self.sdc_data_receiver,
@@ -216,9 +216,9 @@ class Main(threading.Thread):
                     self.tb.restart("thewhale")
                 if topic==b"reboot":
                     self.tb.reboot()
-                if topic==b"pull thirtybirds":
+                if topic==b"pull_thirtybirds":
                     self.tb.tb_pull_from_github()
-                if topic==b"pull thewhale":
+                if topic==b"pull_thewhale":
                     self.tb.app_pull_from_github()
 
 
