@@ -58,9 +58,10 @@ GPIO.output(8, GPIO.LOW)
 #role_module.GPIO.output(8, GPIO.HIGH)
 
 class Poller(threading.Thread):
-    def __init__(self, tb):
+    def __init__(self, tb, upstream_queue):
         threading.Thread.__init__(self)
         self.tb = tb
+        self.upstream_queue = upstream_queue
         self.start()
 
     def run(self):
@@ -68,7 +69,8 @@ class Poller(threading.Thread):
             time.sleep(5)
             self.tb.publish("request_computer_start_status","")
             self.tb.publish("request_computer_runtime_status","")
-            #self.tb.publish("request_sdc_start_status","")
+            self.upstream_queue(b"request_computer_start_status", "")
+            self.upstream_queue(b"request_computer_runtime_status", "")
 
 class Main(threading.Thread):
     class mode_names:
@@ -165,7 +167,7 @@ class Main(threading.Thread):
         """
         self.dashboard = dashboard.init(self.queue)
         self.start()
-        self.poller = Poller(self.tb)
+        self.poller = Poller(self.tb, self.add_to_queue)
 
     def get_computer_start_status(self):
         data = {
@@ -266,9 +268,14 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.publish("pull_thewhale", destination)
                 else:
+
+                    if topic == b"request_computer_start_status":
+                        self.get_computer_start_status()
+                    if topic == b"request_computer_runtime_status":
+                        self.get_computer_runtime_status()
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
-                self.hosts.dispatch(topic, message, origin, destination)
-                #self.current_mode.add_to_queue(topic, message, origin, destination)
+                    self.hosts.dispatch(topic, message, origin, destination)
+                    #self.current_mode.add_to_queue(topic, message, origin, destination)
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
