@@ -97,9 +97,26 @@ class Main(threading.Thread):
         }
 
     def get_sdc_start_status(self):
+        return {
+            "firmware_version":self.sdc.get_firmware_version(),
+            "encoder_ppr_value_motor1":self.sdc.motor_1.get_encoder_ppr_value(),
+            "operating_mode_motor1":self.sdc.motor_1.get_operating_mode(),
+            "pid_differential_gain_motor1":self.sdc.motor_1.get_pid_differential_gain(),
+            "pid_integral_gain_motor1":self.sdc.motor_1.get_pid_integral_gain(),
+            "pid_proportional_gain_motor1":self.sdc.motor_1.get_pid_proportional_gain(),
+            "encoder_ppr_value_motor2":self.sdc.motor_2.get_encoder_ppr_value(),
+            "operating_mode_motor2":self.sdc.motor_2.get_operating_mode(),
+            "pid_differential_gain_motor2":self.sdc.motor_2.get_pid_differential_gain(),
+            "pid_integral_gain_motor2":self.sdc.motor_2.get_pid_integral_gain(),
+            "pid_proportional_gain_motor2":self.sdc.motor_2.get_pid_proportional_gain(),
+
+
+        }
+
+
+
+    def get_sdc_runtime_status(self):
         flags_sdc = []
-        flags_motor1 = []
-        flags_motor2 = []
         fault_flags_d = self.sdc.get_runtime_fault_flags()
         if fault_flags_d is not None:
             for key_value in fault_flags_d.items():
@@ -115,8 +132,19 @@ class Main(threading.Thread):
             #        flags_motor2.append(key_value[0])
         return {
             "flags_sdc":flags_sdc,
-            "flags_motor1":flags_motor1,
-            "flags_motor2":flags_motor2,
+            "volts":self.sdc.get_volts(),
+            "emergency_stop":self.sdc..(),
+            "":self.sdc..(),
+            "duty_cycle_1":self.sdc.motor_1.get_duty_cycle(),
+            "duty_cycle_2":self.sdc.motor_2.get_duty_cycle(),
+            "closed_loop_error_1":self.sdc.motor_1.get_closed_loop_error(),
+            "closed_loop_error_2":self.sdc.motor_2.get_closed_loop_error(),
+            "encoder_speed_relative_1":self.sdc.motor_1.get_encoder_speed_relative(),
+            "encoder_speed_relative_2":self.sdc.motor_1.get_encoder_speed_relative(),
+            "":self.sdc.motor_1.(),
+            "":self.sdc.motor_1.(),
+            "":self.sdc.motor_1.(),
+            "":self.sdc.motor_1.(),
             "encoder_ppr_value_motor1":self.sdc.motor_1.get_encoder_ppr_value(),
             "operating_mode_motor1":self.sdc.motor_1.get_operating_mode(),
             "pid_differential_gain_motor1":self.sdc.motor_1.get_pid_differential_gain(),
@@ -127,8 +155,8 @@ class Main(threading.Thread):
             "pid_differential_gain_motor2":self.sdc.motor_2.get_pid_differential_gain(),
             "pid_integral_gain_motor2":self.sdc.motor_2.get_pid_integral_gain(),
             "pid_proportional_gain_motor2":self.sdc.motor_2.get_pid_proportional_gain(),
-            "firmware_version":self.sdc.get_firmware_version(),
         }
+
 
     def get_sdc_runtime_status(self):
         """

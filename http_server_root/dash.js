@@ -58,9 +58,21 @@ const block_grid_y = [
   500,
   550,
   600,
-  650];
+  650,
+  700,
+  750,
+  800,
+  850,
+  900,
+  950,
+  1000,
+  1050,
+  1100,
+  1150,
+  1200];
 
 hosts = {}
+controllers = {}
 
 // ------------------- utils -------------------
 
@@ -602,6 +614,44 @@ class Row{
   }
 }
 
+
+class SDCRow{
+  constructor(hostname, rotor1name, rotor2name, y_position
+    ) {
+    this.dom_parent = canvas;
+    this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position], hostname, 80)
+    this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position], rotor1name, 140)
+    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position], rotor2name, 140)
+  }
+  set_local_ip(value){
+    this.ip_local.set_text(value)
+  }
+  set_timestamp(ts){
+    this.ts = ts
+  }
+  get_timestamp(){
+    return this.ts
+  }
+  set_colors_active(state){
+    this.ip_local.set_priority(state)
+    this.cpu.set_priority(state)
+    this.mem.set_priority(state)
+    this.disk.set_priority(state)
+    this.voltage.set_priority(state)
+    this.temp.set_priority(state)
+    this.os_version.set_priority(state)
+  }
+  check_if_timestamp_is_fresh(){
+    if( Math.abs(this.ts-(Date.now()/1000)) > 8 ){
+      this.set_colors_active(0)
+    }
+  }
+}
+
+
+
+
+
 class Details_Display{
   constructor(dom_parent,coordinates,classname
     ) {
@@ -684,8 +734,7 @@ function init() {
   //status_details = new Details_Display(canvas, [20,500], "exception_details_rect")
   //msg_details = new Details_Display(canvas, [20,500], "exception_details_rect")
 
-
-  new Block_Title_Horizontal(canvas, [block_grid_x[1],block_grid_y[10]], "?")
+  new Block_Title_Horizontal(canvas, [block_grid_x[1],block_grid_y[10]], "driver")
   new Block_Title_Horizontal(canvas, [block_grid_x[2],block_grid_y[10]], "voltage")
   new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[10]], "firmware")
   new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[10]], "emergency stop")
@@ -701,6 +750,13 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[10]], "?")
   new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[10]], "?")
 
+  controllers["rotors0102"] = new SDCRow("rotors0102","rotor01","rotor02", block_grid_y[11])
+  controllers["rotors0304"] = new SDCRow("rotors0304","rotor03","rotor04", block_grid_y[13])
+  controllers["rotors0506"] = new SDCRow("rotors0506","rotor05","rotor06", block_grid_y[15])
+  controllers["rotors0708"] = new SDCRow("rotors0708","rotor07","rotor08", block_grid_y[17])
+  controllers["rotors0910"] = new SDCRow("rotors0910","rotor09","rotor10", block_grid_y[19])
+  controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21])
+  controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23])
 }
 
 function check_for_stale_rows(){
