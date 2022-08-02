@@ -634,7 +634,7 @@ class Details_Display{
   }
 }
 
-high_power_button = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[1],0], "24V POWER", 200)
+high_power_button = new Block_Toggle_Button(canvas, "", exception_details.toggle_visibility, [block_grid_x[1],0], "24V POWER", 200)
 
 /* ########### D I S P L A Y S ########### */
 function init() {
