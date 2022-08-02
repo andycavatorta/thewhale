@@ -233,7 +233,8 @@ class Main(threading.Thread):
                             self.tb.app_pull_from_github()
                     else:
                         if topic!="":
-                            self.tb.publish(topic, destination )
+                            print(type(topic),type(destination))
+                            self.tb.publish(topic, destination)
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 
