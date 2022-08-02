@@ -212,18 +212,16 @@ class Main(threading.Thread):
 
 
                 ### DASHBOARD FUNCTIONS ###
-                if topic==b"restart":
-                    self.tb.restart("thewhale")
-                if topic==b"reboot":
-                    self.tb.reboot()
-                if topic==b"pull_thirtybirds":
-                    self.tb.tb_pull_from_github()
-                if topic==b"pull_thewhale":
-                    self.tb.app_pull_from_github()
-
-
-
-
+                if str(message) == hostname:
+                    print(hostname,hostname,hostname,hostname,hostname,hostname,hostname)
+                    if topic==b"restart":
+                        self.tb.restart("thewhale")
+                    if topic==b"reboot":
+                        self.tb.reboot()
+                    if topic==b"pull_thirtybirds":
+                        self.tb.tb_pull_from_github()
+                    if topic==b"pull_thewhale":
+                        self.tb.app_pull_from_github()
 
 
 

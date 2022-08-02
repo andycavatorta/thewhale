@@ -219,9 +219,7 @@ class Main(threading.Thread):
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
-                #print(topic, message, origin, destination)
                 if origin == "dashboard":
-                    print("*******************", topic)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -240,10 +238,8 @@ class Main(threading.Thread):
                             self.tb.publish("pull_thirtybirds", destination)
                         if topic=="pull thewhale":
                             self.tb.publish("pull_thewhale", destination)
-
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
-                
                 self.hosts.dispatch(topic, message, origin, destination)
                 #self.current_mode.add_to_queue(topic, message, origin, destination)
             except Exception as e:
