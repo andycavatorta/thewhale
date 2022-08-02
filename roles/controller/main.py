@@ -232,8 +232,8 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.app_pull_from_github()
                     else:
-                        print(",,,,,,,,,,,,,", topic, destination)
-                        self.tb.publish("restart", destination )
+                        if topic!="":
+                            self.tb.publish(topic, destination )
                 else:
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                 
