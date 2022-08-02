@@ -105,14 +105,14 @@ class Main(threading.Thread):
             for key_value in fault_flags_d.items():
                 if key_value[1] == True:
                     flags_sdc.append(key_value[0])
-            fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
-            for key_value in fault_flags_d.items():
-                if key_value[1] == True:
-                    flags_motor1.append(key_value[0])
-            fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
-            for key_value in fault_flags_d.items():
-                if key_value[1] == True:
-                    flags_motor2.append(key_value[0])
+            #fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
+            #for key_value in fault_flags_d.items():
+            #    if key_value[1] == True:
+            #        flags_motor1.append(key_value[0])
+            #fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
+            #for key_value in fault_flags_d.items():
+            #    if key_value[1] == True:
+            #        flags_motor2.append(key_value[0])
         return {
             "flags_sdc":flags_sdc,
             "flags_motor1":flags_motor1,
