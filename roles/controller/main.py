@@ -181,7 +181,7 @@ class Main(threading.Thread):
             "app_git_timestamp":self.tb.app_get_git_timestamp(),
             "app_scripts_version":self.tb.app_get_scripts_version(),
         }
-        self.dashboard("response_computer_start_status", data, "controller")
+        self.dashboard("response_computer_start_status", data, "controller", "controller")
 
     def get_computer_runtime_status(self):
         data = {
@@ -194,7 +194,7 @@ class Main(threading.Thread):
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
         }
-        self.dashboard("response_computer_runtime_status", data, "controller")
+        self.dashboard("response_computer_runtime_status", data, "controller", "controller")
 
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
