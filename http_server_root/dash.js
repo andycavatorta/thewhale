@@ -43,6 +43,7 @@ const block_grid_x = [
   1700,
   1800,
   1900,
+  2050,
   ];
 const block_grid_y = [
   0,
@@ -643,8 +644,8 @@ class SDCRow{
     this.pid_differential_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 140)
     this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 140)
     this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 140)
-    //this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
-    //this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_2], "", 140)
+    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[16],y_position_1], "", 140)
+    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[16],y_position_2], "", 140)
     this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
 
   }
