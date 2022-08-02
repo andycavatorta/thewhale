@@ -90,7 +90,7 @@ function format_date(date_string){
 
 
 function format_df(df_a){
-  console.log(df_a)
+  //console.log(df_a)
   df_1 = parseInt(df_a[0]);
   df_2 = parseInt(df_a[1]);
   df_1 = df_1 / 1000000000;
@@ -131,7 +131,7 @@ function websocket_connect() {
 
 function websocket_send(target,topic,message) {
     packet = JSON.stringify({ "target": target,"topic": topic,"message": message})
-    console.log("websocket_send", packet)
+    //console.log("websocket_send", packet)
     websocket.send(packet)
 }
 
@@ -161,7 +161,7 @@ function sendTrigger(command) {
 }
 
 function websocket_message_handler(evt) {
-    console.log(">> data received" + evt.data)
+    //console.log(">> data received" + evt.data)
     var topic_data_origin = JSON.parse(evt.data);
     //console.log(topic_data_origin)
     var topic = topic_data_origin[0];
@@ -199,6 +199,7 @@ function websocket_message_handler(evt) {
           //console.log("online_status",message["online_status"])
           //console.log("connections",message["connections"]) //[true, {"controller": true}]
           //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
+          hosts[origin].set_colors_active(1)
         break;
       case "response_computer_runtime_status":
           hosts[origin].temp.set_text(message["core_temp"])
@@ -208,6 +209,7 @@ function websocket_message_handler(evt) {
           hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
           hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
           hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
+          hosts[origin].set_colors_active(1)
         break;
     }
 }
@@ -231,12 +233,6 @@ function try_to_connect() {
 timers = {
     retry_connection: window.setInterval(try_to_connect, 1000)
 }
-function update_display_values(data){
-  console.log(data)
-}
-
-
-
 
 
 
@@ -552,9 +548,30 @@ class Row{
     this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
     this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "0.0C", 80)
     this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 280)
+    this.ts = 0
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
+  }
+  set_timestamp(ts){
+    this.ts = ts
+  }
+  get_timestamp(){
+    return this.ts
+  }
+  set_colors_active(state){
+    this.ip_local.set_priority(state)
+    this.cpu.set_priority(state)
+    this.mem.set_priority(state)
+    this.disk.set_priority(state)
+    this.voltage.set_priority(state)
+    this.temp.set_priority(state)
+    this.os_version.set_priority(state)
+  }
+  check_if_timestamp_is_fresh(){
+    if( Math.abs(this.ts-(Date.now()/1000)) > 8 ){
+      this.set_colors_active(0)
+    }
   }
 }
 
@@ -636,3 +653,15 @@ function init() {
 }
 
 
+function check_for_stale_rows(){
+  hosts["controller"].check_if_timestamp_is_fresh()
+  hosts["rotors0102"].check_if_timestamp_is_fresh()
+  hosts["rotors0304"].check_if_timestamp_is_fresh()
+  hosts["rotors0506"].check_if_timestamp_is_fresh()
+  hosts["rotors0708"].check_if_timestamp_is_fresh()
+  hosts["rotors0910"].check_if_timestamp_is_fresh()
+  hosts["rotors1112"].check_if_timestamp_is_fresh()
+  hosts["rotors1314"].check_if_timestamp_is_fresh()
+}
+
+setInterval(check_for_stale_rows, 1000);

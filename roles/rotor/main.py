@@ -93,6 +93,7 @@ class Main(threading.Thread):
             "system_runtime":self.tb.get_script_runtime(),
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
+            "current_time":time.time()
         }
 
     def get_sdc_start_status(self):
