@@ -68,7 +68,7 @@ class Poller(threading.Thread):
             time.sleep(5)
             self.tb.publish("request_computer_start_status","")
             self.tb.publish("request_computer_runtime_status","")
-            self.tb.publish("request_sdc_start_status","")
+            #self.tb.publish("request_sdc_start_status","")
 
 class Main(threading.Thread):
     class mode_names:
