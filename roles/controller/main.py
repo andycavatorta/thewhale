@@ -251,9 +251,3 @@ class Main(threading.Thread):
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
 main = Main()
 
-
-
-
-
-
-
