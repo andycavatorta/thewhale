@@ -207,7 +207,7 @@ class Main(threading.Thread):
                     status = self.get_computer_runtime_status()
                     self.tb.publish("response_computer_runtime_status",status)
 
-                if topic==b"request_computer_start_status":
+                if topic==b"request_sdc_start_status":
                     status = self.get_sdc_start_status()
                     self.tb.publish("response_sdc_start_status",status)
 
