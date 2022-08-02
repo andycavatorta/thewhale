@@ -624,11 +624,10 @@ class SDCRow{
   constructor(hostname, rotor1name, rotor2name, y_position_1, y_position_2
     ) {
     this.dom_parent = canvas;
-    this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
+    //this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
     this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 140)
     this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 140)
     this.volts = new Block_Display_Text(this.dom_parent, [block_grid_x[2],y_position_1], "", 140)
-    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[3],y_position_1], "", 140)
     this.emergency_stop = new Block_Display_Text(this.dom_parent, [block_grid_x[4],y_position_1], "", 140)
     this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "", 140)
     this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_2], "", 140)
@@ -644,8 +643,9 @@ class SDCRow{
     this.pid_differential_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 140)
     this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 140)
     this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 140)
-    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
-    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_2], "", 140)
+    //this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
+    //this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_2], "", 140)
+    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
 
   }
   set_local_ip(value){
