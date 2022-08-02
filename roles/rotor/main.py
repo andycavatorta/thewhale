@@ -49,8 +49,8 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("request_sdc_start_status")
         self.tb.subscribe_to_topic("restart")
         self.tb.subscribe_to_topic("reboot")
-        #self.tb.subscribe_to_topic("pull thirtybirds")
-        #self.tb.subscribe_to_topic("pull thewhale")
+        self.tb.subscribe_to_topic("pull thirtybirds")
+        self.tb.subscribe_to_topic("pull thewhale")
 
         self.sdc = sdc.SDC(
             self.sdc_data_receiver,
@@ -209,6 +209,23 @@ class Main(threading.Thread):
                 if topic==b"request_computer_start_status":
                     status = self.get_sdc_start_status()
                     self.tb.publish("response_sdc_start_status",status)
+
+
+                ### DASHBOARD FUNCTIONS ###
+                if topic==b"restart":
+                    self.tb.restart("thewhale")
+                if topic==b"reboot":
+                    self.tb.reboot()
+                if topic==b"pull thirtybirds":
+                    self.tb.tb_pull_from_github()
+                if topic==b"pull thewhale":
+                    self.tb.app_pull_from_github()
+
+
+
+
+
+
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
