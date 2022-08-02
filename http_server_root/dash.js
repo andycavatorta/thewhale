@@ -638,7 +638,7 @@ function toggle_24v_power(e){
   console.log(e)
 }
 
-high_power_button = new Block_Toggle_Button(document.getElementById( "top_level" ), "", toggle_24v_power, [block_grid_x[1],0], "24V POWER", 200)
+//high_power_button = new Block_Toggle_Button(document.getElementById( "top_level" ), "", toggle_24v_power, [block_grid_x[1],0], "24V POWER", 200)
 
 /* ########### D I S P L A Y S ########### */
 function init() {
