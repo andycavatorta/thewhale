@@ -24,8 +24,6 @@ var SVG_NS ="http://www.w3.org/2000/svg";
 var canvas = null;
 var background_rectangle = null;
 
-canvas = document.getElementById( "top_level" );
-
 var websocket;
 var interface = {};
 const block_grid_x = [
@@ -640,10 +638,11 @@ function toggle_24v_power(e){
   console.log(e)
 }
 
-high_power_button = new Block_Toggle_Button(canvas, "", toggle_24v_power, [block_grid_x[1],0], "24V POWER", 200)
+high_power_button = new Block_Toggle_Button(document.getElementById( "top_level" ), "", toggle_24v_power, [block_grid_x[1],0], "24V POWER", 200)
 
 /* ########### D I S P L A Y S ########### */
 function init() {
+  canvas = document.getElementById( "top_level" );
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
   interface.mode_title = create_text(canvas, "MODE: WAITING_FOR_CONNECTIONS", {class:"title_text",id:"mode_title"})
 
