@@ -174,6 +174,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_computer_runtime_status")
         self.tb.subscribe_to_topic("response_sdc_start_status")
+        self.tb.subscribe_to_topic("response_sdc_runtime_status")
 
         """
         self.modes = {
