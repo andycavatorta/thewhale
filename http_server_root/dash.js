@@ -209,6 +209,7 @@ function websocket_message_handler(evt) {
           hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
           hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
           hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
+          hosts[origin].set_timestamp(parseInt(message["current_time"]))
           hosts[origin].set_colors_active(1)
         break;
     }
