@@ -629,7 +629,7 @@ class SDCRow{
     this.os_version.set_priority(state)
   }
   check_if_timestamp_is_fresh(){
-    if( Math.abs(this.ts-(Date.now()/1000)) > 8 ){
+    if( Math.abs(this.ts-(Date.now()/1000)) > 10 ){
       this.set_colors_active(0)
     }
   }
