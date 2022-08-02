@@ -46,6 +46,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("deadman")
         self.tb.subscribe_to_topic("request_computer_runtime_status")
         self.tb.subscribe_to_topic("request_computer_start_status")
+        self.tb.subscribe_to_topic("request_sdc_runtime_status")
         self.tb.subscribe_to_topic("request_sdc_start_status")
         self.tb.subscribe_to_topic("restart")
         self.tb.subscribe_to_topic("reboot")
@@ -109,11 +110,7 @@ class Main(threading.Thread):
             "pid_differential_gain_motor2":self.sdc.motor_2.get_pid_differential_gain(),
             "pid_integral_gain_motor2":self.sdc.motor_2.get_pid_integral_gain(),
             "pid_proportional_gain_motor2":self.sdc.motor_2.get_pid_proportional_gain(),
-
-
         }
-
-
 
     def get_sdc_runtime_status(self):
         flags_sdc = []
@@ -158,54 +155,6 @@ class Main(threading.Thread):
         }
 
 
-    def get_sdc_runtime_status(self):
-        """
-        get_runtime_status_flags
-            "amps_limit_activated":
-            "motor_stalled":
-            "loop_error_detected":
-            "safety_stop_active":
-            "forward_limit_triggered":
-            "reverse_limit_triggered":
-            "amps_trigger_activated":
-
-        get_runtime_fault_flags
-            "overheat":
-            "overvoltage":
-            "undervoltage":
-            "short_circuit":
-            "emergency_stop":
-            "brushless_sensor_fault":
-            "MOSFET_failure":
-            "default_configuration_loaded_at_startup":
-        """
-        flags_sdc = []
-        flags_motor1 = []
-        flags_motor2 = []
-        fault_flags_d = self.sdc.get_runtime_fault_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_sdc.append(key_value[0])
-        fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_motor1.append(key_value[0])
-        fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_motor2.append(key_value[0])
-        return {
-            "flags_sdc":flags_sdc,
-            "flags_motor1":flags_motor1,
-            "flags_motor2":flags_motor2,
-            "temperature":self.sdc.get_temperature(),
-            "volts":self.sdc.get_volts(),
-            "duty_cycle":self.sdc.motor_1.get_duty_cycle(),
-            "closed_loop_error":self.sdc.motor_1.get_closed_loop_error(),
-            "encoder_speed_relative":self.sdc.motor_1.get_encoder_speed_relative(),
-        }
-
-
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
         self.add_to_queue(topic, message, origin, destination)
@@ -239,6 +188,10 @@ class Main(threading.Thread):
                 if topic==b"request_sdc_start_status":
                     status = self.get_sdc_start_status()
                     self.tb.publish("response_sdc_start_status",status)
+
+                if topic==b"request_sdc_runtime_status":
+                    status = self.get_sdc_runtime_status()
+                    self.tb.publish("response_sdc_runtime_status",status)
 
                 ### DASHBOARD FUNCTIONS ###
                 if str(message) == self.hostname:
