@@ -100,17 +100,18 @@ class Main(threading.Thread):
         flags_motor1 = []
         flags_motor2 = []
         fault_flags_d = self.sdc.get_runtime_fault_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_sdc.append(key_value[0])
-        fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_motor1.append(key_value[0])
-        fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
-        for key_value in fault_flags_d.items():
-            if key_value[1] == True:
-                flags_motor2.append(key_value[0])
+        if fault_flags_d is not None:
+            for key_value in fault_flags_d.items():
+                if key_value[1] == True:
+                    flags_sdc.append(key_value[0])
+            fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
+            for key_value in fault_flags_d.items():
+                if key_value[1] == True:
+                    flags_motor1.append(key_value[0])
+            fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
+            for key_value in fault_flags_d.items():
+                if key_value[1] == True:
+                    flags_motor2.append(key_value[0])
         return {
             "flags_sdc":flags_sdc,
             "flags_motor1":flags_motor1,
@@ -210,10 +211,8 @@ class Main(threading.Thread):
                     status = self.get_sdc_start_status()
                     self.tb.publish("response_sdc_start_status",status)
 
-
                 ### DASHBOARD FUNCTIONS ###
                 if str(message) == self.hostname:
-                    print(self.hostname,self.hostname,self.hostname,self.hostname)
                     if topic==b"restart":
                         self.tb.restart("thewhale")
                     if topic==b"reboot":
@@ -222,8 +221,6 @@ class Main(threading.Thread):
                         self.tb.tb_pull_from_github()
                     if topic==b"pull_thewhale":
                         self.tb.app_pull_from_github()
-
-
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
