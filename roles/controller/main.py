@@ -219,7 +219,7 @@ class Main(threading.Thread):
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
-                print(topic, message, origin, destination)
+                #print(topic, message, origin, destination)
                 if origin == "dashboard":
                     print("*******************", topic)
                     if destination=="controller":
