@@ -621,7 +621,7 @@ class SDCRow{
     this.dom_parent = canvas;
     this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position], hostname, 80)
     this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position], rotor1name, 140)
-    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position], rotor2name, 140)
+    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position+1], rotor2name, 140)
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
