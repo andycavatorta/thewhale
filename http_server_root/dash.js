@@ -655,6 +655,7 @@ function init() {
 
 
 function check_for_stale_rows(){
+  console.log("check_for_stale_rows")
   hosts["controller"].check_if_timestamp_is_fresh()
   hosts["rotors0102"].check_if_timestamp_is_fresh()
   hosts["rotors0304"].check_if_timestamp_is_fresh()
