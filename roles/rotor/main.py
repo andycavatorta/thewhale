@@ -39,7 +39,7 @@ class Main(threading.Thread):
             self.exception_handler
         )
         self.queue = queue.Queue()
-
+        self.hostname = self.tb.get_hostname()
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
@@ -212,8 +212,8 @@ class Main(threading.Thread):
 
 
                 ### DASHBOARD FUNCTIONS ###
-                if str(message) == hostname:
-                    print(hostname,hostname,hostname,hostname,hostname,hostname,hostname)
+                if str(message) == self.hostname:
+                    print(self.hostname,self.hostname,self.hostname,self.hostname)
                     if topic==b"restart":
                         self.tb.restart("thewhale")
                     if topic==b"reboot":
