@@ -652,6 +652,7 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[2],block_grid_y[1]], "uptime")
   new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[1]], "tb_git")
   new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[1]], "app_git")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[1]], "computer")
   new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[1]], "ip")
   new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[1]], "errors")
   new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[1]], "status")
@@ -682,8 +683,25 @@ function init() {
   hosts["rotors1314"] = new Row("rotors1314", block_grid_y[9])
   //status_details = new Details_Display(canvas, [20,500], "exception_details_rect")
   //msg_details = new Details_Display(canvas, [20,500], "exception_details_rect")
-}
 
+
+  new Block_Title_Horizontal(canvas, [block_grid_x[1],block_grid_y[10]], "?")
+  new Block_Title_Horizontal(canvas, [block_grid_x[2],block_grid_y[10]], "voltage")
+  new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[10]], "firmware")
+  new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[10]], "emergency stop")
+  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[10]], "rotor")
+  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "rpm")
+  new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[10]], "duty cycle")
+  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "loop error")
+  new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[10]], "mode")
+  new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[10]], "temp")
+  new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[10]], "prop")
+  new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[10]], "diff")
+  new Block_Title_Horizontal(canvas, [block_grid_x[13],block_grid_y[10]], "ppr")
+  new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[10]], "?")
+  new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[10]], "?")
+
+}
 
 function check_for_stale_rows(){
   hosts["controller"].check_if_timestamp_is_fresh()
@@ -697,3 +715,5 @@ function check_for_stale_rows(){
 }
 
 setInterval(check_for_stale_rows, 1000);
+
+

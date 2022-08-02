@@ -270,7 +270,6 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.publish("pull_thewhale", destination)
                 else:
-
                     if topic == b"request_computer_start_status":
                         self.get_computer_start_status()
                     if topic == b"request_computer_runtime_status":
