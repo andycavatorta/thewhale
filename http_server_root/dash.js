@@ -620,12 +620,12 @@ class Block_Five_State_Button{
     self = e.target.class_ref
     if (self.state==1){
       self.set_state(4)
-      websocket_send(self.target_name,"request_high_power",true)
+      websocket_send(self.target_name,"request_high_power",false)
       // setTimeout to restore button if no response
     }
     if (self.state==3){
       self.set_state(2)
-      websocket_send(self.target_name,"request_high_power",false)
+      websocket_send(self.target_name,"request_high_power",true)
       // setTimeout to restore button if no response
     }
   }
