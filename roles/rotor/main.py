@@ -85,8 +85,6 @@ class Main(threading.Thread):
         }
 
     def get_computer_runtime_status(self):
-        if self.sdc.get_firmware_version() is None:
-            return {}
         return {
             "core_temp":self.tb.get_core_temp(),
             #"wifi_strength":self.tb.get_wifi_strength(),
@@ -117,6 +115,8 @@ class Main(threading.Thread):
         }
 
     def get_sdc_runtime_status(self):
+        if self.sdc.get_firmware_version() is None:
+            return {}
         flags_sdc = []
         fault_flags_d = self.sdc.get_runtime_fault_flags()
         if fault_flags_d is not None:
