@@ -85,6 +85,7 @@ class Main(threading.Thread):
         }
 
     def get_computer_runtime_status(self):
+        print("AAAAAAAAAAAAAAAAAAAA",self.sdc.get_firmware_version())
         return {
             "core_temp":self.tb.get_core_temp(),
             #"wifi_strength":self.tb.get_wifi_strength(),
@@ -98,6 +99,7 @@ class Main(threading.Thread):
         }
 
     def get_sdc_start_status(self):
+        print("BBBBBBBBBBBBBBBBB",self.sdc.get_firmware_version())
         return {
             "firmware_version":self.sdc.get_firmware_version(),
             "encoder_ppr_value_motor1":self.sdc.motor_1.get_encoder_ppr_value(),
