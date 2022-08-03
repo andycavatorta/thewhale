@@ -91,7 +91,7 @@ class Poller(threading.Thread):
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
 
-class High_Power(self):
+class High_Power():
     def __init__(self):
         self.pin_number = 8
         self.state_bool = False
