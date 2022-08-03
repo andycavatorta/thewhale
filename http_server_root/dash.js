@@ -592,7 +592,7 @@ class Block_Five_State_Button{
       this.dom_parent,
       {
         class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]})`,
+        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
       }
     );
     this.text_container = create_text(this.container, " ", {class:"status_block_value"});
@@ -846,7 +846,7 @@ function init() {
     "toggle_high_power", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
-    [block_grid_x[1],block_grid_y[1],300]
+    [block_grid_x[1],block_grid_y[0],300]
   )
 
 }
