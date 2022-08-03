@@ -639,7 +639,6 @@ class Block_Five_State_Button{
   }
 }
 
-
 class Row{
   constructor(hostname, y_position
     ) {

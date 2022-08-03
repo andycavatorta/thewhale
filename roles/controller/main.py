@@ -51,9 +51,6 @@ from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Conne
 from roles.controller.mode_system_tests import Mode_System_Tests
 from http_server_root import dashboard
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setup(8, GPIO.OUT)
-GPIO.output(8, GPIO.LOW)
 
 #role_module.GPIO.output(8, GPIO.HIGH)
 
@@ -94,6 +91,22 @@ class Poller(threading.Thread):
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
 
+class High_Power(self):
+    def __init__(self):
+        self.pin_number = 8
+        self.state_bool = False
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(self.pin_number, GPIO.OUT)
+        self.set_state(False)
+    def set_state(self, state_bool):
+        self.state_bool = state_bool
+        if self.state_bool:
+            GPIO.output(self.pin_number, GPIO.HIGH)
+        else:
+            GPIO.output(self.pin_number, GPIO.LOW)
+    def get_state(self, state_bool):
+        return self.state_bool
+
 class Main(threading.Thread):
     class mode_names:
         ERROR = "error"
@@ -113,6 +126,7 @@ class Main(threading.Thread):
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
         self.hosts = Hosts.Hosts(self.tb)
+        #self.high_power = High_Power()
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
@@ -273,7 +287,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 if origin == "dashboard":
-                    print(topic, message, origin, destination)
+                    #print(topic, message, origin, destination)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
