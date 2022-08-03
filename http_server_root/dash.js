@@ -840,7 +840,7 @@ function init() {
   controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21], block_grid_y[22])
   controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23], block_grid_y[24])
 
-  high_power_button = Block_Five_State_Button(
+  high_power_button = new Block_Five_State_Button(
     "toggle_high_power", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
