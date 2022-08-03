@@ -84,6 +84,7 @@ svg {
   font-weight: lighter;
   font-size: 20px;
   color:  #cccccc;
+  opacity: 0.10;
 }
 
 .button_five_state_inactive{fill: #333333;}
