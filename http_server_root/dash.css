@@ -84,14 +84,14 @@ svg {
   font-weight: lighter;
   font-size: 20px;
   color:  #cccccc;
-  opacity: 0.10;
+  opacity: 0.20;
 }
 
-.button_five_state_inactive{fill: #cccccc;}
-.button_five_state_true_confirmed{fill: #aacccc;}
-.button_five_state_true_requested{fill: #cccccc;}
-.button_five_state_false_confirmed{fill: #ccaacc;}
-.button_five_state_false_requested{fill: #cccccc;}
+.button_five_state_inactive{fill: #333333;}
+.button_five_state_true_confirmed{fill: #aa3333;}
+.button_five_state_true_requested{fill: #333333;}
+.button_five_state_false_confirmed{fill: #33aa33;}
+.button_five_state_false_requested{fill: #333333;}
 
 .status_block_name_value{
   width:180px;

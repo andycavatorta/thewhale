@@ -165,7 +165,7 @@ function websocket_connect() {
 
 function websocket_send(target,topic,message) {
     packet = JSON.stringify({ "target": target,"topic": topic,"message": message})
-    //console.log("websocket_send", packet)
+    console.log("websocket_send", packet)
     websocket.send(packet)
 }
 
