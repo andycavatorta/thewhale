@@ -256,6 +256,14 @@ function websocket_message_handler(evt) {
           hosts[origin].set_colors_active(1)
         break;
     }
+      case "response_high_power":
+          if (message==true){
+            high_power_button.set_state(1)
+          }
+          else{
+            high_power_button.set_state(3)
+          }
+        break;
 }
 
 
@@ -847,7 +855,6 @@ function init() {
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
     [block_grid_x[1],block_grid_y[0],300]
   )
-
 }
 
 function check_for_stale_rows(){
@@ -869,5 +876,3 @@ function check_for_stale_rows(){
 }
 
 setInterval(check_for_stale_rows, 1000);
-
-

@@ -92,7 +92,8 @@ class Poller(threading.Thread):
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
 
 class High_Power():
-    def __init__(self):
+    def __init__(self, dashboard_ref):
+        self.dashboard_ref = dashboard_ref
         self.pin_number = 8
         self.state_bool = False
         GPIO.setmode(GPIO.BCM)
@@ -104,7 +105,9 @@ class High_Power():
             GPIO.output(self.pin_number, GPIO.HIGH)
         else:
             GPIO.output(self.pin_number, GPIO.LOW)
-    def get_state(self, state_bool):
+        self.dashboard_ref("response_high_power", self.state_bool, "controller", "controller")
+    def get_state(self):
+        self.dashboard_ref("response_high_power", self.state_bool, "controller", "controller")
         return self.state_bool
 
 class Main(threading.Thread):
@@ -287,7 +290,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 if origin == "dashboard":
-                    print(topic, message, origin, destination)
+                    #print(topic, message, origin, destination)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -297,6 +300,9 @@ class Main(threading.Thread):
                             self.tb.tb_pull_from_github()
                         if topic=="pull thewhale":
                             self.tb.app_pull_from_github()
+                        if topic=="request_high_power":
+                            self.high_power.set_state(message)
+                            self.dashboard("response_high_power", message, "controller", "controller")
                     else:
                         if topic=="restart":
                             self.tb.publish("restart", destination)
@@ -311,6 +317,8 @@ class Main(threading.Thread):
                         self.get_computer_start_status()
                     if topic == b"request_computer_runtime_status":
                         self.get_computer_runtime_status()
+                        # find a better place for this
+                        self.high_power.get_state()
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                     self.hosts.dispatch(topic, message, origin, destination)
                     #self.current_mode.add_to_queue(topic, message, origin, destination)
