@@ -126,7 +126,7 @@ class Main(threading.Thread):
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
         self.hosts = Hosts.Hosts(self.tb)
-        #self.high_power = High_Power()
+        self.high_power = High_Power()
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
