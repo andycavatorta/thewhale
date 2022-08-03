@@ -129,7 +129,6 @@ class Main(threading.Thread):
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
         self.hosts = Hosts.Hosts(self.tb)
-        self.high_power = High_Power()
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
@@ -206,6 +205,7 @@ class Main(threading.Thread):
         self.current_mode.begin()
         """
         self.dashboard = dashboard.init(self.queue)
+        self.high_power = High_Power(self.dashboard)
         self.start()
         self.poller = Poller(self.tb, self.add_to_queue)
 
