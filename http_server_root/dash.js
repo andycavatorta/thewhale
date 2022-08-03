@@ -228,7 +228,7 @@ function websocket_message_handler(evt) {
         console.log(message["volts"])
         var volts_a = message["volts"].split(":")
         console.log(volts_a)
-        controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/100)
+        controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
         controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
         break;
       case "response_computer_start_status":
@@ -250,7 +250,7 @@ function websocket_message_handler(evt) {
           hosts[origin].cpu.set_text( parseFloat( message["system_cpu"] + "%").toFixed(2) )
           hosts[origin].reboot.set_text( ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
           hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
-          hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
+          hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000000).toFixed(2) + "GB")//[37196000.0, 926900000.0]
           hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
           hosts[origin].set_timestamp(parseInt(message["current_time"]))
           hosts[origin].set_colors_active(1)
@@ -633,16 +633,16 @@ class SDCRow{
     this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 140)
     this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 140)
 
-    this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "", 100)
-    this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_2], "", 100)
-    this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
-    this.closed_loop_error_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
-    this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
-    this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_2], "", 60)
-    this.pid_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_1], "", 80)
-    this.pid_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 80)
-    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
-    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 140)
+    this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
+    this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
+    this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 80)
+    this.closed_loop_error_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_2], "", 80)
+    this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_1], "", 80)
+    this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 80)
+    this.pid_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 80)
+    this.pid_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 80)
+    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_1], "", 80)
+    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 80)
     this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 80)
     this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 80)
     this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 300)
@@ -772,13 +772,14 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[10]], "emergency stop")
   //new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[10]], "emergency stop")
   new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[10]], "rotor")
-  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "speed +")
-  new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[10]], "speed -")
-  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "duty cycle")
-  new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[10]], "loop error")
-  new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[10]], "rpm")
-  new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[10]], "PID")
-  new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[10]], "mode")
+  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "       +")
+  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "speed")
+  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "-")
+  new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[10]], "duty cycle")
+  new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[10]], "loop error")
+  new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[10]], "rpm")
+  new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[10]], "PID")
+  new Block_Title_Horizontal(canvas, [block_grid_x[13],block_grid_y[10]], "mode")
   new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[10]], "ppr")
   new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[10]], "driver")
 
