@@ -197,7 +197,7 @@ function sendTrigger(command) {
 function websocket_message_handler(evt) {
     //console.log(">> data received" + evt.data)
     var topic_data_origin = JSON.parse(evt.data);
-    //console.log(topic_data_origin)
+    console.log(topic_data_origin)
     var topic = topic_data_origin[0];
     var message = eval(topic_data_origin[1]);
     var origin = topic_data_origin[2];
@@ -205,7 +205,7 @@ function websocket_message_handler(evt) {
       case "deadman":
           break;
       case "response_sdc_start_status":
-          console.log(message)
+          //console.log(message)
           controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
           controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
           controllers[origin].firmware_version.set_text(message["firmware_version"])
@@ -217,7 +217,7 @@ function websocket_message_handler(evt) {
           controllers[origin].pid_2.set_text(pid_2_str)
           break;
       case "response_sdc_runtime_status":
-          console.log(message)
+          //console.log(message)
           controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
           controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
           controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
