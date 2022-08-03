@@ -211,12 +211,10 @@ function websocket_message_handler(evt) {
         controllers[origin].firmware_version.set_text(message["firmware_version"])
         controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
         controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
-        controllers[origin].pid_differential_gain_motor1.set_text(message["pid_differential_gain_motor1"])
-        controllers[origin].pid_differential_gain_motor2.set_text(message["pid_differential_gain_motor2"])
-        controllers[origin].pid_integral_gain_motor1.set_text(message["pid_integral_gain_motor1"])
-        controllers[origin].pid_integral_gain_motor2.set_text(message["pid_integral_gain_motor2"])
-        controllers[origin].pid_proportional_gain_motor1.set_text(message["pid_proportional_gain_motor1"])
-        controllers[origin].pid_proportional_gain_motor2.set_text(message["pid_proportional_gain_motor2"])
+        var pid_1_str = message["pid_differential_gain_motor1"]+,+message["pid_integral_gain_motor1"]+,+"pid_proportional_gain_motor1"
+        var pid_2_str = message["pid_differential_gain_motor2"]+,+message["pid_integral_gain_motor2"]+,+"pid_proportional_gain_motor2"
+        controllers[origin].pid_1.set_text(pid_1_str)
+        controllers[origin].pid_2.set_text(pid_2_str)
         break;
       case "response_sdc_runtime_status":
         console.log(message)
@@ -637,8 +635,8 @@ class SDCRow{
     this.closed_loop_error_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
     this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
     this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_2], "", 60)
-    this.pid_proportional_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_1], "", 80)
-    this.pid_proportional_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 80)
+    this.pid_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_1], "", 80)
+    this.pid_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 80)
     this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
     this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 140)
     this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 80)
