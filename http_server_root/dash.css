@@ -79,17 +79,18 @@ svg {
 .button_five_state_false_confirmed,
 .button_five_state_false_requested{
   width:180px;
-  height:10px;
+  height:40px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
+  color:  #cccccc;
 }
 
-.button_five_state_inactive{fill: #aaaaaa;}
-.button_five_state_true_confirmed{fill: #ff3333;}
-.button_five_state_true_requested{fill: #aaaaaa;}
-.button_five_state_false_confirmed{fill: #33ff33;}
-.button_five_state_false_requested{fill: #aaaaaa;}
+.button_five_state_inactive{fill: #333333;}
+.button_five_state_true_confirmed{fill: #aa3333;}
+.button_five_state_true_requested{fill: #333333;}
+.button_five_state_false_confirmed{fill: #33aa33;}
+.button_five_state_false_requested{fill: #333333;}
 
 .status_block_name_value{
   width:180px;
