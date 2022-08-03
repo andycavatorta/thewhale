@@ -229,7 +229,7 @@ function websocket_message_handler(evt) {
         var volts_a = message["volts"].split(":")
         console.log(volts_a)
         controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/100)
-        controllers[origin].volts_5.set_text(parseFloat(volts_a[2]/1000)
+        controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
         break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
