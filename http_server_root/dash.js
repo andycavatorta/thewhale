@@ -593,7 +593,7 @@ class Row{
     this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
     this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
     this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "0.0C", 80)
-    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 280)
+    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 300)
     this.ts = 0
   }
   set_local_ip(value){
@@ -641,9 +641,9 @@ class SDCRow{
     this.pid_proportional_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 80)
     this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
     this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 140)
-    this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 190)
+    this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 80)
     this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 80)
-    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 140)
+    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 300)
 
     //this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
     //this.pid_proportional_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
