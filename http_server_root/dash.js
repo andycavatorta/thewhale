@@ -604,7 +604,7 @@ class Block_Five_State_Button{
       }
     )
     this.button_rect.class_ref = this
-    this.button_rect.setAttribute("style",`width:`+handle_click[2]+`px`);
+    this.button_rect.setAttribute("style",`width:`+coordinates[2]+`px`);
     this.button_rect.addEventListener("click",this.handle_click)
     this.set_state(0)
   }
