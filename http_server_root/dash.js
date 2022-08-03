@@ -580,6 +580,8 @@ class Block_Toggle_Button{
 
 class Block_Five_State_Button{
   constructor(ref_name, state_classes, state_labels, coordinates) {
+    
+    this.dom_parent = canvas;
     this.ref_name = ref_name
     this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
     this.state_classes = state_classes
