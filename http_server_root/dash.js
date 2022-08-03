@@ -255,7 +255,6 @@ function websocket_message_handler(evt) {
           hosts[origin].set_timestamp(parseInt(message["current_time"]))
           hosts[origin].set_colors_active(1)
         break;
-    }
       case "response_high_power":
           if (message==true){
             high_power_button.set_state(1)
@@ -264,6 +263,7 @@ function websocket_message_handler(evt) {
             high_power_button.set_state(3)
           }
         break;
+    }
 }
 
 
