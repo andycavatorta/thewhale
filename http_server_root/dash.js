@@ -578,6 +578,66 @@ class Block_Toggle_Button{
   }
 }
 
+class Block_Five_State_Button{
+  constructor(ref_name, state_classes, state_labels, coordinates) {
+    this.ref_name = ref_name
+    this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
+    this.state_classes = state_classes
+    this.state_labels = state_labels
+    this.state = 0
+
+    this.container = create_group(
+      this.dom_parent,
+      {
+        class:"status_block_name_value",
+        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
+      }
+    );
+    this.text_container = create_text(this.container, " ", {class:"status_block_value"});
+    this.button_rect  = create_rectangle(
+      this.dom_parent,
+      {
+        class:"cell_button_0",
+        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
+      }
+    )
+    this.button_rect.class_ref = this
+    this.button_rect.setAttribute("style",`width:`+handle_click[2]+`px`);
+    this.button_rect.addEventListener("click",this.handle_click)
+    this.set_state(0)
+  }
+  handle_click(e){
+    self = e.target.class_ref
+    if (self.state==1){
+      self.set_state(4)
+      websocket_send(self.ref_name,0,"")
+      // setTimeout to restore button if no response
+    }
+    if (self.state==3){
+      self.set_state(2)
+      websocket_send(self.ref_name,1,"")
+      // setTimeout to restore button if no response
+    }
+  }
+  set_state(state_ord){
+    this.state = state_ord
+    this.set_label(state_ord)  
+    this.set_class(state_ord)  
+  }
+  get_state(){
+    return this.state
+  }
+  set_label(label_ord){
+    this.state_label = label_ord
+    let textnode = document.createTextNode(this.state_labels[label_ord]);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  }
+  set_class(class_ord){
+    this.button_rect.setAttribute("class", this.state_classes[class_ord]);
+  }
+}
+
+
 class Row{
   constructor(hostname, y_position
     ) {
@@ -586,16 +646,16 @@ class Row{
     this.reboot = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[2],y_position], "reboot", 80)
     this.tb_git_time = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[3],y_position], "pull thirtybirds", 230)
     this.app_git_time = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[4],y_position], "pull thewhale", 230)
-    this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "192.168.0.200", 140)
+    this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "", 140)
     this.exceptions = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
     this.status = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
     this.messages = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
-    this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "100%", 60)
-    this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "8888MB", 100)
-    this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "8888MB", 100)
-    this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "3.33V", 80)
-    this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "0.0C", 80)
-    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "Linux feral 5.15.0-41-generic", 300)
+    this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "?%", 60)
+    this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "?MB", 100)
+    this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "?MB", 100)
+    this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "?V", 80)
+    this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "?C", 80)
+    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "", 300)
     this.ts = 0
   }
   set_local_ip(value){
@@ -673,10 +733,6 @@ class SDCRow{
     }
   }
 }
-
-
-
-
 
 class Details_Display{
   constructor(dom_parent,coordinates,classname
@@ -783,6 +839,14 @@ function init() {
   controllers["rotors0910"] = new SDCRow("rotors0910","rotor09","rotor10", block_grid_y[19], block_grid_y[20])
   controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21], block_grid_y[22])
   controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23], block_grid_y[24])
+
+  high_power_button = Block_Five_State_Button(
+    "toggle_high_power", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"]
+    ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
+    [[block_grid_x[1],block_grid_y[0],300]
+  )
+
 }
 
 function check_for_stale_rows(){

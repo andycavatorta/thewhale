@@ -73,6 +73,21 @@ svg {
   filter: blur(.25px);
 }
 
+.button_five_state_inactive,
+.button_five_state_true_confirmed,
+.button_five_state_true_requested,
+.button_five_state_false_confirmed,
+.button_five_state_false_requested{
+  width:180px;
+  height:10px;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 20px;
+  fill: #cccccc;
+}
+
+
+
 
 
 .status_block_name_value{
