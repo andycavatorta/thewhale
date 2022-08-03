@@ -172,16 +172,12 @@ class Main(threading.Thread):
                     self.tb.publish("response_computer_runtime_status",status)
 
                 if topic==b"request_sdc_start_status":
-                    print("AAAAAAAAAAAAAAAA", self.sdc.get_device_connected())
-                        print("BBBBBBBBBBBBBB", self.sdc.get_device_connected())
-                        status = self.get_sdc_start_status()
-                        self.tb.publish("response_sdc_start_status",status)
+                    status = self.get_sdc_start_status()
+                    self.tb.publish("response_sdc_start_status",status)
 
                 if topic==b"request_sdc_runtime_status":
-                    print("CCCCCCCCCCCCCCC", self.sdc.get_device_connected())
-                        print("DDDDDDDDDDDDD", self.sdc.get_device_connected())
-                        status = self.get_sdc_runtime_status()
-                        self.tb.publish("response_sdc_runtime_status",status)
+                    status = self.get_sdc_runtime_status()
+                    self.tb.publish("response_sdc_runtime_status",status)
 
                 ### DASHBOARD FUNCTIONS ###
                 if str(message) == self.hostname:
