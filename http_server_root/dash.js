@@ -203,34 +203,33 @@ function websocket_message_handler(evt) {
     var origin = topic_data_origin[2];
     switch (topic) {
       case "deadman":
-        break;
+          break;
       case "response_sdc_start_status":
-        console.log(message)
-        controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
-        controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
-        controllers[origin].firmware_version.set_text(message["firmware_version"])
-        controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
-        controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
-        var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
-        var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
-        controllers[origin].pid_1.set_text(pid_1_str)
-        controllers[origin].pid_2.set_text(pid_2_str)
-        break;
+          console.log(message)
+          controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
+          controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
+          controllers[origin].firmware_version.set_text(message["firmware_version"])
+          controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
+          controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
+          var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
+          var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
+          controllers[origin].pid_1.set_text(pid_1_str)
+          controllers[origin].pid_2.set_text(pid_2_str)
+          break;
       case "response_sdc_runtime_status":
-        console.log(message)
-        controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
-        controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
-        controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
-        controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
-        controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
-        controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
-        controllers[origin].emergency_stop.set_text(message["emergency_stop"])
-        console.log(message["volts"])
-        var volts_a = message["volts"].split(":")
-        console.log(volts_a)
-        controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
-        controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
-        break;
+          console.log(message)
+          controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
+          controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
+          controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
+          controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
+          controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
+          controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
+          controllers[origin].emergency_stop.set_text(message["emergency_stop"])
+          var volts_a = message["volts"].split(":")
+          controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
+          controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
+          controllers[origin].set_timestamp(parseInt(message["current_time"]))
+          break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
           let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -646,15 +645,6 @@ class SDCRow{
     this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 80)
     this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 80)
     this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 300)
-
-    //this.sdc_label = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], hostname, 80)
-    //this.pid_proportional_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 140)
-    //this.pid_proportional_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 140)
-    //this.pid_integral_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[],y_position_1], "", 140)
-    //this.pid_integral_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[],y_position_1], "", 140)
-    //this.pid_differential_gain_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_1], "", 140)
-    //this.pid_differential_gain_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 140)
-
   }
   set_local_ip(value){
     this.ip_local.set_text(value)
@@ -666,13 +656,15 @@ class SDCRow{
     return this.ts
   }
   set_colors_active(state){
-    this.ip_local.set_priority(state)
-    this.cpu.set_priority(state)
-    this.mem.set_priority(state)
-    this.disk.set_priority(state)
-    this.voltage.set_priority(state)
-    this.temp.set_priority(state)
-    this.os_version.set_priority(state)
+    this.volts_24.set_priority(state)
+    this.volts_5.set_priority(state)
+    this.pid_1.set_priority(state)
+    this.pid_2.set_priority(state)
+    this.operating_mode_motor1.set_priority(state)
+    this.operating_mode_motor2.set_priority(state)
+    this.encoder_ppr_value_motor1.set_priority(state)
+    this.encoder_ppr_value_motor2.set_priority(state)
+    this.firmware_version.set_priority(state)
   }
   check_if_timestamp_is_fresh(){
     if( Math.abs(this.ts-(Date.now()/1000)) > 10 ){
@@ -801,6 +793,13 @@ function check_for_stale_rows(){
   hosts["rotors0910"].check_if_timestamp_is_fresh()
   hosts["rotors1112"].check_if_timestamp_is_fresh()
   hosts["rotors1314"].check_if_timestamp_is_fresh()
+  controllers["rotors0102"].check_if_timestamp_is_fresh()
+  controllers["rotors0304"].check_if_timestamp_is_fresh()
+  controllers["rotors0506"].check_if_timestamp_is_fresh()
+  controllers["rotors0708"].check_if_timestamp_is_fresh()
+  controllers["rotors0910"].check_if_timestamp_is_fresh()
+  controllers["rotors1112"].check_if_timestamp_is_fresh()
+  controllers["rotors1314"].check_if_timestamp_is_fresh()
 }
 
 setInterval(check_for_stale_rows, 1000);

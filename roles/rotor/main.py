@@ -137,6 +137,7 @@ class Main(threading.Thread):
             "closed_loop_error_2":self.sdc.motor_2.get_closed_loop_error(),
             "encoder_speed_relative_1":self.sdc.motor_1.get_encoder_speed_relative(),
             "encoder_speed_relative_2":self.sdc.motor_1.get_encoder_speed_relative(),
+            "current_time":time.time()
         }
 
 
