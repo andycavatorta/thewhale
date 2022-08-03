@@ -579,10 +579,10 @@ class Block_Toggle_Button{
 }
 
 class Block_Five_State_Button{
-  constructor(ref_name, state_classes, state_labels, coordinates) {
+  constructor(target_name, state_classes, state_labels, coordinates) {
 
     this.dom_parent = canvas;
-    this.ref_name = ref_name
+    this.target_name = target_name
     this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
     this.state_classes = state_classes
     this.state_labels = state_labels
@@ -612,12 +612,12 @@ class Block_Five_State_Button{
     self = e.target.class_ref
     if (self.state==1){
       self.set_state(4)
-      websocket_send(self.ref_name,"request_toggle",0)
+      websocket_send(self.target_name,"request_high_power",true)
       // setTimeout to restore button if no response
     }
     if (self.state==3){
       self.set_state(2)
-      websocket_send(self.ref_name,"request_toggle",1)
+      websocket_send(self.target_name,"request_high_power",false)
       // setTimeout to restore button if no response
     }
   }
@@ -842,7 +842,7 @@ function init() {
   controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23], block_grid_y[24])
 
   high_power_button = new Block_Five_State_Button(
-    "toggle_high_power", 
+    "controller", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
     [block_grid_x[1],block_grid_y[0],300]
