@@ -211,8 +211,8 @@ function websocket_message_handler(evt) {
         controllers[origin].firmware_version.set_text(message["firmware_version"])
         controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
         controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
-        var pid_1_str = message["pid_differential_gain_motor1"]+,+message["pid_integral_gain_motor1"]+,+"pid_proportional_gain_motor1"
-        var pid_2_str = message["pid_differential_gain_motor2"]+,+message["pid_integral_gain_motor2"]+,+"pid_proportional_gain_motor2"
+        var pid_1_str = message["pid_differential_gain_motor1"]+,+message["pid_integral_gain_motor1"]+","+"pid_proportional_gain_motor1"
+        var pid_2_str = message["pid_differential_gain_motor2"]+,+message["pid_integral_gain_motor2"]+","+"pid_proportional_gain_motor2"
         controllers[origin].pid_1.set_text(pid_1_str)
         controllers[origin].pid_2.set_text(pid_2_str)
         break;
