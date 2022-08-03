@@ -225,7 +225,9 @@ function websocket_message_handler(evt) {
         controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
         controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
         controllers[origin].emergency_stop.set_text(message["emergency_stop"])
-        var volts_a = message["volts"].split(",")
+        console.log(message["volts"])
+        var volts_a = message["volts"].split(":")
+        console.log(volts_a)
         controllers[origin].volts_24.set_text(volts_a[1])
         controllers[origin].volts_5.set_text(volts_a[2])
         break;
