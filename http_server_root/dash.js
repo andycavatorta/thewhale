@@ -592,7 +592,7 @@ class Block_Five_State_Button{
       this.dom_parent,
       {
         class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
+        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]})`,
       }
     );
     this.text_container = create_text(this.container, " ", {class:"status_block_value"});
