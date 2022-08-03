@@ -580,7 +580,7 @@ class Block_Toggle_Button{
 
 class Block_Five_State_Button{
   constructor(ref_name, state_classes, state_labels, coordinates) {
-    
+
     this.dom_parent = canvas;
     this.ref_name = ref_name
     this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
@@ -846,7 +846,7 @@ function init() {
     "toggle_high_power", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
-    [block_grid_x[1],block_grid_y[0],300]
+    [block_grid_x[1],block_grid_y[1],300]
   )
 
 }
