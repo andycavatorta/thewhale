@@ -229,6 +229,7 @@ function websocket_message_handler(evt) {
           controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
           controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
           controllers[origin].set_timestamp(parseInt(message["current_time"]))
+          controllers[origin].set_colors_active(1)
           break;
       case "response_computer_start_status":
           hosts[origin].ip_local.set_text(message["local_ip"])
