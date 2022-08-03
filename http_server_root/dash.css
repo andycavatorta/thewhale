@@ -83,12 +83,13 @@ svg {
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
-  fill: #cccccc;
 }
 
-
-
-
+.button_five_state_inactive{fill: #aaaaaa;}
+.button_five_state_true_confirmed{fill: #ff3333;}
+.button_five_state_true_requested{fill: #aaaaaa;}
+.button_five_state_false_confirmed{fill: #33ff33;}
+.button_five_state_false_requested{fill: #aaaaaa;}
 
 .status_block_name_value{
   width:180px;
@@ -109,9 +110,6 @@ svg {
   fill: red;
   alignment-baseline: hanging;
 }
-
-
-
 
 .status_block_name{
   width:100%;
