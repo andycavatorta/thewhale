@@ -869,7 +869,37 @@ function init() {
     "request_high_power",
     [block_grid_x[1],block_grid_y[0],300]
   )
+  mode_connection_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["unconnected", "power on confirmed", "power on requested", "waiting for connections", "power off requested"],
+    "request_high_power",
+    [block_grid_x[4],block_grid_y[0],300]
+  )
+  mode_connection_button.set_state(3)
+  mode_midi_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["unconnected", "MIDI Input", "power on requested", "waiting for connections", "power off requested"],
+    "request_high_power",
+    [block_grid_x[6],block_grid_y[0],300]
+  mode_midi_button.set_state(1)
+  )
+
+  mode_file_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["unconnected", "Music File Input", "power on requested", "waiting for connections", "power off requested"],
+    "request_high_power",
+    [block_grid_x[8],block_grid_y[0],300]
+  )
+  mode_file_button.set_state(1)
+
 }
+
+
+
+
 
 function check_for_stale_rows(){
   hosts["controller"].check_if_timestamp_is_fresh()
