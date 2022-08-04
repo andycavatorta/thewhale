@@ -798,7 +798,7 @@ function toggle_24v_power(e){
 function init() {
   canvas = document.getElementById( "top_level" );
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
-  interface.mode_title = create_text(canvas, "MODE: WAITING_FOR_CONNECTIONS", {class:"title_text",id:"mode_title"})
+  //interface.mode_title = create_text(canvas, "MODE: WAITING_FOR_CONNECTIONS", {class:"title_text",id:"mode_title"})
 
   exception_details = new Details_Display(canvas, [20,500], "exception_details_rect")
 
