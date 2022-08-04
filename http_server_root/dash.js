@@ -703,7 +703,6 @@ class SDCRow{
         ["unconnected", "emergency stop confirmed", "emergency stop requested", "emergency stop confirmed", "emergency stop requested"],
         [block_grid_x[1],block_grid_y[0],460]
       )
-    }
     
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
     this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
