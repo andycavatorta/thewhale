@@ -590,10 +590,11 @@ class Block_Toggle_Button{
 }
 
 class Block_Five_State_Button{
-  constructor(target_name, state_classes, state_labels, coordinates) {
+  constructor(target_name, state_classes, state_labels, topic, coordinates) {
 
     this.dom_parent = canvas;
     this.target_name = target_name
+    this.topic = topic
     this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
     this.state_classes = state_classes
     this.state_labels = state_labels
@@ -623,12 +624,12 @@ class Block_Five_State_Button{
     self = e.target.class_ref
     if (self.state==1){
       self.set_state(4)
-      websocket_send(self.target_name,"request_high_power",false)
+      websocket_send(self.target_name,this.topic,false)
       // setTimeout to restore button if no response
     }
     if (self.state==3){
       self.set_state(2)
-      websocket_send(self.target_name,"request_high_power",true)
+      websocket_send(self.target_name,this.topic,true)
       // setTimeout to restore button if no response
     }
   }
@@ -705,16 +706,17 @@ class SDCRow{
         "controller", 
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
         ["unconnected", "emergency stop off confirmed", "emergency stop off requested", "emergency stop on confirmed", "emergency stop on requested"],
+        "request_emergency_stop__"+hostname,
         [block_grid_x[3],y_position_1,460]
       )
     this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
     this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 100)
 
-    this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
-    this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
+    this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
+    this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
 
-    this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "+", 100)
-    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "+", 100)
+    this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
+    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
 
     this.increase_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
     this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
@@ -870,6 +872,7 @@ function init() {
     "controller", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
+    "request_high_power",
     [block_grid_x[1],block_grid_y[0],300]
   )
 }
