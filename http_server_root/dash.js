@@ -707,6 +707,17 @@ class SDCRow{
         ["unconnected", "emergency stop off confirmed", "emergency stop off requested", "emergency stop on confirmed", "emergency stop on requested"],
         [block_grid_x[3],y_position_1,460]
       )
+    this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
+    this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor4name, 100)
+
+    this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
+    this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
+
+    this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "+", 100)
+    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "+", 100)
+
+    this.increase_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
+    this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
 
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
     this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
