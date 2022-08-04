@@ -44,6 +44,7 @@ class Main(threading.Thread):
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
+        self.tb.subscribe_to_topic("request_emergency_stop")
         self.tb.subscribe_to_topic("request_computer_runtime_status")
         self.tb.subscribe_to_topic("request_computer_start_status")
         self.tb.subscribe_to_topic("request_sdc_runtime_status")
@@ -144,7 +145,6 @@ class Main(threading.Thread):
             "current_time":time.time()
         }
 
-
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
         self.add_to_queue(topic, message, origin, destination)
@@ -182,6 +182,12 @@ class Main(threading.Thread):
                 if topic==b"request_sdc_runtime_status":
                     status = self.get_sdc_runtime_status()
                     self.tb.publish("response_sdc_runtime_status",status)
+
+                if topic==b"request_emergency_stop":
+                    self.sdc.set_emergency_stop(message)
+                    time.sleep(0.05)
+                    status = self.get_emergency_stop()
+                    self.tb.publish("response_emergency_stop",status)
 
                 ### DASHBOARD FUNCTIONS ###
                 if str(message) == self.hostname:

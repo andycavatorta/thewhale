@@ -189,6 +189,7 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_uptime")
         self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_computer_runtime_status")
+        self.tb.subscribe_to_topic("response_emergency_stop")
         self.tb.subscribe_to_topic("response_sdc_start_status")
         self.tb.subscribe_to_topic("response_sdc_runtime_status")
 
@@ -291,6 +292,7 @@ class Main(threading.Thread):
                     continue
                 if origin == "dashboard":
                     print(topic, message, origin, destination)
+
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -304,6 +306,8 @@ class Main(threading.Thread):
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                     else:
+                        if topic=="request_emergency_stop":
+                            self.tb.publish("request_emergency_stop", destination)
                         if topic=="restart":
                             self.tb.publish("restart", destination)
                         if topic=="reboot":
