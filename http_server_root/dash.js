@@ -708,7 +708,7 @@ class SDCRow{
         [block_grid_x[3],y_position_1,460]
       )
     this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
-    this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor4name, 100)
+    this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 100)
 
     this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
     this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "+", 100)
