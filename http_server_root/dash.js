@@ -354,15 +354,7 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
     return group;
 }
 
-
-
-
-
-
-
-
 ////////// INTERFACE COMPONENT CONSTRUCTORS //////////
-
 
 class Block_Title_Horizontal{
   constructor(dom_parent, coordinates, title_text) {
@@ -705,10 +697,14 @@ class SDCRow{
     this.dom_parent = canvas;
     this.volts_24 = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], "", 80)
     this.volts_5 = new Block_Display_Text(this.dom_parent, [block_grid_x[2],y_position_1], "", 80)
-    this.emergency_stop = new Block_Display_Text(this.dom_parent, [block_grid_x[3],y_position_1], "", 460)
-    this.rotor1label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 140)
-    this.rotor2label = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 140)
-
+    this.emergency_stop = new Block_Five_State_Button(
+        "controller", 
+        ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+        ["unconnected", "emergency stop confirmed", "emergency stop requested", "emergency stop confirmed", "emergency stop requested"],
+        [block_grid_x[1],block_grid_y[0],460]
+      )
+    }
+    
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
     this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
     this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
@@ -837,9 +833,9 @@ function init() {
   new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[10]], "emergency stop")
   //new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[10]], "emergency stop")
   new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[10]], "rotor")
-  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "+ + +")
+  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "- - -")
   new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[10]], "speed")
-  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "- - -")
+  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "+ + +")
   new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[10]], "duty cycle")
   new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[10]], "error")
   new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[10]], "encoder")
