@@ -186,7 +186,7 @@ class Main(threading.Thread):
                 if topic==b"request_emergency_stop":
                     self.sdc.set_emergency_stop(message)
                     time.sleep(0.05)
-                    status = self.get_emergency_stop()
+                    status = self.sdc.get_emergency_stop()
                     self.tb.publish("response_emergency_stop",status)
 
                 ### DASHBOARD FUNCTIONS ###
