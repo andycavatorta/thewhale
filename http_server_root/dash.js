@@ -206,6 +206,9 @@ function websocket_message_handler(evt) {
           break;
       case "response_sdc_start_status":
           //console.log(message)
+          if(message=={}){
+            return
+          }
           controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
           controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
           controllers[origin].firmware_version.set_text(message["firmware_version"])
@@ -218,6 +221,9 @@ function websocket_message_handler(evt) {
           break;
       case "response_sdc_runtime_status":
           //console.log(message)
+          if(message=={}){
+            return
+          }
           controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
           controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
           controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
