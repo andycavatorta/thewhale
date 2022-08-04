@@ -231,10 +231,10 @@ function websocket_message_handler(evt) {
           controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
           controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
           controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
-          if(message["emergency_stop"]){
-            controllers[origin].emergency_stop.set_state(1)
-          }else{
+          if(message["emergency_stop"]==true){
             controllers[origin].emergency_stop.set_state(3)
+          }else{
+            controllers[origin].emergency_stop.set_state(1)
           }
           var volts_a = message["volts"].split(":")
           controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
