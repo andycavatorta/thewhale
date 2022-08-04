@@ -220,7 +220,7 @@ function websocket_message_handler(evt) {
           controllers[origin].pid_2.set_text(pid_2_str)
           break;
       case "response_sdc_runtime_status":
-          //console.log(message)
+          console.log(type(message))
           if(message=="{}"){
             return
           }
