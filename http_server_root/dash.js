@@ -704,7 +704,7 @@ class SDCRow{
     this.emergency_stop = new Block_Five_State_Button(
         "controller", 
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-        ["unconnected", "emergency stop confirmed", "emergency stop requested", "emergency stop confirmed", "emergency stop requested"],
+        ["unconnected", "emergency stop off confirmed", "emergency stop off requested", "emergency stop on confirmed", "emergency stop on requested"],
         [block_grid_x[3],y_position_1,460]
       )
 
