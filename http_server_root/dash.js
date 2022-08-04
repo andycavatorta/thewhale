@@ -231,7 +231,7 @@ function websocket_message_handler(evt) {
           controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
           controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
           controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
-          controllers[origin].emergency_stop.set_text(message["emergency_stop"])
+          //controllers[origin].emergency_stop.set_text(message["emergency_stop"])
           var volts_a = message["volts"].split(":")
           controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
           controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
@@ -701,9 +701,9 @@ class SDCRow{
         "controller", 
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
         ["unconnected", "emergency stop confirmed", "emergency stop requested", "emergency stop confirmed", "emergency stop requested"],
-        [block_grid_x[1],block_grid_y[0],460]
+        [block_grid_x[2],y_position_1,460]
       )
-    
+
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
     this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
     this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
