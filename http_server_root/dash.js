@@ -882,7 +882,7 @@ function init() {
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
     ["unconnected", "MIDI Input", "power on requested", "waiting for connections", "power off requested"],
     "request_high_power",
-    [block_grid_x[6],block_grid_y[0],300]
+    [block_grid_x[6],block_grid_y[0],260]
   )
   mode_midi_button.set_state(1)
 
