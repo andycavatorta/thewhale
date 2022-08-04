@@ -883,8 +883,8 @@ function init() {
     ["unconnected", "MIDI Input", "power on requested", "waiting for connections", "power off requested"],
     "request_high_power",
     [block_grid_x[6],block_grid_y[0],300]
-  mode_midi_button.set_state(1)
   )
+  mode_midi_button.set_state(1)
 
   mode_file_button = new Block_Five_State_Button(
     "controller", 
