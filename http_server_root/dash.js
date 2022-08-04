@@ -206,8 +206,8 @@ function websocket_message_handler(evt) {
           break;
       case "response_sdc_start_status":
           //console.log(message)
-          console.log(Object.keys(message))
-          if(message=={}){
+          var _keys_ = Object.keys(message)
+          if(_keys_.length==0){
             return
           }
           controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
@@ -221,8 +221,8 @@ function websocket_message_handler(evt) {
           controllers[origin].pid_2.set_text(pid_2_str)
           break;
       case "response_sdc_runtime_status":
-          console.log(Object.keys(message))
-          if(message=={}){
+          var _keys_ = Object.keys(message)
+          if(_keys_.length==0){
             return
           }
           controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
