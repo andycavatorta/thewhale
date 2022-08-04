@@ -591,7 +591,6 @@ class Block_Toggle_Button{
 
 class Block_Five_State_Button{
   constructor(target_name, state_classes, state_labels, topic, coordinates) {
-
     this.dom_parent = canvas;
     this.target_name = target_name
     this.topic = topic
@@ -599,7 +598,6 @@ class Block_Five_State_Button{
     this.state_classes = state_classes
     this.state_labels = state_labels
     this.state = 0
-
     this.container = create_group(
       this.dom_parent,
       {
@@ -703,10 +701,10 @@ class SDCRow{
     this.volts_24 = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], "", 80)
     this.volts_5 = new Block_Display_Text(this.dom_parent, [block_grid_x[2],y_position_1], "", 80)
     this.emergency_stop = new Block_Five_State_Button(
-        "controller", 
+        hostname, 
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
         ["unconnected", "emergency stop off confirmed", "emergency stop off requested", "emergency stop on confirmed", "emergency stop on requested"],
-        "request_emergency_stop__"+hostname,
+        "request_emergency_stop",
         [block_grid_x[3],y_position_1,460]
       )
     this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
