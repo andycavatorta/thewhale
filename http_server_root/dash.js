@@ -701,7 +701,7 @@ class SDCRow{
         "controller", 
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
         ["unconnected", "emergency stop confirmed", "emergency stop requested", "emergency stop confirmed", "emergency stop requested"],
-        [block_grid_x[2],y_position_1,460]
+        [block_grid_x[3],y_position_1,460]
       )
 
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
