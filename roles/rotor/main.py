@@ -210,13 +210,24 @@ class Main(threading.Thread):
                 if topic==b"request_decrement":
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_decrement", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
+                        if settings.Rotors.hosts[destination][1] == 1:
+                            status = self.sdc.motor_1.get_motor_command_applied()
+                            self.tb.publish("response_decrement",status)
+
                 if topic==b"request_stop":
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_stop", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
+                        if settings.Rotors.hosts[destination][1] == 1:
+                            status = self.sdc.motor_1.get_motor_command_applied()
+                            self.tb.publish("response_decrement",status)
+
                 if topic==b"request_increment":
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_increment", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
-
+                        if settings.Rotors.hosts[destination][1] == 1:
+                            status = self.sdc.motor_1.get_motor_command_applied()
+                            self.tb.publish("response_decrement",status)
+                            
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
