@@ -282,6 +282,16 @@ function websocket_message_handler(evt) {
             controllers[origin].emergency_stop.set_state(3)
           }
         break;
+      case "response_motor_command_applied":
+          motor_number, command = message
+          if (motor_number==1){
+            controllers[origin].this.requested_speed_1.set_text(command)
+          }
+          if (motor_number==2){
+            controllers[origin].this.requested_speed_2.set_text(command)
+          }
+        break;
+
     }
 }
 

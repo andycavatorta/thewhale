@@ -208,28 +208,34 @@ class Main(threading.Thread):
                         self.tb.publish("response_emergency_stop",status)
 
                 if topic==b"request_decrement":
-                    if settings.Rotors.hosts[destination][0] == self.hostname:
-                        print("request_decrement", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
-                        if settings.Rotors.hosts[destination][1] == 1:
+                    hostname,motor_number = settings.Rotors.hosts[destination]
+                    if hostname == self.hostname:
+                        if motor_number == 1:
                             status = self.sdc.motor_1.get_motor_command_applied()
-                            print("status",status)
-                            self.tb.publish("response_motor_command_applied",[destination,status])
+                            self.tb.publish("response_motor_command_applied",[1,status])
+                        if motor_number == 2:
+                            status = self.sdc.motor_2.get_motor_command_applied()
+                            self.tb.publish("response_motor_command_applied",[2,status])
 
                 if topic==b"request_stop":
-                    if settings.Rotors.hosts[destination][0] == self.hostname:
-                        print("request_stop", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
-                        if settings.Rotors.hosts[destination][1] == 1:
+                    hostname,motor_number = settings.Rotors.hosts[destination]
+                    if hostname == self.hostname:
+                        if motor_number == 1:
                             status = self.sdc.motor_1.get_motor_command_applied()
-                            print("status",status)
-                            self.tb.publish("response_motor_command_applied",[destination,status])
+                            self.tb.publish("response_motor_command_applied",[1,status])
+                        if motor_number == 2:
+                            status = self.sdc.motor_2.get_motor_command_applied()
+                            self.tb.publish("response_motor_command_applied",[2,status])
 
                 if topic==b"request_increment":
-                    if settings.Rotors.hosts[destination][0] == self.hostname:
-                        print("request_increment", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
-                        if settings.Rotors.hosts[destination][1] == 1:
+                    hostname,motor_number = settings.Rotors.hosts[destination]
+                    if hostname == self.hostname:
+                        if motor_number == 1:
                             status = self.sdc.motor_1.get_motor_command_applied()
-                            print("status",status)
-                            self.tb.publish("response_motor_command_applied",[destination,status])
+                            self.tb.publish("response_motor_command_applied",[1,status])
+                        if motor_number == 2:
+                            status = self.sdc.motor_2.get_motor_command_applied()
+                            self.tb.publish("response_motor_command_applied",[2,status])
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
