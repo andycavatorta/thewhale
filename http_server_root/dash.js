@@ -282,9 +282,6 @@ function websocket_message_handler(evt) {
             controllers[origin].emergency_stop.set_state(3)
           }
         break;
-
-
-
     }
 }
 
@@ -720,12 +717,17 @@ class SDCRow{
       )
     this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
     this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 100)
-    this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
-    this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
+
+    this.decrease_speed_1 = new Block_Push_Button(this.dom_parent, rotor1name, [block_grid_x[6],y_position_1], "decrement_speed", 140)
+    this.decrease_speed_2 = new Block_Push_Button(this.dom_parent, rotor2name, [block_grid_x[6],y_position_2], "decrement_speed", 140)
+    //this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
+    //this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_2], "-", 140)
     this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
-    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
+    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_2], "?", 100)
     this.increase_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
-    this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
+    this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_2], "+", 100)
+
+
     this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
     this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
     this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
