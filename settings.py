@@ -27,6 +27,18 @@ class Roles():
         "rotors1314":"rotor",
     }
 
+class Rotors():
+    hosts={
+        "controller":"controller",
+        "rotors0102":["rotor01","rotor02"],
+        "rotors0304":["rotor03","rotor04"],
+        "rotors0506":["rotor05","rotor06"],
+        "rotors0708":["rotor07","rotor08"],
+        "rotors0910":["rotor09","rotor10"],
+        "rotors1112":["rotor11","rotor12"],
+        "rotors1314":["rotor13","rotor14"],
+    }
+
 class Reporting():
     app_name = "thewhale"
     #level = "ERROR" #[DEBUG | INFO | WARNING | ERROR | CRITICAL]
