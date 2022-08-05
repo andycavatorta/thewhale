@@ -212,18 +212,22 @@ class Main(threading.Thread):
                     if hostname == self.hostname:
                         if motor_number == 1:
                             status = self.sdc.motor_1.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[1,status])
+                            self.sdc.motor_1.go_to_speed_or_relative_position(status-1)
+                            self.tb.publish("response_motor_command_applied",[1,status-1])
                         if motor_number == 2:
                             status = self.sdc.motor_2.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[2,status])
+                            self.sdc.motor_2.go_to_speed_or_relative_position(status-1)
+                            self.tb.publish("response_motor_command_applied",[2,status-1])
 
                 if topic==b"request_stop":
                     hostname,motor_number = settings.Rotors.hosts[destination]
                     if hostname == self.hostname:
                         if motor_number == 1:
+                            self.sdc.motor_1.go_to_speed_or_relative_position(0)
                             status = self.sdc.motor_1.get_motor_command_applied()
                             self.tb.publish("response_motor_command_applied",[1,status])
                         if motor_number == 2:
+                            self.sdc.motor_2.go_to_speed_or_relative_position(0)
                             status = self.sdc.motor_2.get_motor_command_applied()
                             self.tb.publish("response_motor_command_applied",[2,status])
 
@@ -232,10 +236,12 @@ class Main(threading.Thread):
                     if hostname == self.hostname:
                         if motor_number == 1:
                             status = self.sdc.motor_1.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[1,status])
+                            self.sdc.motor_1.go_to_speed_or_relative_position(status+1)
+                            self.tb.publish("response_motor_command_applied",[1,status+1])
                         if motor_number == 2:
                             status = self.sdc.motor_2.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[2,status])
+                            self.sdc.motor_2.go_to_speed_or_relative_position(status+1)
+                            self.tb.publish("response_motor_command_applied",[2,status+1])
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()

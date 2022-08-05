@@ -292,7 +292,6 @@ function websocket_message_handler(evt) {
             controllers[origin].requested_speed_2.set_text(command)
           }
         break;
-
     }
 }
 
