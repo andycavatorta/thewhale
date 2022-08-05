@@ -146,7 +146,7 @@ class Main(threading.Thread):
             "encoder_speed_relative_1":self.sdc.motor_1.get_encoder_speed_relative(),
             "encoder_speed_relative_2":self.sdc.motor_1.get_encoder_speed_relative(),
             "motor_command_applied_1":self.sdc.motor_1.get_motor_command_applied(),
-            "motor_command_applied_2":self.sdc.motor_1.get_motor_command_applied(),
+            "motor_command_applied_2":self.sdc.motor_2.get_motor_command_applied(),
             "current_time":time.time()
         }
 
