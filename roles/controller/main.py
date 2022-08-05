@@ -190,8 +190,10 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_computer_runtime_status")
         self.tb.subscribe_to_topic("response_emergency_stop")
+        self.tb.subscribe_to_topic("response_motor_command_applied")
         self.tb.subscribe_to_topic("response_sdc_start_status")
         self.tb.subscribe_to_topic("response_sdc_runtime_status")
+
 
         """
         self.modes = {
@@ -322,6 +324,8 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.publish("pull_thewhale", destination)
                 else:
+                    if topic == b"response_motor_command_applied":
+                        print(topic, message, origin, destination)
                     if topic == b"request_computer_start_status":
                         self.get_computer_start_status()
                     if topic == b"request_computer_runtime_status":
