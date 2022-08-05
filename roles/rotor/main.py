@@ -211,24 +211,24 @@ class Main(threading.Thread):
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_decrement", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
                         if settings.Rotors.hosts[destination][1] == 1:
-                            print("ffffff",1)
                             status = self.sdc.motor_1.get_motor_command_applied()
+                            print("status",status)
                             self.tb.publish("response_motor_command_applied",status)
 
                 if topic==b"request_stop":
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_stop", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
                         if settings.Rotors.hosts[destination][1] == 1:
-                            print("ffffff",1)
                             status = self.sdc.motor_1.get_motor_command_applied()
+                            print("status",status)
                             self.tb.publish("response_motor_command_applied",status)
 
                 if topic==b"request_increment":
                     if settings.Rotors.hosts[destination][0] == self.hostname:
                         print("request_increment", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
                         if settings.Rotors.hosts[destination][1] == 1:
-                            print("ffffff",1)
                             status = self.sdc.motor_1.get_motor_command_applied()
+                            print("status",status)
                             self.tb.publish("response_motor_command_applied",status)
 
             except Exception as e:
