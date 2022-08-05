@@ -29,20 +29,20 @@ class Roles():
 
 class Rotors():
     hosts={
-        "rotor01":"rotors0102",
-        "rotor02":"rotors0102",
-        "rotor03":"rotors0304",
-        "rotor04":"rotors0304",
-        "rotor05":"rotors0506",
-        "rotor06":"rotors0506",
-        "rotor07":"rotors0708",
-        "rotor08":"rotors0708",
-        "rotor09":"rotors0910",
-        "rotor10":"rotors0910",
-        "rotor11":"rotors1112",
-        "rotor12":"rotors1112",
-        "rotor13":"rotors1314",
-        "rotor14":"rotors1314",
+        "rotor01":["rotors0102",1],
+        "rotor02":["rotors0102",2],
+        "rotor03":["rotors0304",1],
+        "rotor04":["rotors0304",2],
+        "rotor05":["rotors0506",1],
+        "rotor06":["rotors0506",2],
+        "rotor07":["rotors0708",1],
+        "rotor08":["rotors0708",2],
+        "rotor09":["rotors0910",1],
+        "rotor10":["rotors0910",2],
+        "rotor11":["rotors1112",1],
+        "rotor12":["rotors1112",2],
+        "rotor13":["rotors1314",1],
+        "rotor14":["rotors1314",2],
     }
 
 class Reporting():

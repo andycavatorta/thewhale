@@ -208,14 +208,14 @@ class Main(threading.Thread):
                         self.tb.publish("response_emergency_stop",status)
 
                 if topic==b"request_decrement":
-                    if settings.Rotors.hosts[destination] == self.hostname:
-                        print("request_decrement", message, settings.Rotors.hosts[destination])
+                    if settings.Rotors.hosts[destination][0] == self.hostname:
+                        print("request_decrement", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
                 if topic==b"request_stop":
-                    if settings.Rotors.hosts[destination] == self.hostname:
-                        print("request_stop", message, settings.Rotors.hosts[destination])
+                    if settings.Rotors.hosts[destination][0] == self.hostname:
+                        print("request_stop", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
                 if topic==b"request_increment":
-                    if settings.Rotors.hosts[destination] == self.hostname:
-                        print("request_increment", message, settings.Rotors.hosts[destination])
+                    if settings.Rotors.hosts[destination][0] == self.hostname:
+                        print("request_increment", message, settings.Rotors.hosts[destination], settings.Rotors.hosts[destination][1])
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()
