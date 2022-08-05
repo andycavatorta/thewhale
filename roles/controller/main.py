@@ -307,7 +307,7 @@ class Main(threading.Thread):
                             self.dashboard("response_high_power", message, "controller", "controller")
                     else:
                         if topic=="request_emergency_stop":
-                            self.tb.publish("request_emergency_stop", destination)
+                            self.tb.publish("request_emergency_stop", message, destination)
                         if topic=="restart":
                             self.tb.publish("restart", destination)
                         if topic=="reboot":
