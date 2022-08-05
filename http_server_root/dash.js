@@ -286,10 +286,10 @@ function websocket_message_handler(evt) {
           var motor_number = message[0]
           var command = message[1]
           if (motor_number==1){
-            controllers[origin].this.requested_speed_1.set_text(command)
+            controllers[origin].requested_speed_1.set_text(command)
           }
           if (motor_number==2){
-            controllers[origin].this.requested_speed_2.set_text(command)
+            controllers[origin].requested_speed_2.set_text(command)
           }
         break;
 
