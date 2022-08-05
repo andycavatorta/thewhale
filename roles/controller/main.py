@@ -292,7 +292,6 @@ class Main(threading.Thread):
                     continue
                 if origin == "dashboard":
                     print(topic, message, origin, destination)
-
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -306,6 +305,12 @@ class Main(threading.Thread):
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                     else:
+                        if topic=="decrement":
+                            self.tb.publish("request_decrement", message, destination)
+                        if topic=="stop":
+                            self.tb.publish("request_stop", message, destination)
+                        if topic=="increment":
+                            self.tb.publish("request_increment", message, destination)
                         if topic=="request_emergency_stop":
                             self.tb.publish("request_emergency_stop", message, destination)
                         if topic=="restart":

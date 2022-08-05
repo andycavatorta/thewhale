@@ -49,6 +49,9 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("request_computer_start_status")
         self.tb.subscribe_to_topic("request_sdc_runtime_status")
         self.tb.subscribe_to_topic("request_sdc_start_status")
+        self.tb.subscribe_to_topic("request_decrement")
+        self.tb.subscribe_to_topic("request_stop")
+        self.tb.subscribe_to_topic("request_increment")
         self.tb.subscribe_to_topic("restart")
         self.tb.subscribe_to_topic("reboot")
         self.tb.subscribe_to_topic("pull_thirtybirds")
@@ -142,6 +145,8 @@ class Main(threading.Thread):
             "closed_loop_error_2":self.sdc.motor_2.get_closed_loop_error(),
             "encoder_speed_relative_1":self.sdc.motor_1.get_encoder_speed_relative(),
             "encoder_speed_relative_2":self.sdc.motor_1.get_encoder_speed_relative(),
+            "motor_command_applied_1":self.sdc.motor_1.get_motor_command_applied(),
+            "motor_command_applied_2":self.sdc.motor_1.get_motor_command_applied(),
             "current_time":time.time()
         }
 
@@ -183,13 +188,6 @@ class Main(threading.Thread):
                     status = self.get_sdc_runtime_status()
                     self.tb.publish("response_sdc_runtime_status",status)
 
-                if topic==b"request_emergency_stop":
-                    print("request_emergency_stop", message)
-                    self.sdc.set_emergency_stop(message)
-                    time.sleep(0.05)
-                    status = self.sdc.get_emergency_stop()
-                    self.tb.publish("response_emergency_stop",status)
-
                 ### DASHBOARD FUNCTIONS ###
                 if str(message) == self.hostname:
                     if topic==b"restart":
@@ -200,6 +198,21 @@ class Main(threading.Thread):
                         self.tb.tb_pull_from_github()
                     if topic==b"pull_thewhale":
                         self.tb.app_pull_from_github()
+
+                if topic==b"request_emergency_stop":
+                    if destination==self.hostname:
+                        print("request_emergency_stop", message)
+                        self.sdc.set_emergency_stop(message)
+                        time.sleep(0.05)
+                        status = self.sdc.get_emergency_stop()
+                        self.tb.publish("response_emergency_stop",status)
+
+                if topic==b"request_decrement":
+                    print("request_decrement")
+                if topic==b"request_stop":
+                    print("request_stop")
+                if topic==b"request_increment":
+                    print("request_increment")
 
             except Exception as e:
                 exc_type, exc_value, exc_traceback = sys.exc_info()

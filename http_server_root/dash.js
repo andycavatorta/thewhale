@@ -720,8 +720,8 @@ class SDCRow{
 
     //this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
     //this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_2], "-", 140)
-    this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
-    this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_2], "?", 100)
+    //this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
+    //this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_2], "?", 100)
     //this.increase_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
     //this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_2], "+", 100)
     this.decrease_speed_1 = new Block_Push_Button(this.dom_parent, rotor1name, [block_grid_x[6],y_position_1], "decrement", 140)
