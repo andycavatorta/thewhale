@@ -283,7 +283,8 @@ function websocket_message_handler(evt) {
           }
         break;
       case "response_motor_command_applied":
-          motor_number, command = message
+          var motor_number = message[0]
+          var command = message[1]
           if (motor_number==1){
             controllers[origin].this.requested_speed_1.set_text(command)
           }
