@@ -184,8 +184,8 @@ class Main(threading.Thread):
                     self.tb.publish("response_sdc_runtime_status",status)
 
                 if topic==b"request_emergency_stop":
-                    print("request_emergency_stop", not message)
-                    self.sdc.set_emergency_stop(not message)
+                    print("request_emergency_stop", message)
+                    self.sdc.set_emergency_stop(message)
                     time.sleep(0.05)
                     status = self.sdc.get_emergency_stop()
                     self.tb.publish("response_emergency_stop",status)
