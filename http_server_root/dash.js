@@ -723,7 +723,14 @@ class SDCRow{
         ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
         ["unconnected", "emergency stop on confirmed", "emergency stop on requested", "emergency stop off confirmed", "emergency stop off requested"],
         "request_emergency_stop",
-        [block_grid_x[3],y_position_1,460]
+        [block_grid_x[3],y_position_1,230]
+      )
+    this.idle_speed = new Block_Five_State_Button(
+        hostname, 
+        ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+        ["unconnected", "idle speed confirmed", "idle stop requested", "idles stop confirmed", "idle speed requested"],
+        "request_idle_speed",
+        [block_grid_x[4],y_position_1,230]
       )
     this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
     this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 100)

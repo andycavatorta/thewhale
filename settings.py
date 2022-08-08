@@ -45,6 +45,44 @@ class Rotors():
         "rotor14":["rotors1314",2],
     }
 
+class Pitch_To_Rotor_Map():
+    "C3" = ["rotor","rotor"]
+    "D3" = ["rotor","rotor"]
+    "D#3" = ["rotor","rotor"]
+    "E3" = ["rotor","rotor"]
+    "F3" = ["rotor","rotor"]
+    "F#3" = ["rotor","rotor"]
+    "G3" = ["rotor","rotor"]
+    "G#3" = ["rotor","rotor"]
+    "A3" = ["rotor","rotor"]
+    "A#3" = ["rotor","rotor"]
+    "B3" = ["rotor","rotor"]
+    "C4" = ["rotor","rotor"]
+    "D4" = ["rotor","rotor"]
+    "D#4" = ["rotor","rotor"]
+    "E4" = ["rotor","rotor"]
+    "F4" = ["rotor","rotor"]
+    "F#4" = ["rotor","rotor"]
+    "G4" = ["rotor","rotor"]
+    "G#4" = ["rotor","rotor"]
+    "A4" = ["rotor","rotor"]
+    "A#4" = ["rotor","rotor"]
+    "B4" = ["rotor","rotor"]
+    "C5" = ["rotor","rotor"]
+    "D5" = ["rotor","rotor"]
+    "D#5" = ["rotor","rotor"]
+    "E5" = ["rotor","rotor"]
+    "F5" = ["rotor","rotor"]
+    "F#5" = ["rotor","rotor"]
+    "G5" = ["rotor","rotor"]
+    "G#5" = ["rotor","rotor"]
+    "A5" = ["rotor","rotor"]
+    "A#5" = ["rotor","rotor"]
+    "B5" = ["rotor","rotor"]
+    "C6" = ["rotor","rotor"]
+    "D6" = ["rotor","rotor"]
+
+
 class Reporting():
     app_name = "thewhale"
     #level = "ERROR" #[DEBUG | INFO | WARNING | ERROR | CRITICAL]

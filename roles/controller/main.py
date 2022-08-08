@@ -59,34 +59,35 @@ class Poller(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.upstream_queue = upstream_queue
+        self.sleep_unit = 2
         self.start()
 
     def run(self):
         while True:
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_start_status","")
             self.tb.publish("request_sdc_start_status","")
             self.upstream_queue(b"request_computer_start_status", "", "controller", "controller")
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(5)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
@@ -129,6 +130,7 @@ class Main(threading.Thread):
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
         self.hosts = Hosts.Hosts(self.tb)
+
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
@@ -193,8 +195,6 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("response_motor_command_applied")
         self.tb.subscribe_to_topic("response_sdc_start_status")
         self.tb.subscribe_to_topic("response_sdc_runtime_status")
-
-
         """
         self.modes = {
             "error":Mode_Error(self.tb, self.hosts, self.set_current_mode, self.safety_enable.set_active),
@@ -211,6 +211,11 @@ class Main(threading.Thread):
         self.high_power = High_Power(self.dashboard)
         self.start()
         self.poller = Poller(self.tb, self.add_to_queue)
+
+
+    def map_pitch_to_rotor(self,pitch_str):
+        pass
+
 
     def get_computer_start_status(self):
         data = {
@@ -239,6 +244,7 @@ class Main(threading.Thread):
             "current_time":time.time()
         }
         self.dashboard("response_computer_runtime_status", data, "controller", "controller")
+
 
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
