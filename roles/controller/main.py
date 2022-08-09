@@ -59,7 +59,7 @@ class Poller(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.upstream_queue = upstream_queue
-        self.sleep_unit = 2
+        self.sleep_unit = 3
         self.start()
 
     def run(self):
@@ -212,10 +212,8 @@ class Main(threading.Thread):
         self.start()
         self.poller = Poller(self.tb, self.add_to_queue)
 
-
     def map_pitch_to_rotor(self,pitch_str):
         pass
-
 
     def get_computer_start_status(self):
         data = {
@@ -244,7 +242,6 @@ class Main(threading.Thread):
             "current_time":time.time()
         }
         self.dashboard("response_computer_runtime_status", data, "controller", "controller")
-
 
     ##### THIRTYBIRDS CALLBACKS #####
     def network_message_handler(self, topic, message, origin, destination):
@@ -321,6 +318,8 @@ class Main(threading.Thread):
                             self.tb.publish("request_increment", message, destination)
                         if topic=="request_emergency_stop":
                             self.tb.publish("request_emergency_stop", message, destination)
+                        if topic=="request_idle_speed":
+                            self.tb.publish("request_idle_speed", message, destination)
                         if topic=="restart":
                             self.tb.publish("restart", destination)
                         if topic=="reboot":
