@@ -47,44 +47,32 @@ class Rotors():
 
 class Pitch_To_Rotor_Map():
     pitch={
-        "C3":["rotor","rotor"],
-        "C#3":["rotor","rotor"],
-        "D3":["rotor","rotor"],
-        "D#3":["rotor","rotor"],
-        "E3":["rotor","rotor"],
-        "F3":["rotor","rotor"],
-        "F#3":["rotor","rotor"],
-        "G3":["rotor","rotor"],
-        "G#3":["rotor","rotor"],
-        "A3":["rotor","rotor"],
-        "A#3":["rotor","rotor"],
-        "B3":["rotor","rotor"],
-        "C4":["rotor","rotor"],
-        "C#4":["rotor","rotor"],
-        "D4":["rotor","rotor"],
-        "D#4":["rotor","rotor"],
-        "E4":["rotor","rotor"],
-        "F4":["rotor","rotor"],
-        "F#4":["rotor","rotor"],
-        "G4":["rotor","rotor"],
-        "G#4":["rotor","rotor"],
-        "A4":["rotor","rotor"],
-        "A#4":["rotor","rotor"],
-        "B4":["rotor","rotor"],
-        "C5":["rotor","rotor"],
-        "C#5":["rotor","rotor"],
-        "D5":["rotor","rotor"],
-        "D#5":["rotor","rotor"],
-        "E5":["rotor","rotor"],
-        "F5":["rotor","rotor"],
-        "F#5":["rotor","rotor"],
-        "G5":["rotor","rotor"],
-        "G#5":["rotor","rotor"],
-        "A5":["rotor","rotor"],
-        "A#5":["rotor","rotor"],
-        "B5":["rotor","rotor"],
-        "C6":["rotor","rotor"],
-        "D6":["rotor","rotor"],
+        "C3":["rotor","rotor"], #4(1)
+        "C#3":["rotor","rotor"], #5(1)
+        "D3":["rotor","rotor"], #3(1)
+        "D#3":["rotor","rotor"], #6(1) 
+        "E3":["rotor","rotor"], #7(1)
+        "F3":["rotor","rotor"], #2(1)
+        "F#3":["rotor","rotor"], #8(1)
+        "G3":["rotor","rotor"], #9(1)
+        "G#3":["rotor","rotor"], #10(1)
+        "A3":["rotor","rotor"], #11(1)
+        "A#3":["rotor","rotor"], #12(1) 
+        "B3":["rotor","rotor"], #1(1)
+        "C4":["rotor","rotor"], #4(2)
+        "C#4":["rotor","rotor"], #5(2)
+        "D4":["rotor","rotor"], #3(2)
+        "D#4":["rotor","rotor"], #6(2)
+        "E4":["rotor","rotor"], #7(2)
+        "F4":["rotor","rotor"], #4(3) #2(2)
+        "F#4":["rotor","rotor"], #8(2) 
+        "G4":["rotor","rotor"], #9(2)
+        "G#4":["rotor","rotor"], #10(2)
+        "A4":["rotor","rotor"], #11(2)
+        "A#4":["rotor","rotor"], #12(2) 
+        "B4":["rotor","rotor"], #1(1)
+        "C5":["rotor","rotor"], #13(2)
+        "C#5":["rotor","rotor"], #14(1)
     }
 
 class Reporting():

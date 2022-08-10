@@ -26,6 +26,23 @@ var background_rectangle = null;
 
 var websocket;
 var interface = {};
+const key_grid_x = [
+  0,
+  20,
+  120,
+  220,
+  320,
+  420,
+  520,
+  620,
+  720,
+  820,
+  920,
+  1020,
+  1120,
+  1220,
+  1320,
+  ];
 const block_grid_x = [
   0,
   20, 
@@ -70,7 +87,13 @@ const block_grid_y = [
   1050,
   1100,
   1150,
-  1200];
+  1200,
+  1250,
+  1300,
+  1450,
+  1500,
+  1550,
+  1600];
 
 hosts = {}
 controllers = {}
@@ -924,6 +947,54 @@ function init() {
     [block_grid_x[8],block_grid_y[0],300]
   )
   mode_file_button.set_state(1)
+
+
+  mode_file_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "C3 on", "C3 on req", "C3 off", "C3 off req"],
+    "request_C3",
+    [key_grid_x[1],block_grid_y[25],80]
+  )
+  mode_file_button.set_state(1)
+
+
+
+  
+
+        "C3":["rotor","rotor"], #4(1)
+        "C#3":["rotor","rotor"], #5(1)
+        "D3":["rotor","rotor"], #3(1)
+        "D#3":["rotor","rotor"], #6(1) 
+        "E3":["rotor","rotor"], #7(1)
+        "F3":["rotor","rotor"], #2(1)
+        "F#3":["rotor","rotor"], #8(1)
+        "G3":["rotor","rotor"], #9(1)
+        "G#3":["rotor","rotor"], #10(1)
+        "A3":["rotor","rotor"], #11(1)
+        "A#3":["rotor","rotor"], #12(1) 
+        "B3":["rotor","rotor"], #1(1)
+        "C4":["rotor","rotor"], #4(2)
+        "C#4":["rotor","rotor"], #5(2)
+        "D4":["rotor","rotor"], #3(2)
+        "D#4":["rotor","rotor"], #6(2)
+        "E4":["rotor","rotor"], #7(2)
+        "F4":["rotor","rotor"], #4(3) #2(2)
+        "F#4":["rotor","rotor"], #8(2) 
+        "G4":["rotor","rotor"], #9(2)
+        "G#4":["rotor","rotor"], #10(2)
+        "A4":["rotor","rotor"], #11(2)
+        "A#4":["rotor","rotor"], #12(2) 
+        "B4":["rotor","rotor"], #1(1)
+        "C5":["rotor","rotor"], #13(2)
+        "C#5":["rotor","rotor"], #14(1)
+
+
+
+
+
+
+
 }
 
 function check_for_stale_rows(){
