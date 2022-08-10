@@ -79,7 +79,6 @@ DASHBOARD_NOTES_TOPICS = [
     "request_Ab4",
     "request_A4",
     "request_Bb4",
-    "request_B4",
 ]
 
 class Poller(threading.Thread):
@@ -241,14 +240,17 @@ class Main(threading.Thread):
         self.poller = Poller(self.tb, self.add_to_queue)
 
 
-    def handle_dashboard_note_buttons(self, topic, message, origin, destination):
+    def convert_dashboard_notes_to_midi(self, topic, message, origin, destination):
         print("handle_dashboard_note_buttons", topic, message, origin, destination)
         note_index = DASHBOARD_NOTES_TOPICS.index(topic)
         midi_pitch = note_index + 48
-        print(midi_pitch)
+        return midi_pitch
 
-    def map_pitch_to_rotor(self,pitch_str):
-        pass
+    def map_pitch_to_rotor_and_speed(self,pitch_num):
+        return settings.Pitch_To_Rotor_Map.midi[pitch_num-48]
+
+    def map_rotor_to_host_and_motor_number(self, rotor_name):
+        return settings.Rotors.hosts[rotor_name]
 
     def get_computer_start_status(self):
         data = {
@@ -345,7 +347,11 @@ class Main(threading.Thread):
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                         if topic in DASHBOARD_NOTES_TOPICS:
-                            self.handle_dashboard_note_buttons(topic, message, origin, destination)
+                            midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
+                            rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
+                            host, motor_number = self.map_rotor_to_host_and_motor_number()
+                            print(host, motor_number, speed)
+
                     else:
                         if topic=="decrement":
                             self.tb.publish("request_decrement", message, destination)

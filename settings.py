@@ -64,7 +64,7 @@ class Pitch_To_Rotor_Map():
         "D4":["rotor","rotor"], #3(2)
         "D#4":["rotor","rotor"], #6(2)
         "E4":["rotor","rotor"], #7(2)
-        "F4":["rotor","rotor"], #4(3) #2(2)
+        "F4":["rotor","rotor"], #2(2)
         "F#4":["rotor","rotor"], #8(2) 
         "G4":["rotor","rotor"], #9(2)
         "G#4":["rotor","rotor"], #10(2)
@@ -74,6 +74,33 @@ class Pitch_To_Rotor_Map():
         "C5":["rotor","rotor"], #13(2)
         "C#5":["rotor","rotor"], #14(1)
     }
+    midi=[
+        ["rotor04",145],
+        ["rotor05",150],
+        ["rotor03",140],
+        ["rotor06",210],
+        ["rotor07",0],
+        ["rotor02",120],
+        ["rotor08",0],
+        ["rotor09",134],
+        ["rotor10",175],
+        ["rotor11",140],
+        ["rotor12",150],
+        ["rotor01",235],
+        ["rotor04",195],
+        ["rotor05",200],
+        ["rotor03",190],
+        ["rotor06",260],
+        ["rotor07",0],
+        ["rotor02",235],
+        ["rotor08",0],
+        ["rotor09",250],
+        ["rotor10",280],
+        ["rotor11",255],
+        ["rotor12",260],
+        ["rotor01",235],
+    ]
+
 
 class Reporting():
     app_name = "thewhale"
