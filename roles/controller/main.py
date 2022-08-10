@@ -349,7 +349,7 @@ class Main(threading.Thread):
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
-                            host, motor_number = self.map_rotor_to_host_and_motor_number()
+                            host, motor_number = self.map_rotor_to_host_and_motor_number(rotor)
                             print(host, motor_number, speed)
 
                     else:
