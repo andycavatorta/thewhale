@@ -1002,6 +1002,170 @@ function init() {
   )
   note_F3_button.set_state(3)
 
+  note_Gb3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Gb3 on", "Gb3_on", "Gb3 off", "Gb3_off"],
+    "request_Gb3",
+    [key_grid_x[7],block_grid_y[25],80]
+  )
+  note_Gb3_button.set_state(3)
+
+  note_G3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "G3 on", "G3_on", "G3 off", "G3_off"],
+    "request_G3",
+    [key_grid_x[8],block_grid_y[25],80]
+  )
+  note_G3_button.set_state(3)
+
+  note_Ab3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Ab3 on", "Ab3_on", "Ab3 off", "Ab3_off"],
+    "request_Ab3",
+    [key_grid_x[9],block_grid_y[25],80]
+  )
+  note_Ab3_button.set_state(3)
+
+  note_A3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "A3 on", "A3_on", "A3 off", "A3_off"],
+    "request_A3",
+    [key_grid_x[10],block_grid_y[25],80]
+  )
+  note_A3_button.set_state(3)
+
+  note_Bb3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Bb3 on", "Bb3_on", "Bb3 off", "Bb3_off"],
+    "request_Bb3",
+    [key_grid_x[11],block_grid_y[25],80]
+  )
+  note_Bb3_button.set_state(3)
+
+  note_B3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "B3 on", "B3_on", "B3 off", "B3_off"],
+    "request_B3",
+    [key_grid_x[12],block_grid_y[25],80]
+  )
+  note_B3_button.set_state(3)
+
+
+  note_C4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "C4 on", "C4_on", "C4 off", "C4_off"],
+    "request_C4",
+    [key_grid_x[13],block_grid_y[25],80]
+  )
+  note_C4_button.set_state(3)
+
+  note_Db4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Db4 on", "Db4_on", "Db4 off", "Db4_off"],
+    "request_Db4",
+    [key_grid_x[14],block_grid_y[25],80]
+  )
+  note_Db4_button.set_state(3)
+
+  note_D4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "D4 on", "D4_on", "D4 off", "D4_off"],
+    "request_D4",
+    [key_grid_x[15],block_grid_y[25],80]
+  )
+  note_D4_button.set_state(3)
+
+  note_Eb4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Db4 on", "Eb4_on", "Eb4 off", "Eb4_off"],
+    "request_Db4",
+    [key_grid_x[16],block_grid_y[25],80]
+  )
+  note_Eb4_button.set_state(3)
+
+  note_E4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "E4 on", "E4_on", "E4 off", "E4_off"],
+    "request_E4",
+    [key_grid_x[17],block_grid_y[25],80]
+  )
+  note_E4_button.set_state(3)
+
+  note_F4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "F4 on", "F4_on", "F4 off", "F4_off"],
+    "request_F4",
+    [key_grid_x[18],block_grid_y[25],80]
+  )
+  note_F4_button.set_state(3)
+
+  note_Gb4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Gb4 on", "Gb4_on", "Gb4 off", "Gb4_off"],
+    "request_Gb4",
+    [key_grid_x[19],block_grid_y[25],80]
+  )
+  note_Gb4_button.set_state(3)
+
+  note_G4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "G4 on", "G4_on", "G4 off", "G4_off"],
+    "request_G4",
+    [key_grid_x[20],block_grid_y[25],80]
+  )
+  note_G4_button.set_state(3)
+
+  note_Ab4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Ab4 on", "Ab4_on", "Ab4 off", "Ab4_off"],
+    "request_Ab4",
+    [key_grid_x[21],block_grid_y[25],80]
+  )
+  note_Ab4_button.set_state(3)
+
+  note_A4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "A4 on", "A4_on", "A4 off", "A4_off"],
+    "request_A4",
+    [key_grid_x[22],block_grid_y[25],80]
+  )
+  note_A4_button.set_state(3)
+
+  note_Bb4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Bb4 on", "Bb4_on", "Bb4 off", "Bb4_off"],
+    "request_Bb4",
+    [key_grid_x[23],block_grid_y[25],80]
+  )
+  note_Bb4_button.set_state(3)
+
+  note_B4_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "B4 on", "B4_on", "B4 off", "B4_off"],
+    "request_B4",
+    [key_grid_x[24],block_grid_y[25],80]
+  )
+  note_B4_button.set_state(3)
+
+
 
 }
 
