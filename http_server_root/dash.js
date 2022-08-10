@@ -952,7 +952,7 @@ function init() {
   note_C3_button = new Block_Five_State_Button(
     "controller", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "C3 on", "C3 on req", "C3 off", "C3 off req"],
+    ["off", "C3 on", "C3_on", "C3 off", "C3_off"],
     "request_C3",
     [key_grid_x[1],block_grid_y[25],80]
   )
