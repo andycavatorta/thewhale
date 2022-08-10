@@ -948,7 +948,6 @@ function init() {
   )
   mode_file_button.set_state(1)
 
-
   note_C3_button = new Block_Five_State_Button(
     "controller", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
@@ -958,8 +957,50 @@ function init() {
   )
   note_C3_button.set_state(3)
 
+  note_Db3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Db3 on", "Db3_on", "Db3 off", "Db3_off"],
+    "request_Db3",
+    [key_grid_x[2],block_grid_y[25],80]
+  )
+  note_Db3_button.set_state(3)
 
+  note_D3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "D3 on", "D3_on", "D3 off", "D3_off"],
+    "request_D3",
+    [key_grid_x[3],block_grid_y[25],80]
+  )
+  note_D3_button.set_state(3)
 
+  note_Eb3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "Db3 on", "Eb3_on", "Eb3 off", "Eb3_off"],
+    "request_Db3",
+    [key_grid_x[4],block_grid_y[25],80]
+  )
+  note_Eb3_button.set_state(3)
+
+  note_E3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "E3 on", "E3_on", "E3 off", "E3_off"],
+    "request_E3",
+    [key_grid_x[5],block_grid_y[25],80]
+  )
+  note_E3_button.set_state(3)
+
+  note_F3_button = new Block_Five_State_Button(
+    "controller", 
+    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
+    ["off", "F3 on", "F3_on", "F3 off", "F3_off"],
+    "request_F3",
+    [key_grid_x[6],block_grid_y[25],80]
+  )
+  note_F3_button.set_state(3)
 
 
 }
