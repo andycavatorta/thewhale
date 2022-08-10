@@ -350,7 +350,7 @@ class Main(threading.Thread):
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
                             host, motor_number = self.map_rotor_to_host_and_motor_number(rotor)
-                            print(host, motor_number, speed)
+                            self.tb.publish("request_motor_speed", [motor_number, speed], host)
 
                     else:
                         if topic=="decrement":
