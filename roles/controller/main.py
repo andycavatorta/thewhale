@@ -212,6 +212,10 @@ class Main(threading.Thread):
         self.start()
         self.poller = Poller(self.tb, self.add_to_queue)
 
+
+    def handle_dashboard_note_buttons(self,message, origin, destination):
+        print("handle_dashboard_note_buttons",message, origin, destination)
+
     def map_pitch_to_rotor(self,pitch_str):
         pass
 
@@ -289,6 +293,32 @@ class Main(threading.Thread):
         # self.add_to_queue(b"event_safety_enable", state_bool, "", "")
 
     def run(self):
+        dashboard_notes_topics = [
+            "request_C3",
+            "request_Db3",
+            "request_D3",
+            "request_Db3",
+            "request_E3",
+            "request_F3",
+            "request_Gb3",
+            "request_G3",
+            "request_Ab3",
+            "request_A3",
+            "request_Bb3",
+            "request_B3",
+            "request_C4",
+            "request_Db4",
+            "request_D4",
+            "request_Eb4",
+            "request_E4",
+            "request_F4",
+            "request_Gb4",
+            "request_G4",
+            "request_Ab4",
+            "request_A4",
+            "request_Bb4",
+            "request_B4",
+        ]
         while True:
             try:
                 topic, message, origin, destination = self.queue.get(True)
@@ -309,6 +339,8 @@ class Main(threading.Thread):
                         if topic=="request_high_power":
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
+                        if topic in dashboard_notes_topics:
+                            self.handle_dashboard_note_buttons(message, origin, destination)
                     else:
                         if topic=="decrement":
                             self.tb.publish("request_decrement", message, destination)
