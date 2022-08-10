@@ -956,7 +956,7 @@ function init() {
     "request_C3",
     [key_grid_x[1],block_grid_y[25],80]
   )
-  note_C3_button.set_state(1)
+  note_C3_button.set_state(3)
 
 
 
