@@ -351,6 +351,7 @@ class Main(threading.Thread):
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
                             host, motor_number = self.map_rotor_to_host_and_motor_number(rotor)
                             self.tb.publish("request_motor_speed", [motor_number, speed], host)
+                            self.tb.publish("request_dashboard_button", message, host)
 
                     else:
                         if topic=="decrement":

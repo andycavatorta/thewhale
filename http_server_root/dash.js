@@ -267,8 +267,10 @@ function websocket_message_handler(evt) {
           controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
           if(message["emergency_stop"]==true){
             controllers[origin].emergency_stop.set_state(1)
+            controllers[origin].V.set_state(1)
           }else{
             controllers[origin].emergency_stop.set_state(3)
+            controllers[origin].V.set_state(3)
           }
           var volts_a = message["volts"].split(":")
           controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
@@ -1098,8 +1100,8 @@ function init() {
   note_Eb4_button = new Block_Five_State_Button(
     "controller", 
     ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Db4 on", "Eb4_on", "Eb4 off", "Eb4_off"],
-    "request_Db4",
+    ["off", "Eb4 on", "Eb4_on", "Eb4 off", "Eb4_off"],
+    "request_Eb4",
     [key_grid_x[16],block_grid_y[25],70]
   )
   note_Eb4_button.set_state(3)
