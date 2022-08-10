@@ -213,8 +213,8 @@ class Main(threading.Thread):
         self.poller = Poller(self.tb, self.add_to_queue)
 
 
-    def handle_dashboard_note_buttons(self,message, origin, destination):
-        print("handle_dashboard_note_buttons",message, origin, destination)
+    def handle_dashboard_note_buttons(self,topic, message, origin, destination):
+        print("handle_dashboard_note_buttons",topic, message, origin, destination)
 
     def map_pitch_to_rotor(self,pitch_str):
         pass
@@ -340,7 +340,7 @@ class Main(threading.Thread):
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                         if topic in dashboard_notes_topics:
-                            self.handle_dashboard_note_buttons(message, origin, destination)
+                            self.handle_dashboard_note_buttons(topic, message, origin, destination)
                     else:
                         if topic=="decrement":
                             self.tb.publish("request_decrement", message, destination)
