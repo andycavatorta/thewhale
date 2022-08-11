@@ -44,6 +44,22 @@ class Rotors():
         "rotor13":["rotors1314",1],
         "rotor14":["rotors1314",2],
     }
+    idle_speeds={
+        "rotor01":160,
+        "rotor02":180,
+        "rotor03":,
+        "rotor04":100,
+        "rotor05":,
+        "rotor06":,
+        "rotor07":,
+        "rotor08":,
+        "rotor09":,
+        "rotor10":,
+        "rotor11":,
+        "rotor12":,
+        "rotor13":,
+        "rotor14":,
+    }
 
 class Pitch_To_Rotor_Map():
     pitch={
@@ -77,7 +93,7 @@ class Pitch_To_Rotor_Map():
     midi=[
         ["rotor04",145],
         ["rotor05",150],
-        ["rotor03",140],
+        ["rotor03",75],
         ["rotor06",210],
         ["rotor07",0],
         ["rotor02",120],
@@ -86,10 +102,10 @@ class Pitch_To_Rotor_Map():
         ["rotor10",175],
         ["rotor11",140],
         ["rotor12",150],
-        ["rotor01",235],
+        ["rotor01",220],
         ["rotor04",195],
         ["rotor05",200],
-        ["rotor03",190],
+        ["rotor03",130],
         ["rotor06",260],
         ["rotor07",0],
         ["rotor02",235],

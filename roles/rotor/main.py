@@ -44,19 +44,22 @@ class Main(threading.Thread):
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
-        self.tb.subscribe_to_topic("request_emergency_stop")
+        self.tb.subscribe_to_topic("pull_thewhale")
+        self.tb.subscribe_to_topic("pull_thirtybirds")
+        self.tb.subscribe_to_topic("reboot")
         self.tb.subscribe_to_topic("request_computer_runtime_status")
         self.tb.subscribe_to_topic("request_computer_start_status")
-        self.tb.subscribe_to_topic("request_sdc_runtime_status")
-        self.tb.subscribe_to_topic("request_sdc_start_status")
+        self.tb.subscribe_to_topic("request_dashboard_button")
         self.tb.subscribe_to_topic("request_decrement")
+        self.tb.subscribe_to_topic("request_emergency_stop")
+        self.tb.subscribe_to_topic("request_idle_speed")
         self.tb.subscribe_to_topic("request_increment")
         self.tb.subscribe_to_topic("request_motor_speed")
+        self.tb.subscribe_to_topic("request_sdc_runtime_status")
+        self.tb.subscribe_to_topic("request_sdc_start_status")
         self.tb.subscribe_to_topic("request_stop")
         self.tb.subscribe_to_topic("restart")
-        self.tb.subscribe_to_topic("reboot")
-        self.tb.subscribe_to_topic("pull_thirtybirds")
-        self.tb.subscribe_to_topic("pull_thewhale")
+
 
         self.sdc = sdc.SDC(
             self.sdc_data_receiver,
