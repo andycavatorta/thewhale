@@ -44,21 +44,38 @@ class Rotors():
         "rotor13":["rotors1314",1],
         "rotor14":["rotors1314",2],
     }
-    idle_speeds={
+    idle_speeds_low={
+        "rotor01":100,
+        "rotor02":98,
+        "rotor03":96,
+        "rotor04":94,
+        "rotor05":0, #150, need to fix chain
+        "rotor06":92,
+        "rotor07":0, # wrong
+        "rotor08":0, # wrong
+        "rotor09":94,
+        "rotor10":96,
+        "rotor11":98,
+        "rotor12":100,
+        "rotor13":102,
+        "rotor14":104,
+    }
+
+    idle_speeds_high={
         "rotor01":160,
         "rotor02":180,
-        "rotor03":,
-        "rotor04":100,
-        "rotor05":,
-        "rotor06":,
-        "rotor07":,
-        "rotor08":,
-        "rotor09":,
-        "rotor10":,
-        "rotor11":,
-        "rotor12":,
-        "rotor13":,
-        "rotor14":,
+        "rotor03":100,
+        "rotor04":90,
+        "rotor05":0, #150, need to fix chain
+        "rotor06":160,
+        "rotor07":0, # wrong
+        "rotor08":0, # wrong
+        "rotor09":180,
+        "rotor10":200,
+        "rotor11":200,
+        "rotor12":160,
+        "rotor13":170,
+        "rotor14":220,
     }
 
 class Pitch_To_Rotor_Map():
@@ -92,29 +109,31 @@ class Pitch_To_Rotor_Map():
     }
     midi=[
         ["rotor04",145],
-        ["rotor05",150],
+        ["rotor05",0], # wrong, need to find h1
         ["rotor03",75],
-        ["rotor06",210],
+        ["rotor06",190], # wrong, need to find h1
         ["rotor07",0],
         ["rotor02",120],
         ["rotor08",0],
-        ["rotor09",134],
-        ["rotor10",175],
+        ["rotor09",130],
+        ["rotor10",145],
         ["rotor11",140],
-        ["rotor12",150],
+        ["rotor12",130],
         ["rotor01",220],
         ["rotor04",195],
-        ["rotor05",200],
+        ["rotor05",0], # =150 need to fix chain
         ["rotor03",130],
-        ["rotor06",260],
+        ["rotor06",190],
         ["rotor07",0],
         ["rotor02",235],
         ["rotor08",0],
-        ["rotor09",250],
-        ["rotor10",280],
-        ["rotor11",255],
+        ["rotor09",260],
+        ["rotor10",300],
+        ["rotor11",240],
         ["rotor12",260],
         ["rotor01",235],
+        ["rotor13",210],
+        ["rotor14",260],
     ]
 
 

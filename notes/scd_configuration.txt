@@ -1,4 +1,4 @@
-sdc.sdc.apply_config_to_sdc(
+role_module.main.sdc.apply_config_to_sdc(
     {
         "brake_activation_delay": 250,
         "command_priorities": ["0", "1", "2", "4"],
@@ -30,9 +30,9 @@ sdc.sdc.apply_config_to_sdc(
             "motor_acceleration_rate": 10000,
             "motor_deceleration_rate": 10000,
             "operating_mode": 1,
-            "pid_differential_gain": 1.0,
+            "pid_differential_gain": 0.0,
             "pid_integral_cap": 100,
-            "pid_integral_gain": 2.0,
+            "pid_integral_gain": 0.2,
             "pid_proportional_gain": 1.0,
             "sensor_type_select": [0, 18],
             "stall_detection": 0,
@@ -56,9 +56,9 @@ sdc.sdc.apply_config_to_sdc(
             "motor_acceleration_rate": 10000,
             "motor_deceleration_rate": 10000,
             "operating_mode": 1,
-            "pid_differential_gain": 1.0,
+            "pid_differential_gain": 0.0,
             "pid_integral_cap": 100,
-            "pid_integral_gain": 2.0,
+            "pid_integral_gain": 0.2,
             "pid_proportional_gain": 1.0,
             "sensor_type_select": [0, 18],
             "stall_detection": 18,
@@ -188,6 +188,35 @@ motor_2
 
 firmware_version
 
+
+role_module.main.sdc.motor_1.set_acceleration(5000)
+role_module.main.sdc.motor_2.set_acceleration(5000)
+role_module.main.sdc.motor_1.set_deceleration(5000)
+role_module.main.sdc.motor_2.set_deceleration(5000)
+role_module.main.sdc.save_configuration_in_eeprom()
+
+role_module.main.sdc.
+
+
+
+role_module.main.sdc.motor_1.set_motor_deceleration_rate(10000)
+role_module.main.sdc.motor_2.set_motor_deceleration_rate(10000)
+role_module.main.sdc.motor_2.set_motor_acceleration_rate(10000)
+role_module.main.sdc.motor_1.set_motor_acceleration_rate(10000)
+role_module.main.sdc.save_configuration_in_eeprom()
+
+
+role_module.main.sdc.motor_1.set_motor_deceleration_rate(10000)
+role_module.main.sdc.motor_2.set_motor_deceleration_rate(10000)
+role_module.main.sdc.motor_2.set_motor_acceleration_rate(10000)
+role_module.main.sdc.motor_1.set_motor_acceleration_rate(10000)
+role_module.main.sdc.motor_1.set_pid_differential_gain(0)
+role_module.main.sdc.motor_1.set_pid_integral_gain(0.2)
+role_module.main.sdc.motor_1.set_pid_proportional_gain(1)
+role_module.main.sdc.motor_2.set_pid_differential_gain(0)
+role_module.main.sdc.motor_2.set_pid_integral_gain(0.2)
+role_module.main.sdc.motor_2.set_pid_proportional_gain(1)
+role_module.main.sdc.save_configuration_in_eeprom()
 
 
 
