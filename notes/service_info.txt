@@ -1,0 +1,17 @@
+thewhale
+
+[Unit]
+Description=reverse tunnel service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+Restart=always
+RestartSec=5
+WorkingDirectory=/home/ubuntu/thewhale
+
+ExecStart=/usr/bin/python3 ./main.py
+
+[Install]
+WantedBy=multi-user.target
