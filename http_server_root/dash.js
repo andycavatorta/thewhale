@@ -387,8 +387,8 @@ class Grid_Folding{
         this.columns[column["title"]][0].button_rect.setAttribute("width", column["width"] + `px`);
         console.log(this.columns[column["title"]])
         left = left + column["width"]+5;
-        top = top + 40;
       }
+      top = top + 40;
     }
   };
   show() {
