@@ -261,7 +261,7 @@ class Display_Text{
         class:"grid_cell_box",
       }
     );
-    this.text_container = create_text(this.container, " ", {class:"status_block_value"});
+    this.text_container = create_text(this.container, " ", {class:"grid_title"});
     this.button_rect  = create_rectangle(
       this.dom_parent,
       {
