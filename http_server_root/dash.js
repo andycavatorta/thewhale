@@ -290,6 +290,8 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         console.log(column["title"]["width"])
+      }
+    }
   };
   show() {
 
