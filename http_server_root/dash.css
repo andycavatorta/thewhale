@@ -27,6 +27,7 @@ svg {
   font-size: 20px;
   color:#ffffff;
   alignment-baseline: hanging;
+  stroke: white;
 }
 
 .panel_static{
