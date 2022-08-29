@@ -253,9 +253,15 @@ class Panel_Static{
         transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
       }
     );
-    this.container.setAttribute("style",`width:`+coordinates[2]+`px`);
-    this.container.setAttribute("style",`height:`+coordinates[3]+`px`);
-    this.container.setAttribute("class", classname);
+    this.rectangle  = create_rectangle(
+      this.dom_parent,
+      {
+        class:classname,
+        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
+      }
+    )
+    this.rectangle.setAttribute("style",`width:`+coordinates[2]+`px`);
+    this.rectangle.setAttribute("style",`height:`+coordinates[3]+`px`);
 
 
   };
