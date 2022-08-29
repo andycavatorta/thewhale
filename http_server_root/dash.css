@@ -21,6 +21,13 @@ svg {
   height:2100px;
 }
 
+.grid_title{
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 20px;
+  color:#ffffff;
+}
+
 .panel_static{
   stroke: white;
   stroke-width: 2px;

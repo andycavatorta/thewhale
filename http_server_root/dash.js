@@ -195,7 +195,7 @@ function create_rectangle(dom_parent, attributes_o = new Object()) {
   dom_parent.appendChild(rect)
   return rect;
 }
-function create_text(dom_parent, Display_Text, attributes_o = new Object()) {
+function create_text(dom_parent, display_text, attributes_o = new Object()) {
   var text_container = document.createElementNS( SVG_NS, "text");
   setAttributes(text_container, attributes_o);
   text_container.appendChild(document.createTextNode(""))
@@ -203,7 +203,7 @@ function create_text(dom_parent, Display_Text, attributes_o = new Object()) {
     var textnode = document.createTextNode(new_text);
     text_container.replaceChild(textnode, text_container.childNodes[0]);
   }
-  text_container.update_text(Display_Text);
+  text_container.update_text(display_text);
   dom_parent.appendChild(text_container)
   return text_container;
 }
@@ -241,6 +241,8 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
 }
 
 ////////// INTERFACE COMPONENT CONSTRUCTORS //////////
+
+
 class Grid_Folding{
   constructor(
       dom_parent, 
@@ -250,19 +252,23 @@ class Grid_Folding{
     {
     this.dom_parent = dom_parent;
     this.coordinates = coordinates;
+    this.column_groups_a = column_groups_a;
     this.container = create_group(
       this.dom_parent,
       {}
     );
+    */ generate cells */
+    this.columns = {}
+    this.rows = {}
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index]
       console.log(column_group["fold"])
       for (let column_index in column_group["columns"]) {
-        let column = column_group["columns"][column_index]
-        console.log(column["title"])
+        let column = column_group["columns"][column_index];
+        this.columns[column["title"]] = {};
+        this.columns[column["title"]].title = create_text(this.container, column["title"], {class:"grid_title"});
       }
     }
-
     /*
     this.rectangle  = create_rectangle(
       this.container,
@@ -275,13 +281,22 @@ class Grid_Folding{
       }
     )
     */
+    this.update_layout()
+  };
+  update_layout() {
+    left = 0
+    for (let column_group_index in column_groups_a) {
+      let column_group = column_groups_a[column_group_index];
+      for (let column_index in column_group["columns"]) {
+        let column = column_group["columns"][column_index];
+        console.log(column["title"]["width"])
   };
   show() {
 
   };
   hide() {
 
-  }
+  };
 }
 
 function init() {
@@ -293,7 +308,8 @@ function init() {
       [50,50],
       [
         {
-          fold:true,
+          foldable:true,
+          folded:false,
           columns:[
             {title:"runtime", type:"Button_Text",width:80,action:""},
             {title:"uptime", type:"Button_Text",width:80,action:""},
@@ -305,14 +321,16 @@ function init() {
           ]
         },
         {
-          fold:false,
+          foldable:false,
+          folded:false,
           columns:[
             {title:"computer_name", type:"Display_Text",width:140},
             {title:"errors", type:"Button_Text",width:100,action:""},
           ]
         },
         {
-          fold:true,
+          foldable:true,
+          folded:false,
           columns:[
             {title:"status", type:"Button_Text",width:100,action:""},
             {title:"msgs", type:"Button_Text",width:100},
@@ -322,7 +340,8 @@ function init() {
           ]
         },
         {
-          fold:false,
+          foldable:false,
+          folded:false,
           columns:[
             {title:"mcu_name", type:"Display_Text",width:200},
             {title:"emergency_stop", type:"Button_Text",width:100,action:""},
@@ -332,7 +351,8 @@ function init() {
           ]
         },
         {
-          fold:true,
+          foldable:true,
+          folded:false,
           columns:[
             {title:"-10", type:"Button_Text",width:40,action:""},
             {title:"-1", type:"Button_Text",width:40,action:""},
@@ -342,7 +362,8 @@ function init() {
           ]
         },
         {
-          fold:true,
+          foldable:true,
+          folded:false,
           columns:[
             {title:"24v", type:"Display_Text",width:60},
             {title:"5v", type:"Display_Text",width:60},
