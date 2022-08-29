@@ -254,7 +254,7 @@ class Panel_Static{
       }
     );
     this.rectangle  = create_rectangle(
-      this.dom_parent,
+      this.container,
       {
         class:classname,
         transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
