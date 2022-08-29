@@ -241,14 +241,68 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
 }
 
 ////////// INTERFACE COMPONENT CONSTRUCTORS //////////
+//class Button_Text
 
+class Display_Text{
+  constructor(
+      dom_parent,
+      column_title,
+      row_title, 
+      width)
+    {
+    this.dom_parent = dom_parent;
+    this.column_title = column_title;
+    this.row_title = row_title;
+    this.width = width;
+    this.active = false;
+    this.container = create_group(
+      this.dom_parent,
+      {
+        class:"status_block_name_value",
+        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
+      }
+    );
+    this.text_container = create_text(this.container, " ", {class:"status_block_value"});
+    this.button_rect  = create_rectangle(
+      this.dom_parent,
+      {
+        class:"display_text_active",
+        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
+      }
+    )
+    this.button_rect.class_ref = this
+    this.button_rect.setAttribute("style",`width:`+coordinates[2]+`px`);
+    this.set_active(this.active);
+    this.set_text(" ");
+  }
+  set_active(active){
+    this.active = active
+    this.set_class(active)  
+  }
+  get_active(){
+    return this.active
+  }
+  set_text(display_text){
+    let textnode = document.createTextNode(display_text);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  }
+  set_class(class_b){
+    if (class_b){
+      this.button_rect.setAttribute("class", "display_text_active");
+    } else {
+      this.button_rect.setAttribute("class", "display_text_inactive");
+    }
+    
+  }
+}
+//class Display_Graph
 
 class Grid_Folding{
   constructor(
       dom_parent, 
       coordinates,
       column_groups_a,
-      number_of_rows)
+      row_names)
     {
     this.dom_parent = dom_parent;
     this.coordinates = coordinates;
@@ -262,13 +316,14 @@ class Grid_Folding{
     this.rows = {}
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index]
-      //console.log(column_group["foldable"])
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         this.columns[column["title"]] = {};
         this.columns[column["title"]].title = create_text(this.container, column["title"], {class:"grid_title"});
       }
     }
+
+    this.create_row("rotor_1")
     /*
     this.rectangle  = create_rectangle(
       this.container,
@@ -283,6 +338,21 @@ class Grid_Folding{
     */
     this.update_layout()
   };
+  create_row(row_name) {
+    this.rows[row_name] = {};
+    this.rows[row_name]["title"] = row_name;
+    for (let column_group_index in this.column_groups_a) {
+      let column_group = column_groups_a[column_group_index]
+      for (let column_index in column_group["columns"]) {
+        let column = column_group["columns"][column_index];
+        console.log(column)
+      }
+    }
+    //this.rows[row_name]["runtime"] = new Display_Text(this.container, "runtime", row_name, );
+  };
+
+
+
   update_layout() {
     var left = 0
     for (let column_group_index in this.column_groups_a) {
@@ -290,8 +360,8 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         left = left + column["width"];
-        this.columns[column["title"]].title.setAttribute("y", "30px")
-        this.columns[column["title"]].title.setAttribute("x", left+`px`)
+        this.columns[column["title"]].title.setAttribute("y", "100px")
+        this.columns[column["title"]].title.setAttribute("x", left + `px`)
       }
     }
   };
