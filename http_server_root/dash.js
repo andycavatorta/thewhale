@@ -383,10 +383,8 @@ class Grid_Folding{
         this.columns[column["title"]][0].text_container.setAttribute("y", "150px");
         this.columns[column["title"]][0].text_container.setAttribute("x", left + `px`);
         this.columns[column["title"]][0].button_rect.setAttribute("y", "150px");
+        this.columns[column["title"]][0].button_rect.setAttribute("x", left + `px`);
         this.columns[column["title"]][0].button_rect.setAttribute("width", column["width"] + `px`);
-        
-
-
         console.log(this.columns[column["title"]])
       }
     }
