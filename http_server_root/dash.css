@@ -50,7 +50,7 @@ svg {
 
 
 .grid_cell_text_active{
-  height:10px;
+  height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
@@ -58,7 +58,7 @@ svg {
 }
 
 .grid_cell_text_inactive{
-  height:10px;
+  height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
