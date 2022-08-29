@@ -339,8 +339,8 @@ class Grid_Folding{
         this.columns[column["title"]]["title"] = create_text(this.container, column["title"], {class:"grid_title"});
       }
     }
-    for(let row_name in row_name_lookup){
-      this.create_row(row_name)  
+    for(let row_ord in row_name_lookup){
+      this.create_row(row_ord)  
     }
     
     /*
@@ -365,6 +365,7 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];        
         this.rows[row_number][column["title"]] = new Display_Text(this.container, column["title"], row_number, column["width"]);
+        let row_name        
         this.columns[column["title"]][row_number] = this.rows[row_number][column["title"]]
       }
     }
@@ -380,7 +381,7 @@ class Grid_Folding{
         left = left + column["width"];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-        console.log(this.columns[column["title"]])
+        console.log(this.columns[column["title"]][0])
       }
     }
   };
