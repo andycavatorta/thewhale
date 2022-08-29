@@ -291,7 +291,7 @@ class Grid_Folding{
         let column = column_group["columns"][column_index];
         left = left + column["width"];
         this.columns[column["title"]].title.setAttribute("x", left+`px`)
-        console.log(title,column["width"], left,column)
+        console.log(column["width"], left,column)
       }
     }
   };
