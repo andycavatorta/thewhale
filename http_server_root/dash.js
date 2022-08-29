@@ -250,20 +250,18 @@ class Panel_Static{
       this.dom_parent,
       {
         class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
       }
     );
     this.rectangle  = create_rectangle(
       this.container,
       {
         class:classname,
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
+        x:coordinates[0],
+        y:coordinates[1],
+        width:coordinates[2],
+        height:coordinates[3],
       }
     )
-    //this.container.setAttribute("style",`width:`+coordinates[2]+`px`);
-    //this.container.setAttribute("style",`height:`+coordinates[3]+`px`);
-
-
   };
   show() {
 
