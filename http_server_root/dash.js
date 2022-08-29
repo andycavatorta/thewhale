@@ -284,7 +284,7 @@ class Grid_Folding{
     this.update_layout()
   };
   update_layout() {
-    left = 0
+    var left = 0
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
