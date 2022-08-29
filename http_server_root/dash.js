@@ -258,14 +258,14 @@ class Display_Text{
     this.container = create_group(
       this.dom_parent,
       {
-        class:"status_block_name_value",
+        class:"grid_cell_box",
       }
     );
     this.text_container = create_text(this.container, " ", {class:"status_block_value"});
     this.button_rect  = create_rectangle(
       this.dom_parent,
       {
-        class:"display_text_active",
+        class:"grid_cell_text_active",
       }
     )
     this.button_rect.class_ref = this
@@ -286,9 +286,9 @@ class Display_Text{
   }
   set_class(class_b){
     if (class_b){
-      this.button_rect.setAttribute("class", "display_text_active");
+      this.button_rect.setAttribute("class", "grid_cell_text_active");
     } else {
-      this.button_rect.setAttribute("class", "display_text_inactive");
+      this.button_rect.setAttribute("class", "grid_cell_text_inactive");
     }
     
   }
@@ -380,7 +380,7 @@ class Grid_Folding{
         left = left + column["width"];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-
+        console.log(this.columns[column["title"]])
       }
     }
   };

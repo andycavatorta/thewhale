@@ -30,6 +30,41 @@ svg {
   stroke: white;
 }
 
+
+.grid_cell_box{
+  stroke: white;
+  stroke-width: 2px;
+  top:0px;
+  left:0px;
+  height:32px;
+  fill: #33ff33;
+  z-index: 1;
+  opacity: 0.10;
+  cursor: default;
+}
+
+.grid_cell_box:hover {
+  opacity: 0.20;
+  cursor: pointer;
+}
+
+
+.grid_cell_text_active{
+  height:10px;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 20px;
+  fill: #cccccc;
+}
+
+.grid_cell_text_inactive{
+  height:10px;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 20px;
+  fill: #333333;
+}
+
 .panel_static{
   stroke: white;
   stroke-width: 2px;
