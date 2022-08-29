@@ -282,7 +282,7 @@ function init() {
 
 
   new Panel_Static(
-      background_rectangle, 
+      canvas, 
       [50,50,200,200], 
       "panel_static"
     )
