@@ -297,20 +297,20 @@ class Display_Text{
 
 var row_name_lookup = [
   {computer_name:"controller",mcu_name:""},
-  {computer_name:"rotors0102",mcu_name:"rotor01"},
-  {computer_name:"rotors0102",mcu_name:"rotor02"},
-  {computer_name:"rotors0304",mcu_name:"rotor03"},
-  {computer_name:"rotors0304",mcu_name:"rotor04"},
-  {computer_name:"rotors0506",mcu_name:"rotor05"},
-  {computer_name:"rotors0506",mcu_name:"rotor06"},
-  {computer_name:"rotors0708",mcu_name:"rotor07"},
-  {computer_name:"rotors0708",mcu_name:"rotor08"},
-  {computer_name:"rotors0910",mcu_name:"rotor09"},
-  {computer_name:"rotors0910",mcu_name:"rotor10"},
-  {computer_name:"rotors1112",mcu_name:"rotor11"},
-  {computer_name:"rotors1112",mcu_name:"rotor12"},
-  {computer_name:"rotors1314",mcu_name:"rotor13"},
-  {computer_name:"rotors1314",mcu_name:"rotor14"}
+  {computer_name:"rotors0102",mcu_name:"rotor01",y:100},
+  {computer_name:"rotors0102",mcu_name:"rotor02",y:140},
+  {computer_name:"rotors0304",mcu_name:"rotor03",y:180},
+  {computer_name:"rotors0304",mcu_name:"rotor04",y:220},
+  {computer_name:"rotors0506",mcu_name:"rotor05",y:260},
+  {computer_name:"rotors0506",mcu_name:"rotor06",y:300},
+  {computer_name:"rotors0708",mcu_name:"rotor07",y:340},
+  {computer_name:"rotors0708",mcu_name:"rotor08",y:380},
+  {computer_name:"rotors0910",mcu_name:"rotor09",y:420},
+  {computer_name:"rotors0910",mcu_name:"rotor10",y:460},
+  {computer_name:"rotors1112",mcu_name:"rotor11",y:500},
+  {computer_name:"rotors1112",mcu_name:"rotor12",y:540},
+  {computer_name:"rotors1314",mcu_name:"rotor13",y:580},
+  {computer_name:"rotors1314",mcu_name:"rotor14",y:620}
 ]
 
 
@@ -373,22 +373,22 @@ class Grid_Folding{
 
   update_layout() {
     var left = 20
-    var top = 100
     for (let column_group_index in this.column_groups_a) {
       let column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-        this.columns[column["title"]][0].text_container.setAttribute("y", top + `px`);
-        this.columns[column["title"]][0].text_container.setAttribute("x", left + `px`);
-        this.columns[column["title"]][0].button_rect.setAttribute("y", top + `px`);
-        this.columns[column["title"]][0].button_rect.setAttribute("x", left + `px`);
-        this.columns[column["title"]][0].button_rect.setAttribute("width", column["width"] + `px`);
+        for (const row_number of Array(14).keys())
+        this.columns[column["title"]][row_number].text_container.setAttribute("y", column["y"] + `px`);
+        this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
+        this.columns[column["title"]][row_number].button_rect.setAttribute("y", column["y"] + `px`);
+        this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
+        this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
+
         console.log(this.columns[column["title"]])
         left = left + column["width"]+5;
       }
-      top = top + 40;
     }
   };
   show() {
