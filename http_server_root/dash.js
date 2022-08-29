@@ -257,7 +257,7 @@ class Grid_Folding{
       this.dom_parent,
       {}
     );
-    */ generate cells */
+    /* generate cells */
     this.columns = {}
     this.rows = {}
     for (let column_group_index in column_groups_a) {
