@@ -290,6 +290,7 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         left = left + column["width"];
+        column.title.setAttribute("x", left)
         console.log(column["width"], left)
       }
     }
