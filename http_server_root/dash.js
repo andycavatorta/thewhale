@@ -384,6 +384,7 @@ class Grid_Folding{
         this.columns[column["title"]][0].container.setAttribute("x", left + `px`);
         this.columns[column["title"]][1].container.setAttribute("y", "200px");
         this.columns[column["title"]][1].container.setAttribute("x", left + `px`);
+        console.log(this.columns[column["title"]])
       }
     }
   };
