@@ -195,7 +195,7 @@ function create_rectangle(dom_parent, attributes_o = new Object()) {
   dom_parent.appendChild(rect)
   return rect;
 }
-function create_text(dom_parent, display_text, attributes_o = new Object()) {
+function create_text(dom_parent, Display_Text, attributes_o = new Object()) {
   var text_container = document.createElementNS( SVG_NS, "text");
   setAttributes(text_container, attributes_o);
   text_container.appendChild(document.createTextNode(""))
@@ -203,7 +203,7 @@ function create_text(dom_parent, display_text, attributes_o = new Object()) {
     var textnode = document.createTextNode(new_text);
     text_container.replaceChild(textnode, text_container.childNodes[0]);
   }
-  text_container.update_text(display_text);
+  text_container.update_text(Display_Text);
   dom_parent.appendChild(text_container)
   return text_container;
 }
@@ -241,17 +241,24 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
 }
 
 ////////// INTERFACE COMPONENT CONSTRUCTORS //////////
-class Panel_Static{
-  constructor(dom_parent, coordinates, classname) {
+class Grid_Folding{
+  constructor(
+      dom_parent, 
+      coordinates,
+      column_groups_a,
+      number_of_rows)
+    {
     this.dom_parent = dom_parent;
     this.coordinates = coordinates;
-    //this.classname = classname;
     this.container = create_group(
       this.dom_parent,
-      {
-        class:"status_block_name_value",
-      }
+      {}
     );
+    for (column_group in column_groups_a) {
+      console.log(column_group["fold"])
+    }
+
+    /*
     this.rectangle  = create_rectangle(
       this.container,
       {
@@ -262,6 +269,7 @@ class Panel_Static{
         height:coordinates[3],
       }
     )
+    */
   };
   show() {
 
@@ -271,18 +279,76 @@ class Panel_Static{
   }
 }
 
-
-
-
 function init() {
   canvas = document.getElementById( "top_level" );
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
 
-
-  new Panel_Static(
+  new Grid_Folding(
       canvas, 
-      [50,50,200,200], 
-      "panel_static"
+      [50,50],
+      [
+        {
+          fold:true,
+          columns:[
+            {title:"runtime", type:"Button_Text",width:80,action=""},
+            {title:"uptime", type:"Button_Text",width:80,action=""},
+            {title:"tb_git", type:"Button_Text",width:200,action=""},
+            {title:"app_git", type:"Button_Text",width:200,action=""},
+            {title:"os_version", type:"Button_Text",width:300,action=""},
+            {title:"ip_local", type:"Display_Text",width:140},
+            {title:"disk", type:"Display_Text",width:100},
+          ]
+        },
+        {
+          fold:false,
+          columns:[
+            {title:"computer_name", type:"Display_Text",width:140},
+            {title:"errors", type:"Button_Text",width:100,action=""},
+          ]
+        },
+        {
+          fold:true,
+          columns:[
+            {title:"status", type:"Button_Text",width:100},action="",
+            {title:"msgs", type:"Button_Text",width:100},
+            {title:"cpu", type:"Display_Graph",width:80, range:[0,100]},
+            {title:"mem", type:"Display_Graph",width:80, range:[0,100]},
+            {title:"temp", type:"Display_Graph",width:80, range:[0,100]},
+          ]
+        },
+        {
+          fold:false,
+          columns:[
+            {title:"mcu_name", type:"Display_Text",width:200},
+            {title:"emergency_stop", type:"Button_Text",width:100,action=""},
+            {title:"duty_cycle", type:"Display_Graph",width:120, range:[0,100]},
+            {title:"loop_error", type:"Display_Graph",width:120, range:[0,100]},
+            {title:"encoder_speed", type:"Display_Graph",width:120, range:[0,100]},
+          ]
+        },
+        {
+          fold:true,
+          columns:[
+            {title:"-10", type:"Button_Text",width:40,action=""},
+            {title:"-1", type:"Button_Text",width:40,action=""},
+            {title:"speed", type:"Button_Text",width:80,action=""},
+            {title:"+1", type:"Button_Text",width:40,action=""},
+            {title:"+10", type:"Button_Text",width:40,action=""},
+          ]
+        },
+        {
+          fold:true,
+          columns:[
+            {title:"24v", type:"Display_Text",width:60},
+            {title:"5v", type:"Display_Text",width:60},
+            {title:"mode", type:"Display_Text",width:80},
+            {title:"pid", type:"Display_Text",width:80},
+            {title:"ppr", type:"Display_Text",width:80},
+            {title:"firmware_version", type:"Display_Text",width:200},
+          ]
+        },
+      ],
+      16
     )
-
 }
+
