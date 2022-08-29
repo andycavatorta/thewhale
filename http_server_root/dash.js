@@ -317,11 +317,11 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         this.columns[column["title"]] = {};
-        this.columns[column["title"]].title = create_text(this.container, column["title"], {class:"grid_title"});
+        this.columns[column["title"]]["title"] = create_text(this.container, column["title"], {class:"grid_title"});
       }
     }
 
-    this.create_row("rotor_1")
+    this.create_row("controller")
     /*
     this.rectangle  = create_rectangle(
       this.container,
@@ -344,13 +344,11 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];        
         this.rows[row_name][column["title"]] = new Display_Text(this.container, column["title"], row_name, column["width"]);
-
+        this.columns[column["title"]][row_name] = this.rows[row_name][column["title"]]
       }
     }
     //this.rows[row_name]["runtime"] = new Display_Text(this.container, "runtime", row_name, );
   };
-
-
 
   update_layout() {
     var left = 0
@@ -359,8 +357,9 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         left = left + column["width"];
-        this.columns[column["title"]].title.setAttribute("y", "100px")
-        this.columns[column["title"]].title.setAttribute("x", left + `px`)
+        this.columns[column["title"]]["title"].setAttribute("y", "100px");
+        this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
+
       }
     }
   };
