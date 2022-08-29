@@ -344,8 +344,9 @@ class Grid_Folding{
     for (let column_group_index in this.column_groups_a) {
       let column_group = this.column_groups_a[column_group_index]
       for (let column_index in column_group["columns"]) {
-        let column = column_group["columns"][column_index];
-        console.log(column)
+        let column = column_group["columns"][column_index];        
+        this.rows[row_name][column["title"]] = new Display_Text(this.container, column["title"], row_name, column["width"]);
+
       }
     }
     //this.rows[row_name]["runtime"] = new Display_Text(this.container, "runtime", row_name, );
