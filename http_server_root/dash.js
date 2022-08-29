@@ -342,7 +342,7 @@ class Grid_Folding{
     this.rows[row_name] = {};
     this.rows[row_name]["title"] = row_name;
     for (let column_group_index in this.column_groups_a) {
-      let column_group = column_groups_a[column_group_index]
+      let column_group = this.column_groups_a[column_group_index]
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         console.log(column)
