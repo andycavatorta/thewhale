@@ -296,7 +296,7 @@ class Display_Text{
 //class Display_Graph
 
 var row_name_lookup = [
-  {computer_name:"controller",mcu_name:""},
+  {computer_name:"controller",mcu_name:"",y:60},
   {computer_name:"rotors0102",mcu_name:"rotor01",y:100},
   {computer_name:"rotors0102",mcu_name:"rotor02",y:140},
   {computer_name:"rotors0304",mcu_name:"rotor03",y:180},
@@ -379,12 +379,14 @@ class Grid_Folding{
         let column = column_group["columns"][column_index];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-        for (const row_number of Array(14).keys())
-        this.columns[column["title"]][row_number].text_container.setAttribute("y", column["y"] + `px`);
-        this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
-        this.columns[column["title"]][row_number].button_rect.setAttribute("y", column["y"] + `px`);
-        this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
-        this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
+        for (const row_number of Array(14).keys()){}
+          let y = row_name_lookup[row_number]["y"]
+          this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
+          this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
+          this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
+          this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
+          this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
+        }
 
         console.log(this.columns[column["title"]])
         left = left + column["width"]+5;
