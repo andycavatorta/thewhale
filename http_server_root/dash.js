@@ -290,11 +290,11 @@ function init() {
         {
           fold:true,
           columns:[
-            {title:"runtime", type:"Button_Text",width:80,action=""},
-            {title:"uptime", type:"Button_Text",width:80,action=""},
-            {title:"tb_git", type:"Button_Text",width:200,action=""},
-            {title:"app_git", type:"Button_Text",width:200,action=""},
-            {title:"os_version", type:"Button_Text",width:300,action=""},
+            {title:"runtime", type:"Button_Text",width:80,action:""},
+            {title:"uptime", type:"Button_Text",width:80,action:""},
+            {title:"tb_git", type:"Button_Text",width:200,action:""},
+            {title:"app_git", type:"Button_Text",width:200,action:""},
+            {title:"os_version", type:"Button_Text",width:300,action:""},
             {title:"ip_local", type:"Display_Text",width:140},
             {title:"disk", type:"Display_Text",width:100},
           ]
@@ -303,13 +303,13 @@ function init() {
           fold:false,
           columns:[
             {title:"computer_name", type:"Display_Text",width:140},
-            {title:"errors", type:"Button_Text",width:100,action=""},
+            {title:"errors", type:"Button_Text",width:100,action:""},
           ]
         },
         {
           fold:true,
           columns:[
-            {title:"status", type:"Button_Text",width:100},action="",
+            {title:"status", type:"Button_Text",width:100},action:"",
             {title:"msgs", type:"Button_Text",width:100},
             {title:"cpu", type:"Display_Graph",width:80, range:[0,100]},
             {title:"mem", type:"Display_Graph",width:80, range:[0,100]},
@@ -320,7 +320,7 @@ function init() {
           fold:false,
           columns:[
             {title:"mcu_name", type:"Display_Text",width:200},
-            {title:"emergency_stop", type:"Button_Text",width:100,action=""},
+            {title:"emergency_stop", type:"Button_Text",width:100,action:""},
             {title:"duty_cycle", type:"Display_Graph",width:120, range:[0,100]},
             {title:"loop_error", type:"Display_Graph",width:120, range:[0,100]},
             {title:"encoder_speed", type:"Display_Graph",width:120, range:[0,100]},
@@ -329,11 +329,11 @@ function init() {
         {
           fold:true,
           columns:[
-            {title:"-10", type:"Button_Text",width:40,action=""},
-            {title:"-1", type:"Button_Text",width:40,action=""},
-            {title:"speed", type:"Button_Text",width:80,action=""},
-            {title:"+1", type:"Button_Text",width:40,action=""},
-            {title:"+10", type:"Button_Text",width:40,action=""},
+            {title:"-10", type:"Button_Text",width:40,action:""},
+            {title:"-1", type:"Button_Text",width:40,action:""},
+            {title:"speed", type:"Button_Text",width:80,action:""},
+            {title:"+1", type:"Button_Text",width:40,action:""},
+            {title:"+10", type:"Button_Text",width:40,action:""},
           ]
         },
         {
