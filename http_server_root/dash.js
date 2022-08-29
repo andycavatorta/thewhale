@@ -254,7 +254,7 @@ class Grid_Folding{
       this.dom_parent,
       {}
     );
-    for (column_group in column_groups_a) {
+    for (let column_group in column_groups_a) {
       console.log(column_group)
     }
 
