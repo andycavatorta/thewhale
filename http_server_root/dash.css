@@ -26,6 +26,7 @@ svg {
   font-weight: lighter;
   font-size: 20px;
   color:#ffffff;
+  alignment-baseline: hanging;
 }
 
 .panel_static{
