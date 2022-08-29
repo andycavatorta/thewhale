@@ -256,7 +256,10 @@ class Grid_Folding{
     );
     for (let column_index in column_groups_a) {
       let column_group = column_groups_a[column_index]
-      console.log(column_group["columns"])
+      console.log(column_group["fold"])
+      for (let column in column_group["columns"]) {
+        console.log(column["title"])
+      }
     }
 
     /*
