@@ -289,7 +289,8 @@ class Grid_Folding{
       let column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
-        console.log(column["width"])
+        left = left + column["width"];
+        console.log(column["width"], left)
       }
     }
   };
