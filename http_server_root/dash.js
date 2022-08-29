@@ -377,7 +377,6 @@ class Grid_Folding{
       let column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
-        left = left + column["width"]+5;
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
         this.columns[column["title"]][0].text_container.setAttribute("y", "150px");
@@ -386,6 +385,7 @@ class Grid_Folding{
         this.columns[column["title"]][0].button_rect.setAttribute("x", left + `px`);
         this.columns[column["title"]][0].button_rect.setAttribute("width", column["width"] + `px`);
         console.log(this.columns[column["title"]])
+        left = left + column["width"]+5;
       }
     }
   };
