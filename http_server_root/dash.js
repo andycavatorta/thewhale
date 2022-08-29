@@ -255,7 +255,7 @@ class Grid_Folding{
       {}
     );
     for (column_group in column_groups_a) {
-      console.log(column_group["fold"])
+      console.log(column_group)
     }
 
     /*
