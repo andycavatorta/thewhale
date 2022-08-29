@@ -295,6 +295,25 @@ class Display_Text{
 }
 //class Display_Graph
 
+var row_name_lookup = [
+  (computer_name:"controller",mcu_name:""),
+  (computer_name:"rotors0102",mcu_name:"rotor01"),
+  (computer_name:"rotors0102",mcu_name:"rotor02"),
+  (computer_name:"rotors0304",mcu_name:"rotor03"),
+  (computer_name:"rotors0304",mcu_name:"rotor04"),
+  (computer_name:"rotors0506",mcu_name:"rotor05"),
+  (computer_name:"rotors0506",mcu_name:"rotor06"),
+  (computer_name:"rotors0708",mcu_name:"rotor07"),
+  (computer_name:"rotors0708",mcu_name:"rotor08"),
+  (computer_name:"rotors0910",mcu_name:"rotor09"),
+  (computer_name:"rotors0910",mcu_name:"rotor10"),
+  (computer_name:"rotors1112",mcu_name:"rotor11"),
+  (computer_name:"rotors1112",mcu_name:"rotor12"),
+  (computer_name:"rotors1314",mcu_name:"rotor13"),
+  (computer_name:"rotors1314",mcu_name:"rotor14")
+]
+
+
 class Grid_Folding{
   constructor(
       dom_parent, 
@@ -311,7 +330,7 @@ class Grid_Folding{
     );
     /* generate cells */
     this.columns = {}
-    this.rows = {}
+    this.rows = []
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index]
       for (let column_index in column_group["columns"]) {
@@ -320,8 +339,10 @@ class Grid_Folding{
         this.columns[column["title"]]["title"] = create_text(this.container, column["title"], {class:"grid_title"});
       }
     }
-
-    this.create_row("controller")
+    for(let row_name in row_name_lookup){
+      this.create_row(row_name)  
+    }
+    
     /*
     this.rectangle  = create_rectangle(
       this.container,
@@ -336,15 +357,15 @@ class Grid_Folding{
     */
     this.update_layout()
   };
-  create_row(row_name) {
-    this.rows[row_name] = {};
-    this.rows[row_name]["title"] = row_name;
+  create_row(row_number) {
+    this.rows[row_number] = {};
+    this.rows[row_number]["title"] = row_number;
     for (let column_group_index in this.column_groups_a) {
       let column_group = this.column_groups_a[column_group_index]
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];        
-        this.rows[row_name][column["title"]] = new Display_Text(this.container, column["title"], row_name, column["width"]);
-        this.columns[column["title"]][row_name] = this.rows[row_name][column["title"]]
+        this.rows[row_number][column["title"]] = new Display_Text(this.container, column["title"], row_number, column["width"]);
+        this.columns[column["title"]][row_number] = this.rows[row_number][column["title"]]
       }
     }
     //this.rows[row_name]["runtime"] = new Display_Text(this.container, "runtime", row_name, );
