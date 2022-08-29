@@ -30,6 +30,8 @@ svg {
   fill: #33ff33;
   z-index: 1;
   cursor: default;
+  width:300px;
+  height:200px;
 }
 
 
