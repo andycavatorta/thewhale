@@ -309,7 +309,7 @@ function init() {
         {
           fold:true,
           columns:[
-            {title:"status", type:"Button_Text",width:100},action:"",
+            {title:"status", type:"Button_Text",width:100,action:""},
             {title:"msgs", type:"Button_Text",width:100},
             {title:"cpu", type:"Display_Graph",width:80, range:[0,100]},
             {title:"mem", type:"Display_Graph",width:80, range:[0,100]},
