@@ -296,21 +296,21 @@ class Display_Text{
 //class Display_Graph
 
 var row_name_lookup = [
-  (computer_name:"controller",mcu_name:""),
-  (computer_name:"rotors0102",mcu_name:"rotor01"),
-  (computer_name:"rotors0102",mcu_name:"rotor02"),
-  (computer_name:"rotors0304",mcu_name:"rotor03"),
-  (computer_name:"rotors0304",mcu_name:"rotor04"),
-  (computer_name:"rotors0506",mcu_name:"rotor05"),
-  (computer_name:"rotors0506",mcu_name:"rotor06"),
-  (computer_name:"rotors0708",mcu_name:"rotor07"),
-  (computer_name:"rotors0708",mcu_name:"rotor08"),
-  (computer_name:"rotors0910",mcu_name:"rotor09"),
-  (computer_name:"rotors0910",mcu_name:"rotor10"),
-  (computer_name:"rotors1112",mcu_name:"rotor11"),
-  (computer_name:"rotors1112",mcu_name:"rotor12"),
-  (computer_name:"rotors1314",mcu_name:"rotor13"),
-  (computer_name:"rotors1314",mcu_name:"rotor14")
+  {computer_name:"controller",mcu_name:""},
+  {computer_name:"rotors0102",mcu_name:"rotor01"},
+  {computer_name:"rotors0102",mcu_name:"rotor02"},
+  {computer_name:"rotors0304",mcu_name:"rotor03"},
+  {computer_name:"rotors0304",mcu_name:"rotor04"},
+  {computer_name:"rotors0506",mcu_name:"rotor05"},
+  {computer_name:"rotors0506",mcu_name:"rotor06"},
+  {computer_name:"rotors0708",mcu_name:"rotor07"},
+  {computer_name:"rotors0708",mcu_name:"rotor08"},
+  {computer_name:"rotors0910",mcu_name:"rotor09"},
+  {computer_name:"rotors0910",mcu_name:"rotor10"},
+  {computer_name:"rotors1112",mcu_name:"rotor11"},
+  {computer_name:"rotors1112",mcu_name:"rotor12"},
+  {computer_name:"rotors1314",mcu_name:"rotor13"},
+  {computer_name:"rotors1314",mcu_name:"rotor14"}
 ]
 
 
