@@ -254,10 +254,11 @@ class Grid_Folding{
       this.dom_parent,
       {}
     );
-    for (let column_index in column_groups_a) {
-      let column_group = column_groups_a[column_index]
+    for (let column_group_index in column_groups_a) {
+      let column_group = column_groups_a[column_group_index]
       console.log(column_group["fold"])
-      for (let column in column_group["columns"]) {
+      for (let column_index in column_group["columns"]) {
+        let column = column_group["columns"][column_index]
         console.log(column["title"])
       }
     }
