@@ -29,6 +29,7 @@ svg {
   z-index: 10;
   alignment-baseline: hanging;
   stroke: white;
+  opacity: 1.0;
 }
 
 
