@@ -206,6 +206,7 @@ function websocket_message_handler(evt) {
         var _keys_ = Object.keys(message)
         if(_keys_.length==0){
           return
+        }
         /*
         var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
         var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
