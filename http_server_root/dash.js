@@ -151,6 +151,7 @@ function websocket_message_handler(evt) {
     var origin = topic_data_origin[2];
     switch (topic) {
       case "deadman":
+          grid_folding.set_row_segment_active()
           break;
       case "response_sdc_start_status":
           break;
@@ -403,19 +404,6 @@ class Grid_Folding{
     for(let row_ord in row_name_lookup){
       this.create_row(row_ord)  
     }
-    
-    /*
-    this.rectangle  = create_rectangle(
-      this.container,
-      {
-        class:classname,
-        x:coordinates[0],
-        y:coordinates[1],
-        width:coordinates[2],
-        height:coordinates[3],
-      }
-    )
-    */
     this.update_layout()
   };
   create_row(row_number) {
@@ -453,8 +441,11 @@ class Grid_Folding{
     }
   };
   set_row_segment_active(row_name, active_b) {
-    console.log(name_row_lookup[row_name])
+    console.log("aaaa", name_row_lookup[row_name])
   };
+  check_row_segment_stale(_this_) {
+    console.log("bbb", _this_)
+  }
   show() {
 
   };
@@ -539,5 +530,7 @@ function init() {
       },
     ],
   )
+  setInterval(grid_folding.check_row_segment_stale, 1000, grid_folding);
+
 }
 
