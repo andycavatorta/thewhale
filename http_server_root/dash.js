@@ -496,17 +496,17 @@ class Grid_Folding{
       }
     }
   };
-  update_layout(row, column, value) {
-
+  update_data(row, column, value) {
+    console.log(row, column, value)
 
 
 
   };
   set_row_segment_active(row_name, active_b) {
-    console.log("aaaa", name_row_lookup[row_name])
+    //console.log("aaaa", name_row_lookup[row_name])
   };
   check_row_segment_stale(_this_) {
-    console.log("bbb", _this_)
+    //console.log("bbb", _this_)
   }
   show() {
 
