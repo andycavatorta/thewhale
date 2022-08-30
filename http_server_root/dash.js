@@ -27,6 +27,48 @@ var websocket;
 
 var grid_folding;
 
+const row_name_lookup = [
+  {computer_name:"controller",mcu_name:""},
+  {computer_name:"rotors0102",mcu_name:"rotor01"},
+  {computer_name:"rotors0102",mcu_name:"rotor02"},
+  {computer_name:"rotors0304",mcu_name:"rotor03"},
+  {computer_name:"rotors0304",mcu_name:"rotor04"},
+  {computer_name:"rotors0506",mcu_name:"rotor05"},
+  {computer_name:"rotors0506",mcu_name:"rotor06"},
+  {computer_name:"rotors0708",mcu_name:"rotor07"},
+  {computer_name:"rotors0708",mcu_name:"rotor08"},
+  {computer_name:"rotors0910",mcu_name:"rotor09"},
+  {computer_name:"rotors0910",mcu_name:"rotor10"},
+  {computer_name:"rotors1112",mcu_name:"rotor11"},
+  {computer_name:"rotors1112",mcu_name:"rotor12"},
+  {computer_name:"rotors1314",mcu_name:"rotor13"},
+  {computer_name:"rotors1314",mcu_name:"rotor14"}
+]
+
+const name_row_lookup = {
+  controller:[0,segment_columns_left_a],
+  rotors0102:[1,segment_columns_left_a],
+  rotors0304:[3,segment_columns_left_a],
+  rotors0506:[5,segment_columns_left_a],
+  rotors0708:[7,segment_columns_left_a],
+  rotors0910:[9,segment_columns_left_a],
+  rotors1112:[11,segment_columns_left_a],
+  rotors1314:[13,segment_columns_left_a],
+  rotor01:[1,segment_columns_right_a],
+  rotor02:[2,segment_columns_right_a],
+  rotor03:[3,segment_columns_right_a],
+  rotor04:[4,segment_columns_right_a],
+  rotor05:[5,segment_columns_right_a],
+  rotor06:[6,segment_columns_right_a],
+  rotor07:[7,segment_columns_right_a],
+  rotor08:[8,segment_columns_right_a],
+  rotor09:[9,segment_columns_right_a],
+  rotor10:[10,segment_columns_right_a],
+  rotor11:[11,segment_columns_right_a],
+  rotor12:[12,segment_columns_right_a],
+  rotor13:[13,segment_columns_right_a],
+  rotor14:[14,segment_columns_right_a],
+}
 // ------------------- utils -------------------
 
 function setAttributes(element, attributes_o){
@@ -113,7 +155,7 @@ function websocket_connect() {
 
 function websocket_send(target,topic,message) {
     packet = JSON.stringify({ "target": target,"topic": topic,"message": message})
-    console.log("websocket_send", packet)
+    //console.log("websocket_send", packet)
     websocket.send(packet)
 }
 
@@ -142,24 +184,79 @@ function sendTrigger(command) {
     websocket.send(command)
 }
 
+
+
 function websocket_message_handler(evt) {
     //console.log(">> data received" + evt.data)
     var topic_data_origin = JSON.parse(evt.data);
-    console.log(topic_data_origin)
+    //console.log(topic_data_origin)
     var topic = topic_data_origin[0];
     var message = eval(topic_data_origin[1]);
     var origin = topic_data_origin[2];
+
+
+
+
+
+
     switch (topic) {
       case "deadman":
-          grid_folding.set_row_segment_active()
           break;
       case "response_sdc_start_status":
-          break;
+        var _keys_ = Object.keys(message)
+        if(_keys_.length==0){
+          return
+        /*
+        var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
+        var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
+        grid_folding.update_data(origin,"", message["encoder_ppr_value_motor1"])
+        grid_folding.update_data(origin,"", message["encoder_ppr_value_motor2"])
+        grid_folding.update_data(origin,"", message["firmware_version"])
+        grid_folding.update_data(origin,"", message["operating_mode_motor1"])
+        grid_folding.update_data(origin,"", message["operating_mode_motor2"])
+        grid_folding.update_data(origin,"", pid_1_str)
+        grid_folding.update_data(origin,"", pid_2_str)
+        */
+        break;
       case "response_sdc_runtime_status":
-          break;
+        var _keys_ = Object.keys(message)
+        if(_keys_.length==0){
+          return
+        }
+        /*
+        var volts_a = message["volts"].split(":")
+        grid_folding.update_data(origin,"", message["closed_loop_error_1"])
+        grid_folding.update_data(origin,"", message["closed_loop_error_2"])
+        grid_folding.update_data(origin,"", message["duty_cycle_1"])
+        grid_folding.update_data(origin,"", message["duty_cycle_2"])
+        grid_folding.update_data(origin,"", message["encoder_speed_relative_1"])
+        grid_folding.update_data(origin,"", message["encoder_speed_relative_2"])
+        grid_folding.update_data(origin,"", parseFloat(volts_a[1])/10)
+        grid_folding.update_data(origin,"", parseFloat(volts_a[2])/1000)
+        grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
+        grid_folding.update_data(origin,"emergency_stop", message["emergency_stop"])
+        */
+        break;
       case "response_computer_start_status":
+        /*
+        let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
+        let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
+        let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
+        grid_folding.update_data(origin,"local_ip", message["local_ip"])
+        grid_folding.update_data(origin,"tb_git", formatDate(tb_date))
+        grid_folding.update_data(origin,"app_git", formatDate(app_date))
+        grid_folding.update_data(origin,"os_version", os_version_str)
+        */
         break;
       case "response_computer_runtime_status":
+        let row = name_row_lookup[origin]
+        grid_folding.update_data(row,"temp", message["core_temp"])
+        grid_folding.update_data(row,"cpu", parseFloat( message["system_cpu"] + "%").toFixed(2))
+        grid_folding.update_data(row,"uptime", ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")
+        grid_folding.update_data(row,"runtime", ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")
+        grid_folding.update_data(row,"disk",(parseInt(message["system_disk"][0])/1000000000).toFixed(2) + "GB")
+        grid_folding.update_data(row,"mem", (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")
+        //grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
         break;
       case "response_high_power":
         break;
@@ -334,48 +431,6 @@ var segment_columns_right_a = [
   "firmware_version",
 ]
 
-var row_name_lookup = [
-  {computer_name:"controller",mcu_name:""},
-  {computer_name:"rotors0102",mcu_name:"rotor01"},
-  {computer_name:"rotors0102",mcu_name:"rotor02"},
-  {computer_name:"rotors0304",mcu_name:"rotor03"},
-  {computer_name:"rotors0304",mcu_name:"rotor04"},
-  {computer_name:"rotors0506",mcu_name:"rotor05"},
-  {computer_name:"rotors0506",mcu_name:"rotor06"},
-  {computer_name:"rotors0708",mcu_name:"rotor07"},
-  {computer_name:"rotors0708",mcu_name:"rotor08"},
-  {computer_name:"rotors0910",mcu_name:"rotor09"},
-  {computer_name:"rotors0910",mcu_name:"rotor10"},
-  {computer_name:"rotors1112",mcu_name:"rotor11"},
-  {computer_name:"rotors1112",mcu_name:"rotor12"},
-  {computer_name:"rotors1314",mcu_name:"rotor13"},
-  {computer_name:"rotors1314",mcu_name:"rotor14"}
-]
-
-var name_row_lookup = {
-  controller:[0,segment_columns_left_a],
-  rotors0102:[1,segment_columns_left_a],
-  rotors0304:[3,segment_columns_left_a],
-  rotors0506:[5,segment_columns_left_a],
-  rotors0708:[7,segment_columns_left_a],
-  rotors0910:[9,segment_columns_left_a],
-  rotors1112:[11,segment_columns_left_a],
-  rotors1314:[13,segment_columns_left_a],
-  rotor01:[1,segment_columns_right_a],
-  rotor02:[2,segment_columns_right_a],
-  rotor03:[3,segment_columns_right_a],
-  rotor04:[4,segment_columns_right_a],
-  rotor05:[5,segment_columns_right_a],
-  rotor06:[6,segment_columns_right_a],
-  rotor07:[7,segment_columns_right_a],
-  rotor08:[8,segment_columns_right_a],
-  rotor09:[9,segment_columns_right_a],
-  rotor10:[10,segment_columns_right_a],
-  rotor11:[11,segment_columns_right_a],
-  rotor12:[12,segment_columns_right_a],
-  rotor13:[13,segment_columns_right_a],
-  rotor14:[14,segment_columns_right_a],
-}
 
 class Grid_Folding{
   constructor(
@@ -439,6 +494,12 @@ class Grid_Folding{
         left = left + column["width"]+5;
       }
     }
+  };
+  update_layout(row, column, value) {
+
+
+
+
   };
   set_row_segment_active(row_name, active_b) {
     console.log("aaaa", name_row_lookup[row_name])
