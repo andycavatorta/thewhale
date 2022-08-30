@@ -57,7 +57,6 @@ svg {
   font-size: 20px;
   z-index: 10;
   opacity: 0.10;
-  fill: #cccccc;
 }
 
 .grid_cell_text_inactive{
@@ -68,7 +67,6 @@ svg {
   font-size: 20px;
   z-index: 10;
   opacity: 0.20;
-  fill: #333333;
 }
 
 .panel_static{
