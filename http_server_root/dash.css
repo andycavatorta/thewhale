@@ -41,12 +41,10 @@ svg {
   height:32px;
   fill: #33ff33;
   z-index: 1;
-  opacity: 0.10;
   cursor: default;
 }
 
 .grid_cell_box:hover {
-  opacity: 0.20;
   cursor: pointer;
 }
 
