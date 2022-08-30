@@ -50,19 +50,23 @@ svg {
 
 
 .grid_cell_text_active{
+  stroke: white;
   height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
+  z-index: 10;
   opacity: 0.10;
   fill: #cccccc;
 }
 
 .grid_cell_text_inactive{
+  stroke: white;
   height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
+  z-index: 10;
   opacity: 0.20;
   fill: #333333;
 }
