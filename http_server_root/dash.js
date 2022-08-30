@@ -295,31 +295,90 @@ class Display_Text{
 }
 //class Display_Graph
 
-var row_name_lookup = [
-  {computer_name:"controller",mcu_name:"",y:60},
-  {computer_name:"rotors0102",mcu_name:"rotor01",y:100},
-  {computer_name:"rotors0102",mcu_name:"rotor02",y:140},
-  {computer_name:"rotors0304",mcu_name:"rotor03",y:180},
-  {computer_name:"rotors0304",mcu_name:"rotor04",y:220},
-  {computer_name:"rotors0506",mcu_name:"rotor05",y:260},
-  {computer_name:"rotors0506",mcu_name:"rotor06",y:300},
-  {computer_name:"rotors0708",mcu_name:"rotor07",y:340},
-  {computer_name:"rotors0708",mcu_name:"rotor08",y:380},
-  {computer_name:"rotors0910",mcu_name:"rotor09",y:420},
-  {computer_name:"rotors0910",mcu_name:"rotor10",y:460},
-  {computer_name:"rotors1112",mcu_name:"rotor11",y:500},
-  {computer_name:"rotors1112",mcu_name:"rotor12",y:540},
-  {computer_name:"rotors1314",mcu_name:"rotor13",y:580},
-  {computer_name:"rotors1314",mcu_name:"rotor14",y:620}
+var segment_columns_left_a = [
+  "runtime",
+  "uptime",
+  "tb_git",
+  "app_git",
+  "os_version",
+  "ip_local",
+  "disk",
+  "computer_name",
+  "errors",
+  "status",
+  "msgs",
+  "cpu",
+  "mem",
+  "temp",
 ]
 
+var segment_columns_right_a = [
+  "mcu_name",
+  "emergency_stop",
+  "duty_cycle",
+  "loop_error",
+  "encoder_speed",
+  "-10",
+  "-1",
+  "speed",
+  "+1",
+  "+10",
+  "24v",
+  "5v",
+  "mode",
+  "pid",
+  "ppr",
+  "firmware_version",
+]
+
+var row_name_lookup = [
+  {computer_name:"controller",mcu_name:""},
+  {computer_name:"rotors0102",mcu_name:"rotor01"},
+  {computer_name:"rotors0102",mcu_name:"rotor02"},
+  {computer_name:"rotors0304",mcu_name:"rotor03"},
+  {computer_name:"rotors0304",mcu_name:"rotor04"},
+  {computer_name:"rotors0506",mcu_name:"rotor05"},
+  {computer_name:"rotors0506",mcu_name:"rotor06"},
+  {computer_name:"rotors0708",mcu_name:"rotor07"},
+  {computer_name:"rotors0708",mcu_name:"rotor08"},
+  {computer_name:"rotors0910",mcu_name:"rotor09"},
+  {computer_name:"rotors0910",mcu_name:"rotor10"},
+  {computer_name:"rotors1112",mcu_name:"rotor11"},
+  {computer_name:"rotors1112",mcu_name:"rotor12"},
+  {computer_name:"rotors1314",mcu_name:"rotor13"},
+  {computer_name:"rotors1314",mcu_name:"rotor14"}
+]
+
+var name_row_lookup = {
+  controller:[0,segment_columns_left_a],
+  rotors0102:[1,segment_columns_left_a],
+  rotors0304:[3,segment_columns_left_a],
+  rotors0506:[5,segment_columns_left_a],
+  rotors0708:[7,segment_columns_left_a],
+  rotors0910:[9,segment_columns_left_a],
+  rotors1112:[11,segment_columns_left_a],
+  rotors1314:[13,segment_columns_left_a],
+  rotor01:[1,segment_columns_right_a],
+  rotor02:[2,segment_columns_right_a],
+  rotor03:[3,segment_columns_right_a],
+  rotor04:[4,segment_columns_right_a],
+  rotor05:[5,segment_columns_right_a],
+  rotor06:[6,segment_columns_right_a],
+  rotor07:[7,segment_columns_right_a],
+  rotor08:[8,segment_columns_right_a],
+  rotor09:[9,segment_columns_right_a],
+  rotor10:[10,segment_columns_right_a],
+  rotor11:[11,segment_columns_right_a],
+  rotor12:[12,segment_columns_right_a],
+  rotor13:[13,segment_columns_right_a],
+  rotor14:[14,segment_columns_right_a],
+}
 
 class Grid_Folding{
   constructor(
       dom_parent, 
       coordinates,
-      column_groups_a,
-      row_names)
+      column_groups_a)
     {
     this.dom_parent = dom_parent;
     this.coordinates = coordinates;
@@ -370,7 +429,6 @@ class Grid_Folding{
     }
     //this.rows[row_name]["runtime"] = new Display_Text(this.container, "runtime", row_name, );
   };
-
   update_layout() {
     var left = 20
     for (let column_group_index in this.column_groups_a) {
@@ -379,7 +437,7 @@ class Grid_Folding{
         let column = column_group["columns"][column_index];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-        let y = 100
+        let y = 140
         for (const row_number of Array(14).keys()){
           this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
@@ -388,11 +446,13 @@ class Grid_Folding{
           this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
           y = y + 40;
         }
-
         console.log(this.columns[column["title"]])
         left = left + column["width"]+5;
       }
     }
+  };
+  set_row_segment_active(row_name, active_b) {
+    console.log(name_row_lookup[row_name])
   };
   show() {
 
@@ -407,77 +467,76 @@ function init() {
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
 
   new Grid_Folding(
-      canvas, 
-      [50,50],
-      [
-        {
-          foldable:true,
-          folded:false,
-          columns:[
-            {title:"runtime", type:"Button_Text",width:80,action:""},
-            {title:"uptime", type:"Button_Text",width:80,action:""},
-            {title:"tb_git", type:"Button_Text",width:200,action:""},
-            {title:"app_git", type:"Button_Text",width:200,action:""},
-            {title:"os_version", type:"Button_Text",width:300,action:""},
-            {title:"ip_local", type:"Display_Text",width:140},
-            {title:"disk", type:"Display_Text",width:100},
-          ]
-        },
-        {
-          foldable:false,
-          folded:false,
-          columns:[
-            {title:"computer_name", type:"Display_Text",width:140},
-            {title:"errors", type:"Button_Text",width:100,action:""},
-          ]
-        },
-        {
-          foldable:true,
-          folded:false,
-          columns:[
-            {title:"status", type:"Button_Text",width:100,action:""},
-            {title:"msgs", type:"Button_Text",width:100},
-            {title:"cpu", type:"Display_Graph",width:80, range:[0,100]},
-            {title:"mem", type:"Display_Graph",width:80, range:[0,100]},
-            {title:"temp", type:"Display_Graph",width:80, range:[0,100]},
-          ]
-        },
-        {
-          foldable:false,
-          folded:false,
-          columns:[
-            {title:"mcu_name", type:"Display_Text",width:200},
-            {title:"emergency_stop", type:"Button_Text",width:100,action:""},
-            {title:"duty_cycle", type:"Display_Graph",width:120, range:[0,100]},
-            {title:"loop_error", type:"Display_Graph",width:120, range:[0,100]},
-            {title:"encoder_speed", type:"Display_Graph",width:120, range:[0,100]},
-          ]
-        },
-        {
-          foldable:true,
-          folded:false,
-          columns:[
-            {title:"-10", type:"Button_Text",width:40,action:""},
-            {title:"-1", type:"Button_Text",width:40,action:""},
-            {title:"speed", type:"Button_Text",width:80,action:""},
-            {title:"+1", type:"Button_Text",width:40,action:""},
-            {title:"+10", type:"Button_Text",width:40,action:""},
-          ]
-        },
-        {
-          foldable:true,
-          folded:false,
-          columns:[
-            {title:"24v", type:"Display_Text",width:60},
-            {title:"5v", type:"Display_Text",width:60},
-            {title:"mode", type:"Display_Text",width:80},
-            {title:"pid", type:"Display_Text",width:80},
-            {title:"ppr", type:"Display_Text",width:80},
-            {title:"firmware_version", type:"Display_Text",width:200},
-          ]
-        },
-      ],
-      16
-    )
+    canvas, 
+    [50,50],
+    [
+      {
+        foldable:true,
+        folded:false,
+        columns:[
+          {title:"runtime", type:"Button_Text",width:80,action:""},
+          {title:"uptime", type:"Button_Text",width:80,action:""},
+          {title:"tb_git", type:"Button_Text",width:200,action:""},
+          {title:"app_git", type:"Button_Text",width:200,action:""},
+          {title:"os_version", type:"Button_Text",width:300,action:""},
+          {title:"ip_local", type:"Display_Text",width:140},
+          {title:"disk", type:"Display_Text",width:100},
+        ]
+      },
+      {
+        foldable:false,
+        folded:false,
+        columns:[
+          {title:"computer_name", type:"Display_Text",width:140},
+          {title:"errors", type:"Button_Text",width:100,action:""},
+        ]
+      },
+      {
+        foldable:true,
+        folded:false,
+        columns:[
+          {title:"status", type:"Button_Text",width:100,action:""},
+          {title:"msgs", type:"Button_Text",width:100},
+          {title:"cpu", type:"Display_Graph",width:80, range:[0,100]},
+          {title:"mem", type:"Display_Graph",width:80, range:[0,100]},
+          {title:"temp", type:"Display_Graph",width:80, range:[0,100]},
+        ]
+      },
+      {
+        foldable:false,
+        folded:false,
+        columns:[
+          {title:"mcu_name", type:"Display_Text",width:200},
+          {title:"emergency_stop", type:"Button_Text",width:100,action:""},
+          {title:"duty_cycle", type:"Display_Graph",width:120, range:[0,100]},
+          {title:"loop_error", type:"Display_Graph",width:120, range:[0,100]},
+          {title:"encoder_speed", type:"Display_Graph",width:120, range:[0,100]},
+        ]
+      },
+      {
+        foldable:true,
+        folded:false,
+        columns:[
+          {title:"-10", type:"Button_Text",width:40,action:""},
+          {title:"-1", type:"Button_Text",width:40,action:""},
+          {title:"speed", type:"Button_Text",width:80,action:""},
+          {title:"+1", type:"Button_Text",width:40,action:""},
+          {title:"+10", type:"Button_Text",width:40,action:""},
+        ]
+      },
+      {
+        foldable:true,
+        folded:false,
+        columns:[
+          {title:"24v", type:"Display_Text",width:60},
+          {title:"5v", type:"Display_Text",width:60},
+          {title:"mode", type:"Display_Text",width:80},
+          {title:"pid", type:"Display_Text",width:80},
+          {title:"ppr", type:"Display_Text",width:80},
+          {title:"firmware_version", type:"Display_Text",width:200},
+        ]
+      },
+    ],
+  )
 }
 
