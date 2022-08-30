@@ -54,6 +54,7 @@ svg {
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
+  opacity: 0.10;
   fill: #cccccc;
 }
 
@@ -62,6 +63,7 @@ svg {
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
+  opacity: 0.20;
   fill: #333333;
 }
 

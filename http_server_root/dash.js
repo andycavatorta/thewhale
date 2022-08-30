@@ -498,9 +498,10 @@ class Grid_Folding{
     }
   };
   update_data(row, column, value) {
-    console.log(row, column, value)
-
-
+    let row_number = row[0];
+    let row_titles = row[1];
+    //console.log(row, column, value)
+    this.rows[row_number][column].set_text(value)
 
   };
   set_row_segment_active(row_name, active_b) {
