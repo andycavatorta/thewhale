@@ -56,7 +56,6 @@ svg {
   font-weight: lighter;
   font-size: 20px;
   z-index: 10;
-  opacity: 0.01;
 }
 
 .grid_cell_text_inactive{
@@ -66,7 +65,6 @@ svg {
   font-weight: lighter;
   font-size: 20px;
   z-index: 10;
-  opacity: 0.05;
 }
 
 .panel_static{
