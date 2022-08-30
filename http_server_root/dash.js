@@ -25,6 +25,8 @@ var canvas = null;
 var background_rectangle = null;
 var websocket;
 
+var grid_folding;
+
 // ------------------- utils -------------------
 
 function setAttributes(element, attributes_o){
@@ -446,7 +448,6 @@ class Grid_Folding{
           this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
           y = y + 40;
         }
-        console.log(this.columns[column["title"]])
         left = left + column["width"]+5;
       }
     }
@@ -466,7 +467,7 @@ function init() {
   canvas = document.getElementById( "top_level" );
   var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
 
-  new Grid_Folding(
+  grid_folding = new Grid_Folding(
     canvas, 
     [50,50],
     [
