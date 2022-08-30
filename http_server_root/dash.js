@@ -45,6 +45,43 @@ const row_name_lookup = [
   {computer_name:"rotors1314",mcu_name:"rotor14"}
 ]
 
+
+const segment_columns_left_a = [
+  "runtime",
+  "uptime",
+  "tb_git",
+  "app_git",
+  "os_version",
+  "ip_local",
+  "disk",
+  "computer_name",
+  "errors",
+  "status",
+  "msgs",
+  "cpu",
+  "mem",
+  "temp",
+]
+
+const segment_columns_right_a = [
+  "mcu_name",
+  "emergency_stop",
+  "duty_cycle",
+  "loop_error",
+  "encoder_speed",
+  "-10",
+  "-1",
+  "speed",
+  "+1",
+  "+10",
+  "24v",
+  "5v",
+  "mode",
+  "pid",
+  "ppr",
+  "firmware_version",
+]
+
 const name_row_lookup = {
   controller:[0,segment_columns_left_a],
   rotors0102:[1,segment_columns_left_a],
@@ -395,42 +432,6 @@ class Display_Text{
   }
 }
 //class Display_Graph
-
-var segment_columns_left_a = [
-  "runtime",
-  "uptime",
-  "tb_git",
-  "app_git",
-  "os_version",
-  "ip_local",
-  "disk",
-  "computer_name",
-  "errors",
-  "status",
-  "msgs",
-  "cpu",
-  "mem",
-  "temp",
-]
-
-var segment_columns_right_a = [
-  "mcu_name",
-  "emergency_stop",
-  "duty_cycle",
-  "loop_error",
-  "encoder_speed",
-  "-10",
-  "-1",
-  "speed",
-  "+1",
-  "+10",
-  "24v",
-  "5v",
-  "mode",
-  "pid",
-  "ppr",
-  "firmware_version",
-]
 
 
 class Grid_Folding{
