@@ -388,7 +388,7 @@ class Display_Text{
     this.container = create_group(
       this.dom_parent,
       {
-        class:"grid_cell_box",
+        class:"grid_cell_container",
       }
     );
     this.text_container = create_text(this.container, " ", {class:"grid_cell_text_inactive"});
