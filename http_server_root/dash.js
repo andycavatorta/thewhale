@@ -535,7 +535,7 @@ function init() {
     [
       {
         foldable:true,
-        folded:false,
+        folded:true,
         columns:[
           {title:"runtime", type:"Button_Text",width:80,action:""},
           {title:"uptime", type:"Button_Text",width:80,action:""},
