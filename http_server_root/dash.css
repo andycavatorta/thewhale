@@ -32,6 +32,16 @@ svg {
   opacity: 1.0;
 }
 
+.grid_cell_container{
+  stroke: white;
+  stroke-width: .1px;
+  top:0px;
+  left:0px;
+  height:32px;
+  fill: #333333;
+  z-index: 1;
+  cursor: default;
+}
 
 .grid_cell_box{
   stroke: white;
