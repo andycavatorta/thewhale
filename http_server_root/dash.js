@@ -458,7 +458,6 @@ class Grid_Folding{
 
     for (var row_name in name_row_lookup){
       var row = name_row_lookup[row_name]
-      console.log("==============", row, row[0])
       this.update_data(row,"computer_name", row_name_lookup[row[0]]["computer_name"])
       this.update_data(row,"mcu_name", row_name_lookup[row[0]]["mcu_name"])
     }
@@ -501,8 +500,6 @@ class Grid_Folding{
     }
   };
   update_data(row, column, value) {
-    console.log("-------",row, column, value)
-    //console.log("-------",row, row_number, row_titles, column, value,this.rows[row_number])
     var row_number = row[0];
     var row_titles = row[1];
     this.rows[row_number][column].set_text(value)
