@@ -416,7 +416,7 @@ class Display_Text{
   }
   set_width(_width_){
     this.container.setAttribute("width", _width_ + `px`);
-    this.text_container.style.width = _width_ + `px`;
+    this.text_container.setAttribute("width", _width_ + `px`);
     this.button_rect.setAttribute("width", _width_ + `px`);
   }
   set_class(class_b){
@@ -487,7 +487,7 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
         if (column_group["folded"]) {
-          var _width_ = 36;
+          var _width_ = 0;
         }else{
           var _width_ = column["width"];
         }
@@ -497,12 +497,12 @@ class Grid_Folding{
         this.columns[column["title"]]["title"].setAttribute("width", _width_ + `px`);
         var y = 140
         for (const row_number of Array(15).keys()){
-          this.columns[column["title"]][row_number].set_width(_width_);
+          this.columns[column["title"]][row_number].set_width(_width_)
           this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
-          //this.columns[column["title"]][row_number].button_rect.setAttribute("width", _width_ + `px`);
+          this.columns[column["title"]][row_number].button_rect.setAttribute("width", _width_ + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("x", left + `px`);
           //this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
