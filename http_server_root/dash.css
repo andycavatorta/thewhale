@@ -35,14 +35,13 @@ svg {
 
 .grid_cell_box{
   stroke: white;
-  stroke-width: 2px;
+  stroke-width: 0.5px;
   top:0px;
   left:0px;
   height:32px;
   fill: #333333;
   z-index: 1;
   cursor: default;
-  opacity: 0.1;
 }
 
 .grid_cell_box:hover {
@@ -52,7 +51,6 @@ svg {
 
 .grid_cell_text_active{
   alignment-baseline: hanging;
-  height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 16px;
@@ -62,7 +60,6 @@ svg {
 
 .grid_cell_text_inactive{
   alignment-baseline: hanging;
-  height:36px;
   font-family: Jura;
   font-weight: lighter;
   font-size: 20px;
