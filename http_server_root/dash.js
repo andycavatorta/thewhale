@@ -68,7 +68,7 @@ const segment_columns_right_a = [
   "emergency_stop",
   "duty_cycle",
   "loop_error",
-  "encoder_speed",
+  "encoder",
   "-10",
   "-1",
   "speed",
@@ -527,7 +527,7 @@ function init() {
           {title:"uptime", type:"Button_Text",width:80,action:""},
           {title:"tb_git", type:"Button_Text",width:200,action:""},
           {title:"app_git", type:"Button_Text",width:200,action:""},
-          {title:"os_version", type:"Button_Text",width:300,action:""},
+          {title:"os_version", type:"Button_Text",width:200,action:""},
           {title:"local_ip", type:"Display_Text",width:140},
           {title:"disk", type:"Display_Text",width:100},
         ]
@@ -536,7 +536,7 @@ function init() {
         foldable:false,
         folded:false,
         columns:[
-          {title:"computer_name", type:"Display_Text",width:140},
+          {title:"computer_name", type:"Display_Text",width:160},
           {title:"errors", type:"Button_Text",width:100,action:""},
         ]
       },
@@ -556,10 +556,10 @@ function init() {
         folded:false,
         columns:[
           {title:"mcu_name", type:"Display_Text",width:200},
-          {title:"emergency_stop", type:"Button_Text",width:100,action:""},
+          {title:"emergency_stop", type:"Button_Text",width:200,action:""},
           {title:"duty_cycle", type:"Display_Graph",width:120, range:[0,100]},
           {title:"loop_error", type:"Display_Graph",width:120, range:[0,100]},
-          {title:"encoder_speed", type:"Display_Graph",width:120, range:[0,100]},
+          {title:"encoder", type:"Display_Graph",width:120, range:[0,100]},
         ]
       },
       {
