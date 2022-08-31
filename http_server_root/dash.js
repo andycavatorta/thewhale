@@ -472,18 +472,21 @@ class Grid_Folding{
   update_layout() {
     var left = 20
     for (let column_group_index in this.column_groups_a) {
-      let column_group = this.column_groups_a[column_group_index];
+      var column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
-        let column = column_group["columns"][column_index];
+        var column = column_group["columns"][column_index];
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
-        let y = 140
+        var y = 140
         for (const row_number of Array(14).keys()){
           this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("width", column["width"] + `px`);
+          this.columns[column["title"]][row_number].container.setAttribute("y", y + `px`);
+          this.columns[column["title"]][row_number].container.setAttribute("x", left + `px`);
+          this.columns[column["title"]][row_number].container.setAttribute("width", column["width"] + `px`);
           y = y + 40;
         }
         left = left + column["width"]+5;
