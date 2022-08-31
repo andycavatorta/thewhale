@@ -231,11 +231,6 @@ function websocket_message_handler(evt) {
     var message = eval(topic_data_origin[1]);
     var origin = topic_data_origin[2];
 
-
-
-
-
-
     switch (topic) {
       case "deadman":
           break;
@@ -246,6 +241,10 @@ function websocket_message_handler(evt) {
         }
         var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
         var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
+        var volts_a = message["volts"].split(":")
+        let row = name_row_lookup[origin]
+        grid_folding.update_data(origin,"", parseFloat(volts_a[1])/10)
+        grid_folding.update_data(origin,"", parseFloat(volts_a[2])/1000)
         grid_folding.update_data(origin,"", message["encoder_ppr_value_motor1"])
         grid_folding.update_data(origin,"", message["encoder_ppr_value_motor2"])
         grid_folding.update_data(origin,"", message["firmware_version"])
@@ -259,19 +258,18 @@ function websocket_message_handler(evt) {
         if(_keys_.length==0){
           return
         }
-        var volts_a = message["volts"].split(":")
+        let row = name_row_lookup[origin]
         grid_folding.update_data(origin,"", message["closed_loop_error_1"])
         grid_folding.update_data(origin,"", message["closed_loop_error_2"])
         grid_folding.update_data(origin,"", message["duty_cycle_1"])
         grid_folding.update_data(origin,"", message["duty_cycle_2"])
         grid_folding.update_data(origin,"", message["encoder_speed_relative_1"])
         grid_folding.update_data(origin,"", message["encoder_speed_relative_2"])
-        grid_folding.update_data(origin,"", parseFloat(volts_a[1])/10)
-        grid_folding.update_data(origin,"", parseFloat(volts_a[2])/1000)
         grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
         grid_folding.update_data(origin,"emergency_stop", message["emergency_stop"])
         break;
       case "response_computer_start_status":
+        let row = name_row_lookup[origin]
         grid_folding.update_data(row,"uptime", ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")
         grid_folding.update_data(row,"runtime", ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")
         let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
