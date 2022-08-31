@@ -399,7 +399,7 @@ class Display_Text{
       }
     )
     this.button_rect.class_ref = this
-    this.button_rect.setAttribute("style",`width:`+width+`px`);
+    //this.button_rect.setAttribute("style",`width:`+width+`px`);
     this.set_active(this.active);
     this.set_text(" ");
   }
