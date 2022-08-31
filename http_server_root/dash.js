@@ -415,8 +415,8 @@ class Display_Text{
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   }
   set_width(_width_){
-    this.container.setAttribute("width", _width_ + `px`);
-    this.text_container.setAttribute("width", _width_ + `px`);
+    this.container.style.width= _width_ + `px`;
+    //this.text_container.setAttribute("width", _width_ + `px`);
     this.button_rect.setAttribute("width", _width_ + `px`);
   }
   set_class(class_b){
