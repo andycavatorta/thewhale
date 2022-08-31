@@ -455,6 +455,7 @@ class Grid_Folding{
     }
 
     for (const row_number of Array(15).keys()){
+      console.log("+++++++",row_name_lookup[row_number])
       this.update_data(row_number,"computer_name", row_name_lookup[row_number]["computer_name"])
       this.update_data(row_number,"mcu_name", row_name_lookup[row_number]["mcu_name"])
     }
