@@ -487,7 +487,7 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
         if (column_group["folded"]) {
-          var _width_ = 0;
+          var _width_ = 36;
         }else{
           var _width_ = column["width"];
         }
