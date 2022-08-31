@@ -39,7 +39,7 @@ svg {
   left:0px;
   height:32px;
   fill: #333333;
-  z-index: 1;
+  z-index: 10;
   cursor: default;
 }
 
@@ -59,7 +59,6 @@ svg {
   cursor: pointer;
   fill: #444444;
 }
-
 
 .grid_cell_text_active{
   stroke: white;
