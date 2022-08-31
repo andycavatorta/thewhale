@@ -28,7 +28,7 @@ var websocket;
 var grid_folding;
 
 const row_name_lookup = [
-  {computer_name:"controller",mcu_name:""},
+  {computer_name:"controller",mcu_name:"rotor00"},
   {computer_name:"rotors0102",mcu_name:"rotor01"},
   {computer_name:"rotors0102",mcu_name:"rotor02"},
   {computer_name:"rotors0304",mcu_name:"rotor03"},
