@@ -481,6 +481,7 @@ class Grid_Folding{
       var column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
+        console.log("asdfasdf", column_group["folded"])
         if (column_group["folded"]) {
           var _width_ = 36;
         }else{
