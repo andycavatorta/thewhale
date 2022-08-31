@@ -35,7 +35,7 @@ svg {
 
 .grid_cell_box{
   stroke: white;
-  stroke-width: 1px;
+  stroke-width: .1px;
   top:0px;
   left:0px;
   height:32px;
@@ -52,6 +52,8 @@ svg {
 
 
 .grid_cell_text_active{
+  stroke: white;
+  stroke-width: 1px;
   alignment-baseline: hanging;
   height:36px;
   font-family: Jura;
@@ -62,6 +64,8 @@ svg {
 }
 
 .grid_cell_text_inactive{
+  stroke: white;
+  stroke-width: 1px;
   alignment-baseline: hanging;
   height:36px;
   font-family: Jura;
