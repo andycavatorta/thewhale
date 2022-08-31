@@ -502,7 +502,7 @@ class Grid_Folding{
           this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
           y = y + 40;
         }
-        left = left + column["width"]+5;
+        left = left + _width_ + 5;
       }
     }
   };
