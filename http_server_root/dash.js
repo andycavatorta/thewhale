@@ -279,7 +279,6 @@ function websocket_message_handler(evt) {
         grid_folding.update_data(row,"tb_git", formatDate(tb_date))
         grid_folding.update_data(row,"app_git", formatDate(app_date))
         grid_folding.update_data(row,"os_version", os_version_str)
-        grid_folding.update_data(row,"computer_name", origin)
         break;
       case "response_computer_runtime_status":
         var row = name_row_lookup[origin]
@@ -454,6 +453,11 @@ class Grid_Folding{
     for(let row_ord in row_name_lookup){
       this.create_row(row_ord)  
     }
+
+    for (const row_number of Array(15).keys()){
+      grid_folding.update_data(row_number,"computer_name", row_name_lookup[row_number]["computer_name"])
+      grid_folding.update_data(row_number,"mcu_name", row_name_lookup[row_number]["mcu_name"])
+
     this.update_layout()
   };
   create_row(row_number) {
