@@ -252,6 +252,8 @@ class Main(threading.Thread):
 
     def get_computer_start_status(self):
         data = {
+            "system_uptime":self.tb.get_os_uptime(),
+            "system_runtime":self.tb.get_script_runtime(),
             "hostname":self.tb.get_hostname(),
             "local_ip":self.tb.get_local_ip(),
             "online_status":self.tb.get_online_status(),
@@ -270,8 +272,6 @@ class Main(threading.Thread):
             #"wifi_strength":self.tb.get_wifi_strength(),
             "core_voltage":self.tb.get_core_voltage(),
             "system_cpu":self.tb.get_system_cpu(),
-            "system_uptime":self.tb.get_os_uptime(),
-            "system_runtime":self.tb.get_script_runtime(),
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
             "current_time":time.time()
