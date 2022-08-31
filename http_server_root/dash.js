@@ -501,7 +501,7 @@ class Grid_Folding{
   update_data(row, column, value) {
     var row_number = row[0];
     var row_titles = row[1];
-    console.log(row, row_number, row_titles, column, value)
+    console.log("-------",row, row_number, row_titles, column, value,this.rows[row_number])
     this.rows[row_number][column].set_text(value)
 
   };
