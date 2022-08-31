@@ -52,7 +52,7 @@ const segment_columns_left_a = [
   "tb_git",
   "app_git",
   "os_version",
-  "ip_local",
+  "local_ip",
   "disk",
   "computer_name",
   "errors",
@@ -527,7 +527,7 @@ function init() {
           {title:"tb_git", type:"Button_Text",width:200,action:""},
           {title:"app_git", type:"Button_Text",width:200,action:""},
           {title:"os_version", type:"Button_Text",width:300,action:""},
-          {title:"ip_local", type:"Display_Text",width:140},
+          {title:"local_ip", type:"Display_Text",width:140},
           {title:"disk", type:"Display_Text",width:100},
         ]
       },
