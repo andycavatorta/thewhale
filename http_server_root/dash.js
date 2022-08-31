@@ -479,14 +479,13 @@ class Grid_Folding{
     var left = 20
     for (let column_group_index in this.column_groups_a) {
       var column_group = this.column_groups_a[column_group_index];
-      if (column_group["folded"]) {
-        var _width_ = 36;
-      }else{
-        var _width_ = column["width"];
-      }
-
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
+        if (column_group["folded"]) {
+          var _width_ = 36;
+        }else{
+          var _width_ = column["width"];
+        }
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
         this.columns[column["title"]]["title"].setAttribute("width", _width_ + `px`);
