@@ -399,11 +399,11 @@ class Display_Text{
         class:"grid_cell_box",
       }
     );
-    this.text_container = create_text(this.container, " ", {class:"grid_title"});
+    this.text_container = create_text(this.container, " ", {class:"grid_cell_text_inactive"});
     this.button_rect  = create_rectangle(
       this.dom_parent,
       {
-        class:"grid_cell_text_active",
+        class:"grid_cell_box",
       }
     )
     this.button_rect.class_ref = this
@@ -424,9 +424,9 @@ class Display_Text{
   }
   set_class(class_b){
     if (class_b){
-      this.button_rect.setAttribute("class", "grid_cell_text_active");
+      this.text_container.setAttribute("class", "grid_cell_text_active");
     } else {
-      this.button_rect.setAttribute("class", "grid_cell_text_inactive");
+      this.text_container.setAttribute("class", "grid_cell_text_inactive");
     }
     
   }
