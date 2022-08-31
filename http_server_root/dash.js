@@ -455,10 +455,12 @@ class Grid_Folding{
     }
 
     this.update_layout()
-    for (const row_number of Array(15).keys()){
-      console.log("+++++++",row_name_lookup[row_number])
-      this.update_data(row_number,"computer_name", row_name_lookup[row_number]["computer_name"])
-      this.update_data(row_number,"mcu_name", row_name_lookup[row_number]["mcu_name"])
+
+    for (var row_name of name_row_lookup){
+      var row = name_row_lookup[row_name]
+      console.log("+++++++",row)
+      this.update_data(row,"computer_name", row_name_lookup[row_number]["computer_name"])
+      this.update_data(row,"mcu_name", row_name_lookup[row_number]["mcu_name"])
     }
   };
   create_row(row_number) {
