@@ -243,15 +243,15 @@ function websocket_message_handler(evt) {
         var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
         var volts_a = message["volts"].split(":")
         var row = name_row_lookup[origin]
-        grid_folding.update_data(origin,"", parseFloat(volts_a[1])/10)
-        grid_folding.update_data(origin,"", parseFloat(volts_a[2])/1000)
-        grid_folding.update_data(origin,"", message["encoder_ppr_value_motor1"])
-        grid_folding.update_data(origin,"", message["encoder_ppr_value_motor2"])
-        grid_folding.update_data(origin,"", message["firmware_version"])
-        grid_folding.update_data(origin,"", message["operating_mode_motor1"])
-        grid_folding.update_data(origin,"", message["operating_mode_motor2"])
-        grid_folding.update_data(origin,"", pid_1_str)
-        grid_folding.update_data(origin,"", pid_2_str)
+        grid_folding.update_data(row,"", parseFloat(volts_a[1])/10)
+        grid_folding.update_data(row,"", parseFloat(volts_a[2])/1000)
+        grid_folding.update_data(row,"", message["encoder_ppr_value_motor1"])
+        grid_folding.update_data(row,"", message["encoder_ppr_value_motor2"])
+        grid_folding.update_data(row,"", message["firmware_version"])
+        grid_folding.update_data(row,"", message["operating_mode_motor1"])
+        grid_folding.update_data(row,"", message["operating_mode_motor2"])
+        grid_folding.update_data(row,"", pid_1_str)
+        grid_folding.update_data(row,"", pid_2_str)
         break;
       case "response_sdc_runtime_status":
         var _keys_ = Object.keys(message)
@@ -259,14 +259,14 @@ function websocket_message_handler(evt) {
           return
         }
         var row = name_row_lookup[origin]
-        grid_folding.update_data(origin,"", message["closed_loop_error_1"])
-        grid_folding.update_data(origin,"", message["closed_loop_error_2"])
-        grid_folding.update_data(origin,"", message["duty_cycle_1"])
-        grid_folding.update_data(origin,"", message["duty_cycle_2"])
-        grid_folding.update_data(origin,"", message["encoder_speed_relative_1"])
-        grid_folding.update_data(origin,"", message["encoder_speed_relative_2"])
-        grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
-        grid_folding.update_data(origin,"emergency_stop", message["emergency_stop"])
+        grid_folding.update_data(row,"", message["closed_loop_error_1"])
+        grid_folding.update_data(row,"", message["closed_loop_error_2"])
+        grid_folding.update_data(row,"", message["duty_cycle_1"])
+        grid_folding.update_data(row,"", message["duty_cycle_2"])
+        grid_folding.update_data(row,"", message["encoder_speed_relative_1"])
+        grid_folding.update_data(row,"", message["encoder_speed_relative_2"])
+        //grid_folding.set_row_segment_active(row,parseInt(message["current_time"]))
+        grid_folding.update_data(row,"emergency_stop", message["emergency_stop"])
         break;
       case "response_computer_start_status":
         var row = name_row_lookup[origin]
@@ -275,10 +275,10 @@ function websocket_message_handler(evt) {
         let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
         let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
         let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
-        grid_folding.update_data(origin,"local_ip", message["local_ip"])
-        grid_folding.update_data(origin,"tb_git", formatDate(tb_date))
-        grid_folding.update_data(origin,"app_git", formatDate(app_date))
-        grid_folding.update_data(origin,"os_version", os_version_str)
+        grid_folding.update_data(row,"local_ip", message["local_ip"])
+        grid_folding.update_data(row,"tb_git", formatDate(tb_date))
+        grid_folding.update_data(row,"app_git", formatDate(app_date))
+        grid_folding.update_data(row,"os_version", os_version_str)
         break;
       case "response_computer_runtime_status":
         var row = name_row_lookup[origin]
