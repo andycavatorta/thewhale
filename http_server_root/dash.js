@@ -451,21 +451,14 @@ class Grid_Folding{
       }
     }
     for(let row_ord in row_name_lookup){
-      this.create_row(row_ord)  
+      this.create_row(row_ord)
     }
 
     this.update_layout()
 
-
-
-    
-
-
-    for (var row_name in name_row_lookup){
-      console.log("+++++++",row_name,name_row_lookup[row_name])
-      //var row = row_name_lookup[row_name]
-      //this.update_data(row,"computer_name", row_name_lookup[row_number]["computer_name"])
-      //this.update_data(row,"mcu_name", row_name_lookup[row_number]["mcu_name"])
+    for (var row in name_row_lookup){
+      this.update_data(row,"computer_name", row_name_lookup[row_number]["computer_name"])
+      this.update_data(row,"mcu_name", row_name_lookup[row_number]["mcu_name"])
     }
   };
   create_row(row_number) {
