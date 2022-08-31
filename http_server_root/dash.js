@@ -456,12 +456,14 @@ class Grid_Folding{
 
     this.update_layout()
 
+    /*
     for (var row_name in name_row_lookup){
       var row = row_name_lookup[row_name]
       console.log("+++++++",row_name,row)
       this.update_data(row,"computer_name", row_name_lookup[row_number]["computer_name"])
       this.update_data(row,"mcu_name", row_name_lookup[row_number]["mcu_name"])
     }
+    */
   };
   create_row(row_number) {
     this.rows[row_number] = {};
@@ -501,9 +503,10 @@ class Grid_Folding{
     }
   };
   update_data(row, column, value) {
+    console.log("-------",row, column, value)
+    //console.log("-------",row, row_number, row_titles, column, value,this.rows[row_number])
     var row_number = row[0];
     var row_titles = row[1];
-    console.log("-------",row, row_number, row_titles, column, value,this.rows[row_number])
     this.rows[row_number][column].set_text(value)
 
   };
