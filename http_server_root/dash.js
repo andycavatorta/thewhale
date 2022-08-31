@@ -279,7 +279,7 @@ function websocket_message_handler(evt) {
         grid_folding.update_data(row,"tb_git", formatDate(tb_date))
         grid_folding.update_data(row,"app_git", formatDate(app_date))
         grid_folding.update_data(row,"os_version", os_version_str)
-        grid_folding.update_data(row,"Computer_name", origin)
+        grid_folding.update_data(row,"computer_name", origin)
         break;
       case "response_computer_runtime_status":
         var row = name_row_lookup[origin]
