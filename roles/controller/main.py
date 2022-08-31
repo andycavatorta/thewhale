@@ -86,38 +86,36 @@ class Poller(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.upstream_queue = upstream_queue
-        self.sleep_unit = 3
+        self.sleep_unit = 2.5
         self.start()
 
     def run(self):
         while True:
-            time.sleep(self.sleep_unit)
+            time.sleep(self.sleep_unit/2.0)
             self.tb.publish("request_computer_start_status","")
             self.tb.publish("request_sdc_start_status","")
             self.upstream_queue(b"request_computer_start_status", "", "controller", "controller")
+
+            time.sleep(self.sleep_unit/2.0)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
+
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
+
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
+
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(self.sleep_unit)
-            self.tb.publish("request_computer_runtime_status","")
-            self.tb.publish("request_sdc_runtime_status","")
-            self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-            time.sleep(self.sleep_unit)
-            self.tb.publish("request_computer_runtime_status","")
-            self.tb.publish("request_sdc_runtime_status","")
-            self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
+
 
 class High_Power():
     def __init__(self, dashboard_ref):

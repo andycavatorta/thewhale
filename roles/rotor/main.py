@@ -90,18 +90,18 @@ class Main(threading.Thread):
             "tb_scripts_version":self.tb.tb_get_scripts_version(),
             "app_git_timestamp":self.tb.app_get_git_timestamp(),
             "app_scripts_version":self.tb.app_get_scripts_version(),
+            "system_uptime":self.tb.get_os_uptime(),
+            "system_runtime":self.tb.get_script_runtime(),
         }
 
     def get_computer_runtime_status(self):
         return {
             "core_temp":self.tb.get_core_temp(),
-            #"wifi_strength":self.tb.get_wifi_strength(),
-            "core_voltage":self.tb.get_core_voltage(),
-            "system_cpu":self.tb.get_system_cpu(),
-            "system_uptime":self.tb.get_os_uptime(),
-            "system_runtime":self.tb.get_script_runtime(),
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
+            "system_cpu":self.tb.get_system_cpu(),
+            #"wifi_strength":self.tb.get_wifi_strength(),
+            #"core_voltage":self.tb.get_core_voltage(),
             "current_time":time.time()
         }
 
@@ -109,6 +109,7 @@ class Main(threading.Thread):
         if self.sdc.get_firmware_version() is None:
             return {}
         return {
+            "volts":self.sdc.get_volts(),
             "firmware_version":self.sdc.get_firmware_version(),
             "encoder_ppr_value_motor1":self.sdc.motor_1.get_encoder_ppr_value(),
             "operating_mode_motor1":self.sdc.motor_1.get_operating_mode(),
@@ -142,7 +143,6 @@ class Main(threading.Thread):
         emergency_stop = True if "emergency_stop" in flags_sdc else False
         return {
             "emergency_stop":emergency_stop,
-            "volts":self.sdc.get_volts(),
             "duty_cycle_1":self.sdc.motor_1.get_duty_cycle(),
             "duty_cycle_2":self.sdc.motor_2.get_duty_cycle(),
             "closed_loop_error_1":self.sdc.motor_1.get_closed_loop_error(),

@@ -244,7 +244,6 @@ function websocket_message_handler(evt) {
         if(_keys_.length==0){
           return
         }
-        /*
         var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
         var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
         grid_folding.update_data(origin,"", message["encoder_ppr_value_motor1"])
@@ -254,14 +253,12 @@ function websocket_message_handler(evt) {
         grid_folding.update_data(origin,"", message["operating_mode_motor2"])
         grid_folding.update_data(origin,"", pid_1_str)
         grid_folding.update_data(origin,"", pid_2_str)
-        */
         break;
       case "response_sdc_runtime_status":
         var _keys_ = Object.keys(message)
         if(_keys_.length==0){
           return
         }
-        /*
         var volts_a = message["volts"].split(":")
         grid_folding.update_data(origin,"", message["closed_loop_error_1"])
         grid_folding.update_data(origin,"", message["closed_loop_error_2"])
@@ -273,10 +270,10 @@ function websocket_message_handler(evt) {
         grid_folding.update_data(origin,"", parseFloat(volts_a[2])/1000)
         grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
         grid_folding.update_data(origin,"emergency_stop", message["emergency_stop"])
-        */
         break;
       case "response_computer_start_status":
-        /*
+        grid_folding.update_data(row,"uptime", ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")
+        grid_folding.update_data(row,"runtime", ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")
         let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
         let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
         let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
@@ -284,14 +281,11 @@ function websocket_message_handler(evt) {
         grid_folding.update_data(origin,"tb_git", formatDate(tb_date))
         grid_folding.update_data(origin,"app_git", formatDate(app_date))
         grid_folding.update_data(origin,"os_version", os_version_str)
-        */
         break;
       case "response_computer_runtime_status":
         let row = name_row_lookup[origin]
         grid_folding.update_data(row,"temp", message["core_temp"])
         grid_folding.update_data(row,"cpu", parseFloat( message["system_cpu"] + "%").toFixed(2))
-        grid_folding.update_data(row,"uptime", ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")
-        grid_folding.update_data(row,"runtime", ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")
         grid_folding.update_data(row,"disk",(parseInt(message["system_disk"][0])/1000000000).toFixed(2) + "GB")
         grid_folding.update_data(row,"mem", (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")
         //grid_folding.set_row_segment_active(origin,parseInt(message["current_time"]))
