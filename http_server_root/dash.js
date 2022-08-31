@@ -457,7 +457,7 @@ class Grid_Folding{
     for (const row_number of Array(15).keys()){
       grid_folding.update_data(row_number,"computer_name", row_name_lookup[row_number]["computer_name"])
       grid_folding.update_data(row_number,"mcu_name", row_name_lookup[row_number]["mcu_name"])
-
+    }
     this.update_layout()
   };
   create_row(row_number) {
