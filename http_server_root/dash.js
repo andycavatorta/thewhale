@@ -399,12 +399,13 @@ class Toggle{
         class:"grid_toggle_box",
       }
     )
+    this.container.instance_ref = this
     this.container.addEventListener("click",this.handle_click)
-    this.button_rect.instance_ref = this
     this.set_text("-");
   }
   handle_click(e){
     self = e.target.instance_ref
+    console.log()
     self.state = !self.state
     self.handle_toggle(self.column_title, self.column_group_index, self.state)
   }
