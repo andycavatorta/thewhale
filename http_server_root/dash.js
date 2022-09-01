@@ -379,12 +379,12 @@ class Toggle{
       dom_parent,
       column_title,
       column_group_index, 
-      handle_toggle)
+      event_handler)
     {
     this.dom_parent = dom_parent;
     this.column_title = column_title;
     this.column_group_index = column_group_index;
-    this.handle_toggle = handle_toggle;
+    this.event_handler = event_handler;
     this.state = true
     this.container = create_group(
       this.dom_parent,
@@ -408,7 +408,7 @@ class Toggle{
     self = e.target.instance_ref
     //console.log(e,self)
     self.state = !self.state
-    self.handle_toggle(self.column_title, self.column_group_index, self.state)
+    self.event_handler(self.column_title, self.column_group_index, self.state)
   }
   set_state(state){
     this.state = state
