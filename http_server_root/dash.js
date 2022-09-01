@@ -607,7 +607,7 @@ class Grid_Folding{
     console.log(self.column_groups_a)
     console.log(self.column_groups_a[column_group_index])
     self.column_groups_a[column_group_index].folded = !self.column_groups_a[column_group_index].folded
-    //this.update_layout()
+    this.update_layout()
   }
   set_row_segment_active(row_name, active_b) {
     //console.log("aaaa", name_row_lookup[row_name])
