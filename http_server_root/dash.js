@@ -600,7 +600,8 @@ class Grid_Folding{
     console.log(column_title)
     console.log(column_group_index)
     console.log(state)
-    console.log(this.column_groups_a[column_group_index]["folded"])
+    console.log(this.column_groups_a)
+    console.log(this.column_groups_a[column_group_index])
     this.column_groups_a[column_group_index].folded = !this.column_groups_a[column_group_index].folded
     //this.update_layout()
   }
