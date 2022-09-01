@@ -399,6 +399,7 @@ class Toggle{
         class:"grid_toggle_box",
       }
     )
+    this.text_container.instance_ref = this
     this.container.instance_ref = this
     this.container.addEventListener("click",this.handle_click)
     this.set_text("-");
