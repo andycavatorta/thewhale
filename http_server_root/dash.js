@@ -417,6 +417,11 @@ class Toggle{
     }
     //this.set_class(active)  
   }
+  set_left(left_px){
+    this.container.setAttribute("x", left + `px`);
+    this.button_rect.setAttribute("x", left + `px`);
+    this.text_container.setAttribute("x", left + `px`);
+  }
   get_active(){
     return this.active
   }
@@ -549,7 +554,8 @@ class Grid_Folding{
       var column_group = this.column_groups_a[column_group_index];
       if (column_group["foldable"]) {
         var _column_index_ = column_group["columns"][0]
-        console.log("@@@@@@@",this.toggles[column_group["columns"][0]["title"]])
+        var toggle = this.toggles[column_group["columns"][0]["title"]]
+        toggle.set_left(left)
       } 
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
