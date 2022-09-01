@@ -503,10 +503,10 @@ class Grid_Folding{
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("x", left + `px`);
-          this.columns[column["title"]][row_number].button_rect.setAttribute("width", _width_ + `px`);
+          //this.columns[column["title"]][row_number].button_rect.setAttribute("width", _width_ + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("x", left + `px`);
-          this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
+          //this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
           y = y + 40;
         }
         left = left + _width_ + 5;
