@@ -379,13 +379,14 @@ class Toggle{
       dom_parent,
       column_title,
       column_group_index, 
-      event_handler)
+      event_handler, 
+      calling_instance)
     {
-    console.log("event_handler=",event_handler)
     this.dom_parent = dom_parent;
     this.column_title = column_title;
     this.column_group_index = column_group_index;
     this.event_handler = event_handler;
+    this.calling_instance = calling_instance;
     this.state = true
     this.container = create_group(
       this.dom_parent,
@@ -409,7 +410,8 @@ class Toggle{
     self = e.target.instance_ref
     console.log(self)
     self.state = !self.state
-    self.event_handler(self.column_title, self.column_group_index, self.state)
+
+    self.event_handler(self.column_title, self.column_group_index, self.state, self.calling_instance)
   }
   set_state(state){
     this.state = state
@@ -518,7 +520,7 @@ class Grid_Folding{
       console.log("foldable",column_group.foldable)
       if (column_group.foldable){
         var column_title = column_group["columns"][0]["title"];
-        this.toggles[column_title] = new Toggle(dom_parent, column_title, column_group_index, this.handle_toggle)
+        this.toggles[column_title] = new Toggle(dom_parent, column_title, column_group_index, this.handle_toggle, this)
       }
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
@@ -597,8 +599,8 @@ class Grid_Folding{
     this.rows[row_number][column].set_text(value)
 
   };
-  handle_toggle(column_title, column_group_index, state){
-    console.log(this)
+  handle_toggle(column_title, column_group_index, state, self){
+    console.log(self)
     console.log(column_title)
     console.log(column_group_index)
     console.log(state)
