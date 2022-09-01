@@ -597,6 +597,7 @@ class Grid_Folding{
 
   };
   handle_toggle(column_title, column_group_index, state){
+    console.log(this)
     console.log(column_title)
     console.log(column_group_index)
     console.log(state)
