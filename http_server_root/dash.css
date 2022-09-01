@@ -21,11 +21,9 @@ svg {
 .grid_toggle_container{
   stroke: white;
   stroke-width: .1px;
-  top:0px;
-  left:0px;
   height:20px;
   height:20px;
-  fill: #334433;
+  fill: #999999;
   z-index: 10;
   cursor: default;
 }
@@ -48,11 +46,9 @@ svg {
 .grid_toggle_box{
   stroke: white;
   stroke-width: .1px;
-  top:0px;
-  left:0px;
   height:20px;
   height:20px;
-  fill: #333333;
+  fill: #999999;
   z-index: 1;
   cursor: default;
   opacity: .6;

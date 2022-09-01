@@ -427,6 +427,11 @@ class Toggle{
     this.button_rect.setAttribute("x", left_px + `px`);
     this.text_container.setAttribute("x", left_px + `px`);
   }
+  set_top(top_px){
+    this.container.setAttribute("y", top_px + `px`);
+    this.button_rect.setAttribute("y", top_px + `px`);
+    this.text_container.setAttribute("y", top_px + `px`);
+  }
   get_active(){
     return this.active
   }
@@ -561,6 +566,7 @@ class Grid_Folding{
         var _column_index_ = column_group["columns"][0]
         var toggle = this.toggles[column_group["columns"][0]["title"]]
         toggle.set_left(left)
+        toggle.set_top(75)
       } 
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
