@@ -401,7 +401,6 @@ class Toggle{
     )
     this.button_rect.addEventListener("click",this.handle_click)
     this.button_rect.instance_ref = this
-    this.set_active(true);
     this.set_text("-");
   }
   handle_click(e){
