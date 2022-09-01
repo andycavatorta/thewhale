@@ -418,9 +418,9 @@ class Toggle{
     //this.set_class(active)  
   }
   set_left(left_px){
-    this.container.setAttribute("x", left + `px`);
-    this.button_rect.setAttribute("x", left + `px`);
-    this.text_container.setAttribute("x", left + `px`);
+    this.container.setAttribute("x", left_px + `px`);
+    this.button_rect.setAttribute("x", left_px + `px`);
+    this.text_container.setAttribute("x", left_px + `px`);
   }
   get_active(){
     return this.active
