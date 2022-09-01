@@ -511,7 +511,7 @@ class Grid_Folding{
       console.log("foldable",column_group.foldable)
       if (column_group.foldable){
         var column_title = column_group["columns"][0]["title"];
-        this.toggles[toggle_name] = new Toggle(dom_parent, column_title, column_group_index, this.handle_toggle)
+        this.toggles[column_title] = new Toggle(dom_parent, column_title, column_group_index, this.handle_toggle)
       }
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
