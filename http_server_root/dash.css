@@ -18,6 +18,48 @@ svg {
   height:2100px;
 }
 
+.grid_toggle_container{
+  stroke: white;
+  stroke-width: .1px;
+  top:0px;
+  left:0px;
+  height:20px;
+  height:20px;
+  fill: #334433;
+  z-index: 10;
+  cursor: default;
+}
+
+.grid_toggle_text{
+  stroke: white;
+  stroke-width: 1px;
+  alignment-baseline: hanging;
+  height:20px;
+  height:20px;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 20px;
+  z-index: 10;
+  opacity: 1.0;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.grid_toggle_box{
+  stroke: white;
+  stroke-width: .1px;
+  top:0px;
+  left:0px;
+  height:20px;
+  height:20px;
+  fill: #333333;
+  z-index: 1;
+  cursor: default;
+  opacity: .6;
+}
+
+
+
 .grid_title{
   font-family: Jura;
   font-weight: lighter;

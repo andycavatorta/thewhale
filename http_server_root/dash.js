@@ -374,6 +374,59 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
 ////////// INTERFACE COMPONENT CONSTRUCTORS //////////
 //class Button_Text
 
+class Toggle{
+  constructor(
+      dom_parent,
+      column_title,
+      column_group_index, 
+      handle_toggle)
+    {
+    this.dom_parent = dom_parent;
+    this.column_title = column_title;
+    this.column_group_index = column_group_index;
+    this.handle_toggle = handle_toggle;
+    this.state = true
+    this.container = create_group(
+      this.dom_parent,
+      {
+        class:"grid_toggle_container",
+      }
+    );
+    this.text_container = create_text(this.container, " ", {class:"grid_toggle_text"});
+    this.button_rect  = create_rectangle(
+      this.dom_parent,
+      {
+        class:"grid_toggle_box",
+      }
+    )
+    this.button_rect.addEventListener("click",this.handle_click)
+    this.button_rect.instance_ref = this
+    this.set_active(true);
+    this.set_text("-");
+  }
+  handle_click(e){
+    self = e.target.instance_ref
+    self.state = !self.state
+    self.handle_toggle(self.column_title, self.column_group_index, self.state)
+  }
+  set_state(state){
+    this.state = state
+    if (state){
+      this.set_text("+")
+    }else{
+      this.set_text("+")
+    }
+    //this.set_class(active)  
+  }
+  get_active(){
+    return this.active
+  }
+  set_text(display_text){
+    let textnode = document.createTextNode(display_text);
+    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+  }
+}
+
 class Display_Text{
   constructor(
       dom_parent,
@@ -452,9 +505,14 @@ class Grid_Folding{
     /* generate cells */
     this.columns = {}
     this.rows = []
+    this.toggles = {}
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index]
       console.log("foldable",column_group.foldable)
+      if (column_group.foldable){
+        var column_title = column_group["columns"][0]["title"];
+        this.toggles[toggle_name] = new Toggle(dom_parent, column_title, column_group_index, this.handle_toggle)
+      }
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         this.columns[column["title"]] = {};
@@ -464,8 +522,6 @@ class Grid_Folding{
     for(let row_ord in row_name_lookup){
       this.create_row(row_ord)
     }
-
-
 
     this.update_layout()
 
@@ -530,6 +586,9 @@ class Grid_Folding{
     this.rows[row_number][column].set_text(value)
 
   };
+  handle_toggle(column_title, column_group_index, state){
+    console.log(column_title, column_group_index, state)
+  }
   set_row_segment_active(row_name, active_b) {
     //console.log("aaaa", name_row_lookup[row_name])
   };
