@@ -561,9 +561,6 @@ class Grid_Folding{
       } 
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
-
-
-
         if (column_group["folded"]) {
           var _width_ = 36;
         }else{
@@ -600,7 +597,9 @@ class Grid_Folding{
 
   };
   handle_toggle(column_title, column_group_index, state){
-    console.log(column_title, column_group_index, state)
+    console.log(column_title, column_group_index, state, this.column_groups_a[column_group_index].folded)
+    this.column_groups_a[column_group_index].folded = !this.column_groups_a[column_group_index].folded
+    this.update_layout()
   }
   set_row_segment_active(row_name, active_b) {
     //console.log("aaaa", name_row_lookup[row_name])
