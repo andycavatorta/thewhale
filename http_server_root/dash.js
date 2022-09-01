@@ -381,6 +381,7 @@ class Toggle{
       column_group_index, 
       event_handler)
     {
+    console.log("event_handler=",event_handler)
     this.dom_parent = dom_parent;
     this.column_title = column_title;
     this.column_group_index = column_group_index;
@@ -406,7 +407,7 @@ class Toggle{
   }
   handle_click(e){
     self = e.target.instance_ref
-    //console.log(e,self)
+    console.log(self)
     self.state = !self.state
     self.event_handler(self.column_title, self.column_group_index, self.state)
   }
