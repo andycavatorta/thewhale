@@ -454,6 +454,7 @@ class Grid_Folding{
     this.rows = []
     for (let column_group_index in column_groups_a) {
       let column_group = column_groups_a[column_group_index]
+      console.log("foldable",column_group.foldable)
       for (let column_index in column_group["columns"]) {
         let column = column_group["columns"][column_index];
         this.columns[column["title"]] = {};
@@ -463,6 +464,8 @@ class Grid_Folding{
     for(let row_ord in row_name_lookup){
       this.create_row(row_ord)
     }
+
+
 
     this.update_layout()
 
@@ -507,7 +510,6 @@ class Grid_Folding{
           }else{
             this.columns[column["title"]][row_number].set_width(_width_, false)
           }
-          
           this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
