@@ -415,10 +415,14 @@ class Display_Text{
     let textnode = document.createTextNode(display_text);
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   }
-  set_width(_width_){
+  set_width(_width_, remove_text = false){
     this.container.setAttribute("width", _width_ + `px`);
-    this.text_container.setAttribute("style",`width:`+ _width_ +`px`);
     this.button_rect.setAttribute("width", _width_ + `px`);
+    if (remove_text) {
+      this.text_container.setAttribute("style",`visibility:hidden`);
+    }else{
+      this.text_container.setAttribute("style",`visibility:visible`);
+    }
   }
   set_class(class_b){
     if (class_b){
@@ -487,18 +491,23 @@ class Grid_Folding{
       var column_group = this.column_groups_a[column_group_index];
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
+
         if (column_group["folded"]) {
           var _width_ = 36;
         }else{
           var _width_ = column["width"];
         }
-        console.log("asdfasdf", column_group["folded"], _width_)
         this.columns[column["title"]]["title"].setAttribute("y", "100px");
         this.columns[column["title"]]["title"].setAttribute("x", left + `px`);
         this.columns[column["title"]]["title"].setAttribute("width", _width_ + `px`);
         var y = 140
         for (const row_number of Array(15).keys()){
-          this.columns[column["title"]][row_number].set_width(_width_)
+          if (column_group["folded"]){
+            this.columns[column["title"]][row_number].set_width(_width_, true)
+          }else{
+            this.columns[column["title"]][row_number].set_width(_width_, false)
+          }
+          
           this.columns[column["title"]][row_number].text_container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].text_container.setAttribute("x", left + `px`);
           this.columns[column["title"]][row_number].button_rect.setAttribute("y", y + `px`);
