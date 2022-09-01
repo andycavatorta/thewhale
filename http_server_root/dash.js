@@ -548,7 +548,8 @@ class Grid_Folding{
     for (let column_group_index in this.column_groups_a) {
       var column_group = this.column_groups_a[column_group_index];
       if (column_group["foldable"]) {
-        console.log("@@@@@@@",this.toggles[column_index])
+        var _column_index_ = column_group["columns"][0]
+        console.log("@@@@@@@",this.toggles[column_group["columns"][0]["title"]])
       } 
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
