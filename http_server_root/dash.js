@@ -217,7 +217,6 @@ function websocket_close() {
 
 function sendTrigger(command) {
     console.log("Sending command ", command)
-    console.log("=====================================================================")
     websocket.send(command)
 }
 
@@ -337,6 +336,8 @@ function create_text(dom_parent, display_text, attributes_o = new Object()) {
   dom_parent.appendChild(text_container)
   return text_container;
 }
+
+
 function create_group(dom_parent, attributes_o = new Object()){
   var group = document.createElementNS( SVG_NS, "g");
   setAttributes(group, attributes_o);
@@ -415,8 +416,8 @@ class Display_Text{
     this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
   }
   set_width(_width_){
-    this.container.style.width= _width_ + `px`;
-    //this.text_container.setAttribute("width", _width_ + `px`);
+    this.container.setAttribute("width", _width_ + `px`);
+    this.text_container.textLength = _width_ + `px`;
     this.button_rect.setAttribute("width", _width_ + `px`);
   }
   set_class(class_b){
@@ -487,7 +488,7 @@ class Grid_Folding{
       for (let column_index in column_group["columns"]) {
         var column = column_group["columns"][column_index];
         if (column_group["folded"]) {
-          var _width_ = 36;
+          var _width_ = 0;
         }else{
           var _width_ = column["width"];
         }
@@ -505,7 +506,7 @@ class Grid_Folding{
           this.columns[column["title"]][row_number].button_rect.setAttribute("width", _width_ + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("y", y + `px`);
           this.columns[column["title"]][row_number].container.setAttribute("x", left + `px`);
-          //this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
+          this.columns[column["title"]][row_number].container.setAttribute("width", _width_ + `px`);
           y = y + 40;
         }
         left = left + _width_ + 5;
