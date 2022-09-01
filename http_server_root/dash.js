@@ -595,7 +595,7 @@ function init() {
       },
       {
         foldable:true,
-        folded:false,
+        folded:true,
         columns:[
           {title:"-10", type:"Button_Text",width:40,action:""},
           {title:"-1", type:"Button_Text",width:40,action:""},
@@ -606,7 +606,7 @@ function init() {
       },
       {
         foldable:true,
-        folded:false,
+        folded:true,
         columns:[
           {title:"24v", type:"Display_Text",width:60},
           {title:"5v", type:"Display_Text",width:60},
