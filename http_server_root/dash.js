@@ -405,7 +405,7 @@ class Toggle{
   }
   handle_click(e){
     self = e.target.instance_ref
-    console.log()
+    console.log(e,self)
     self.state = !self.state
     self.handle_toggle(self.column_title, self.column_group_index, self.state)
   }
