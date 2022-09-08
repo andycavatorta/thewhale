@@ -1200,4 +1200,4 @@ function check_for_stale_rows(){
   controllers["rotors1314"].check_if_timestamp_is_fresh()
 }
 
-setInterval(check_for_stale_rows, 1000);
+setInterval(check_for_stale_rows, 3000);
