@@ -128,10 +128,13 @@ class High_Power():
         GPIO.setup(self.pin_number, GPIO.OUT)
         self.set_state(False)
     def set_state(self, state_bool):
+        print("High_Power.set_state 0", state_bool)
         self.state_bool = state_bool
         if self.state_bool:
+            print("High_Power.set_state 1", self.state_bool)
             GPIO.output(self.pin_number, GPIO.HIGH)
         else:
+            print("High_Power.set_state 2", self.state_bool)
             GPIO.output(self.pin_number, GPIO.LOW)
         self.dashboard_ref("response_high_power", self.state_bool, "controller", "controller")
     def get_state(self):
