@@ -335,8 +335,8 @@ class Main(threading.Thread):
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
-                print(">>>>>>>>>>", origin, type(origin))
-                if origin == "controller":
+                print(">>>>>>>>>>", topic, message, origin, destination)
+                if origin == "dashboard":
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
