@@ -332,11 +332,11 @@ class Main(threading.Thread):
         while True:
             try:
                 topic, message, origin, destination = self.queue.get(True)
+                print(topic, message, origin, destination)
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 if origin == "dashboard":
-                    print(topic, message, origin, destination)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -347,6 +347,7 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.app_pull_from_github()
                         if topic=="request_high_power":
+                            print("+++run",)
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                         if topic in DASHBOARD_NOTES_TOPICS:
