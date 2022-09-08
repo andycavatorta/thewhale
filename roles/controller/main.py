@@ -86,36 +86,38 @@ class Poller(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.upstream_queue = upstream_queue
-        self.sleep_unit = 2.5
+        self.sleep_unit = 3
         self.start()
 
     def run(self):
         while True:
-            time.sleep(self.sleep_unit/2.0)
+            time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_start_status","")
             self.tb.publish("request_sdc_start_status","")
             self.upstream_queue(b"request_computer_start_status", "", "controller", "controller")
-
-            time.sleep(self.sleep_unit/2.0)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-
             time.sleep(self.sleep_unit)
             self.tb.publish("request_computer_runtime_status","")
             self.tb.publish("request_sdc_runtime_status","")
             self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
-
+            time.sleep(self.sleep_unit)
+            self.tb.publish("request_computer_runtime_status","")
+            self.tb.publish("request_sdc_runtime_status","")
+            self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
+            time.sleep(self.sleep_unit)
+            self.tb.publish("request_computer_runtime_status","")
+            self.tb.publish("request_sdc_runtime_status","")
+            self.upstream_queue(b"request_computer_runtime_status", "", "controller", "controller")
 
 class High_Power():
     def __init__(self, dashboard_ref):
@@ -252,8 +254,6 @@ class Main(threading.Thread):
 
     def get_computer_start_status(self):
         data = {
-            "system_uptime":self.tb.get_os_uptime(),
-            "system_runtime":self.tb.get_script_runtime(),
             "hostname":self.tb.get_hostname(),
             "local_ip":self.tb.get_local_ip(),
             "online_status":self.tb.get_online_status(),
@@ -272,6 +272,8 @@ class Main(threading.Thread):
             #"wifi_strength":self.tb.get_wifi_strength(),
             "core_voltage":self.tb.get_core_voltage(),
             "system_cpu":self.tb.get_system_cpu(),
+            "system_uptime":self.tb.get_os_uptime(),
+            "system_runtime":self.tb.get_script_runtime(),
             "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
             "current_time":time.time()
@@ -386,4 +388,3 @@ class Main(threading.Thread):
                 exc_type, exc_value, exc_traceback = sys.exc_info()
                 print(e, repr(traceback.format_exception(exc_type, exc_value,exc_traceback)))
 main = Main()
-
