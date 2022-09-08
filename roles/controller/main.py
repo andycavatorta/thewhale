@@ -332,10 +332,10 @@ class Main(threading.Thread):
         while True:
             try:
                 topic, message, origin, destination = self.queue.get(True)
-                print(topic, message, origin, destination)
                 if topic==b"deadman":
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
+                print(">>>>>>>>>>",topic, message, origin, destination)
                 if origin == "dashboard":
                     if destination=="controller":
                         if topic=="restart":
