@@ -15,7 +15,10 @@ class SimpleChat(WebSocket):
 
     def handleMessage(self):
        #print("got ws message", self.data)
-       print("handleMessage",self.data,tb_global)
+       #print("handleMessage",self.data)
+       data_decoded = json.loads(self.data)
+       #print("handleMessage",data_decoded["topic"])
+       upstream_queue.put((data_decoded["topic"], data_decoded["message"], "dashboard", data_decoded["target"]))
 
     def handleConnected(self):
         #print(self.address, 'connected')
@@ -61,6 +64,7 @@ class Message_Receiver(threading.Thread):
                 message_json = json.dumps([topic, message])
                 self.websocket.sendToClients(self.websocket,message_json)
                 # self.websocket.sendToClients(message_json)
+
             except queue.Empty:
                 self.generate_system_status()
             """
@@ -71,10 +75,10 @@ def status_receiver(message):
 def exception_receiver(message):
     message_receiver.add_to_queue("exception_event",message)
 
-def init(tb):
+def init(_upstream_queue_):
     global message_receiver
-    global tb_global
-    tb_global = tb
+    global upstream_queue
+    upstream_queue = _upstream_queue_
     server_address = ('0.0.0.0', 8080)
     httpd = HTTPServer(server_address, SimpleHTTPRequestHandler)
     httpd_thread = threading.Thread(target=httpd.serve_forever)
