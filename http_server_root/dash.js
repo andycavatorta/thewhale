@@ -1692,11 +1692,12 @@ class Machinery_Grid_Row{
     update_data(cell_name,data){
         switch(cell_name){
             case "system_runtime":
-                this.system_runtime.set_text(data)
+                let runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
+                this.system_runtime.set_label(runtime_str)
                 break;
             case "system_uptime":
                 let uptime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
-                this.system_uptime.set_text(uptime_str)
+                this.system_uptime.set_label(uptime_str)
                 break;
             case "app_git_timestamp":
                 this.app_git_timestamp
