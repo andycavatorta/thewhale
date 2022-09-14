@@ -108,11 +108,11 @@ function sendTrigger(command) {
 function websocket_message_handler(evt) {
     //console.log(">> data received" + evt.data)
     var topic_data_origin = JSON.parse(evt.data);
-    console.log(topic_data_origin)
+    //console.log(topic_data_origin)
     var topic = topic_data_origin[0];
-    var message = eval(topic_data_origin[1]);
+    var message = topic_data_origin[1];
     var origin = topic_data_origin[2];
-    //console.log(topic, message, origin)
+    console.log(topic, message, origin)
     return
     switch (topic) {
       case "deadman":
