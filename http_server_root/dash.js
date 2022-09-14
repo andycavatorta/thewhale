@@ -64,7 +64,6 @@ function websocket_message_handler(evt) {
     var message = topic_data_origin[1];
     var origin = topic_data_origin[2];
     console.log(topic, message, origin)
-    return
     switch (topic) {
         case "deadman":
             break;
