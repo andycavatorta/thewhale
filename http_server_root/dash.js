@@ -1820,6 +1820,7 @@ class Machinery_Grid_Row{
                 break;
             default:
                 console.log("error 1: column_name=", column_name, error)
+        }
     }
     update_layout(){
         var _x = parseInt(this.x)
