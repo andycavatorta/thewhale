@@ -125,7 +125,8 @@ function websocket_message_handler(evt) {
         case "response_computer_runtime_status":
             console.log(">>>",topic, message, origin)
             Data_Machinery_Rows[origin].system_cpu = message["system_cpu"]
-            machinery_grid.rows[origin]["system_cpu"].set_text(message["system_cpu"])
+            //machinery_grid.rows[origin]["system_cpu"].set_text(message["system_cpu"])
+            machinery_grid.rows[origin].update_data("system_cpu",message["system_cpu"])
             /*
             hosts[origin].temp.set_text(message["core_temp"])
             hosts[origin].voltage.set_text(message["core_voltage"])
@@ -1097,7 +1098,6 @@ class Machinery_Grid_Row{
         // add method to change lables of async button
         // add optional click capture for display box
         // add height parameter to all buttons
-
         this.dom_parent = dom_parent;
         this.host_name = host_name;
         this.rotor_1_name = rotor_1_name;
@@ -1106,7 +1106,6 @@ class Machinery_Grid_Row{
         this.y = y;
         this.column_data = column_data;
         //slow, double height
-
         var _x = parseInt(this.x)
         for(var column of this.column_data){
             var column_name = column[0]
@@ -1684,6 +1683,143 @@ class Machinery_Grid_Row{
     }
     set_collapse(c_b){
 
+    }
+    update_data(cell_name,data){
+        switch(cell_name){
+            case "system_runtime":
+                this.system_runtime.set_text(data)
+                break;
+            case "system_uptime":
+                this.system_uptime
+                break;
+            case "app_git_timestamp":
+                this.app_git_timestamp
+                break;
+            case "tb_git_timestamp":
+                this.tb_git_timestamp
+                break;
+            case "system_disk":
+                this.system_disk
+                break;
+            case "os_version":
+                this.os_version
+                break;
+            case "local_ip":
+                this.local_ip
+                break;
+            case "hostname":
+                this.hostname
+                break;
+            case "memory_free":
+                this.memory_free
+                break;
+            case "system_cpu":
+                this.system_cpu.set_text(data + "%")
+                break;
+            case "errors":
+                this.errors
+                break;
+            case "status":
+                this.status
+                break;
+            case "messages":
+                this.messages
+                break;
+            case "emergency_stop":
+                this.emergency_stop
+                break;
+            case "motor_1_name":
+                this.motor_1_name
+                break;
+            case "motor_2_name":
+                this.motor_2_name
+                break;
+            case "motor_1_slower_10x":
+                this.motor_1_slower_10x
+                break;
+            case "motor_2_slower_10x":
+                this.motor_2_slower_10x
+                break;
+            case "motor_1_slower_1x":
+                this.motor_1_slower_1x
+                break;
+            case "motor_2_slower_1x":
+                this.motor_2_slower_1x
+                break;
+            case "motor_1_value":
+                this.motor_1_value
+                break;
+            case "motor_2_value":
+                this.motor_2_value
+                break;
+            case "motor_1_faster_1x":
+                this.motor_1_faster_1x
+                break;
+            case "motor_2_faster_1x":
+                this.motor_2_faster_1x
+                break;
+            case "motor_1_faster_10x":
+                this.motor_1_faster_10x
+                break;
+            case "motor_2_faster_10x":
+                this.motor_2_faster_10x
+                break;
+            case "motor_1_closed_loop_error":
+                this.motor_1_closed_loop_error
+                break;
+            case "motor_2_closed_loop_error":
+                this.motor_2_closed_loop_error
+                break;
+            case "motor_1_duty_cycle":
+                this.motor_1_duty_cycle
+                break;
+            case "motor_2_duty_cycle":
+                this.motor_2_duty_cycle
+                break;
+            case "motor_1_encoder_speed":
+                this.motor_1_encoder_speed
+                break;
+            case "motor_2_encoder_speed":
+                this.motor_2_encoder_speed
+                break;
+            case "motor_1_pid_proportional_gain":
+                this.motor_1_pid_proportional_gain
+                break;
+            case "motor_2_pid_proportional_gain":
+                this.motor_2_pid_proportional_gain
+                break;
+            case "motor_1_pid_integral_gain":
+                this.motor_1_pid_integral_gain
+                break;
+            case "motor_2_pid_integral_gain":
+                this.motor_2_pid_integral_gain
+                break;
+            case "motor_1_pid_differential_gain":
+                this.motor_1_pid_differential_gain
+                break;
+            case "motor_2_pid_differential_gain":
+                this.motor_2_pid_differential_gain
+                break;
+            case "motor_1_operating_mode":
+                this.motor_1_operating_mode
+                break;
+            case "motor_2_operating_mode":
+                this.motor_2_operating_mode
+                break;
+            case "motor_1_encoder_ppr_value":
+                this.motor_1_encoder_ppr_value
+                break;
+            case "motor_2_encoder_ppr_value":
+                this.motor_2_encoder_ppr_value
+                break;
+            case "volts":
+                this.volts
+                break;
+            case "firmware_version":
+                this.firmware_version
+                break;
+            default:
+                console.log("error 1: column_name=", column_name, error)
     }
     update_layout(){
         var _x = parseInt(this.x)
