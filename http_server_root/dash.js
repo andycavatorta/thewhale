@@ -124,8 +124,9 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_computer_runtime_status":
+            console.log(topic, message, origin)
             Data_Machinery_Rows[origin].system_cpu = message["system_cpu"]
-            machinery_grid.rows[origin]["memory_free"].set_text(message["system_cpu"])
+            machinery_grid.rows[origin]["system_cpu"].set_text(message["system_cpu"])
             /*
             hosts[origin].temp.set_text(message["core_temp"])
             hosts[origin].voltage.set_text(message["core_voltage"])
