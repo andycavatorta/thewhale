@@ -140,10 +140,10 @@ function websocket_message_handler(evt) {
             break;
         case "response_high_power":
             if (message==true){
-                high_power_button.set_state(1)
+                //high_power_button.set_state(1)
             }
             else{
-                high_power_button.set_state(3)
+                //high_power_button.set_state(3)
             }
             break;
         case "response_emergency_stop":
