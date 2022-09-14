@@ -266,6 +266,9 @@ class Main(threading.Thread):
             "tb_scripts_version":self.tb.tb_get_scripts_version(),
             "app_git_timestamp":self.tb.app_get_git_timestamp(),
             "app_scripts_version":self.tb.app_get_scripts_version(),
+            "system_uptime":self.tb.get_os_uptime(),
+            "system_runtime":self.tb.get_script_runtime(),
+            "system_disk":self.tb.get_system_disk(),
         }
         self.dashboard("response_computer_start_status", data, "controller", "controller")
 
@@ -273,11 +276,8 @@ class Main(threading.Thread):
         data = {
             "core_temp":self.tb.get_core_temp(),
             #"wifi_strength":self.tb.get_wifi_strength(),
-            "core_voltage":self.tb.get_core_voltage(),
+            #"core_voltage":self.tb.get_core_voltage(),
             "system_cpu":self.tb.get_system_cpu(),
-            "system_uptime":self.tb.get_os_uptime(),
-            "system_runtime":self.tb.get_script_runtime(),
-            "system_disk":self.tb.get_system_disk(),
             "memory_free":self.tb.get_memory_free(),
             "current_time":time.time()
         }
@@ -336,7 +336,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 if origin == "dashboard":
-                    print("<<<<<<<<<<", topic, message, origin, destination)
+                    #print("<<<<<<<<<<", topic, message, origin, destination)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")

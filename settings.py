@@ -108,32 +108,32 @@ class Pitch_To_Rotor_Map():
         "C#5":["rotor","rotor"], #14(1)
     }
     midi=[
-        ["rotor04",145],
-        ["rotor05",0], # wrong, need to find h1
-        ["rotor03",75],
-        ["rotor06",190], # wrong, need to find h1
-        ["rotor07",0],
-        ["rotor02",120],
-        ["rotor08",0],
-        ["rotor09",130],
-        ["rotor10",145],
-        ["rotor11",140],
-        ["rotor12",130],
-        ["rotor01",220],
-        ["rotor04",195],
-        ["rotor05",0], # =150 need to fix chain
-        ["rotor03",130],
-        ["rotor06",190],
-        ["rotor07",0],
-        ["rotor02",235],
-        ["rotor08",0],
-        ["rotor09",260],
-        ["rotor10",300],
-        ["rotor11",240],
-        ["rotor12",260],
-        ["rotor01",235],
-        ["rotor13",210],
-        ["rotor14",260],
+        ["rotor04",50], #38, D3
+        ["rotor05",65], #39 D#3
+        ["rotor03",100], #40 E3
+        ["rotor06",105], #41
+        ["rotor07",150], #42
+        ["rotor01",140], #43
+        ["rotor08",130], #44
+        ["rotor09",140], #45
+        ["rotor10",165], #46
+        [], #47
+        ["rotor11",135], #48
+        ["rotor12",140], #49
+        ["rotor0",], #          50
+        ["rotor0",], #51
+        ["rotor0",], #52
+        ["rotor0",], #53
+        ["rotor0",], #54
+        ["rotor0",], #55
+        ["rotor0",], #56
+        ["rotor0",], #57
+        ["rotor0",], #58
+        ["rotor0",], #59
+        ["rotor0",], #60
+        ["rotor0",], #61
+        ["rotor0",], #62
+        ["rotor0",], #63
     ]
 
 

@@ -1,184 +1,61 @@
-/*
 
-"time_epoch"
-"time_local"
-"hostname"
-"path"
-"script_name"
-"class_name"
-"method_name"
-"args"
-"kwargs"
-"exception_type"
-"exception_message"
-"stacktrace":traceback.format_exception(exc_type, exc_value,exc_traceback)
-  Location
-  Line
-  type 
-  deets 
-
-*/
 
 
 var SVG_NS ="http://www.w3.org/2000/svg";
 var canvas = null;
-var background_rectangle = null;
-
 var websocket;
-var interface = {};
-const key_grid_x = [
-  0,
-  20,
-  100,
-  180,
-  260,
-  340,
-  420,
-  500,
-  580,
-  660,
-  740,
-  820,
-  900,
-  980,
-  1060,
-  1140,
-  1220,
-  1300,
-  1380,
-  1460,
-  1540,
-  1620,
-  1700,
-  1780,
-  1860,
-  1940,
-  ];
-const block_grid_x = [
-  0,
-  20, 
-  120,
-  220,
-  440,
-  660,
-  810,
-  965,
-  1090,
-  1215,
-  1340,
-  1415,
-  1585,
-  1700,
-  1800,
-  1900,
-  2250,
-  ];
-const block_grid_y = [
-  0,
-  40,
-  80,
-  120,
-  160,
-  200,
-  240,
-  280,
-  320,
-  360,
-  500,
-  550,
-  600,
-  650,
-  700,
-  750,
-  800,
-  850,
-  900,
-  950,
-  1000,
-  1050,
-  1100,
-  1150,
-  1200,
-  1250,
-  1300,
-  1450,
-  1500,
-  1550,
-  1600];
-
-hosts = {}
-controllers = {}
-
-// ------------------- utils -------------------
-
-function setAttributes(element, attributes_o){
-  for (key in attributes_o) {
-    if (attributes_o.hasOwnProperty(key)) {
-      element.setAttribute(key,attributes_o[key]);
-    }
-  }
-}
-
-function degrees_to_radians(radians){
-  return radians * Math.PI / 180;
-}
-
-function format_date(date_string){
-  var epoch_ms = Date.parse(date_string);
-  var dt = new Date(epoch_ms);
-  var year = dt.getFullYear();
-  var month = dt.getMonth() + 1;
-  var date = dt.getDate() +1;
-  var hours = dt.getHours();
-  var minutes = dt.getMinutes();
-  var seconds = dt.getSeconds();
-  return year+":"+month+":"+date+" "+hours+":"+minutes+":"+seconds;
-}
-
-function format_df(df_a){
-  //console.log(df_a)
-  df_1 = parseInt(df_a[0]);
-  df_2 = parseInt(df_a[1]);
-  df_1 = df_1 / 1000000000;
-  df_2 = df_2 / 1000000000;
-  return df_1.toFixed(2)+"/"+df_2.toFixed(2)+"GB";
-}
-
-function makeColor(num, den, error) { // receive numerator, denominator, error of interval
-  error = Math.abs(error);
-  var hex_a = ["00","11","22","33","44","55","66","77","88","99","aa","bb","cc","dd","ee","ff","ff"];
-  var red_str = "00";
-  var green_str = hex_a[num];
-  var blue_str = hex_a[den];
-  var color_str = "#" + red_str + green_str + blue_str;
-  return color_str;
-}
-
-function padTo2Digits(num) {
-  return num.toString().padStart(2, '0');
-}
-
-function formatDate(date) {
-  return (
-    [
-      date.getFullYear(),
-      padTo2Digits(date.getMonth() + 1),
-      padTo2Digits(date.getDate()),
-    ].join('-') +
-    ' ' +
-    [
-      padTo2Digits(date.getHours()),
-      padTo2Digits(date.getMinutes()),
-      padTo2Digits(date.getSeconds()),
-    ].join(':')
-  );
-}
 
 
+/* ##### NETWORK ##### */
 
-/* ========== N E T W O R K  ========== */
+/*
+topics:
+    deadman
+    response_sdc_start_status
+        firmware_version
+        encoder_ppr_value_motor1
+        encoder_ppr_value_motor2
+        operating_mode_motor1
+        operating_mode_motor2
+        pid_differential_gain_motor1
+        pid_integral_gain_motor1
+        pid_proportional_gain_motor1
+        pid_differential_gain_motor2
+        pid_integral_gain_motor2
+        pid_proportional_gain_motor2
+    response_sdc_runtime_status
+        emergency_stop
+        volts
+        closed_loop_error_1
+        closed_loop_error_2
+        duty_cycle_1
+        duty_cycle_2
+        encoder_speed_relative_1
+        encoder_speed_relative_2
+        motor_command_applied_1
+        motor_command_applied_2
+        current_time
+    response_computer_start_status
+        local_ip
+        tb_git_timestamp
+        app_git_timestamp
+        os_version
+        system_uptime
+        system_runtime
+        system_disk
+    response_computer_runtime_status
+        core_temp
+        system_cpu
+        memory_free
+        current_time
+    response_high_power
+    response_emergency_stop
+    response_motor_command_applied
 
+    response_idle_speeds
+    response_system_state [unconnected, waiting_for_connections, ready, playing_file, ]
 
+*/
 
 function websocket_connect() {
     console.log("connecting to wesockets")
@@ -360,7 +237,78 @@ timers = {
 
 
 
-////////// SVG ELEMENT CONVENIENCE METHODS //////////
+
+
+
+
+/* ##### UTILITIES ##### */
+
+function setAttributes(element, attributes_o){
+  for (key in attributes_o) {
+    if (attributes_o.hasOwnProperty(key)) {
+      element.setAttribute(key,attributes_o[key]);
+    }
+  }
+}
+
+function degrees_to_radians(radians){
+  return radians * Math.PI / 180;
+}
+
+function format_date(date_string){
+  var epoch_ms = Date.parse(date_string);
+  var dt = new Date(epoch_ms);
+  var year = dt.getFullYear();
+  var month = dt.getMonth() + 1;
+  var date = dt.getDate() +1;
+  var hours = dt.getHours();
+  var minutes = dt.getMinutes();
+  var seconds = dt.getSeconds();
+  return year+":"+month+":"+date+" "+hours+":"+minutes+":"+seconds;
+}
+
+function format_df(df_a){
+  //console.log(df_a)
+  df_1 = parseInt(df_a[0]);
+  df_2 = parseInt(df_a[1]);
+  df_1 = df_1 / 1000000000;
+  df_2 = df_2 / 1000000000;
+  return df_1.toFixed(2)+"/"+df_2.toFixed(2)+"GB";
+}
+
+function makeColor(num, den, error) { // receive numerator, denominator, error of interval
+  error = Math.abs(error);
+  var hex_a = ["00","11","22","33","44","55","66","77","88","99","aa","bb","cc","dd","ee","ff","ff"];
+  var red_str = "00";
+  var green_str = hex_a[num];
+  var blue_str = hex_a[den];
+  var color_str = "#" + red_str + green_str + blue_str;
+  return color_str;
+}
+
+function padTo2Digits(num) {
+  return num.toString().padStart(2, '0');
+}
+
+function formatDate(date) {
+  return (
+    [
+      date.getFullYear(),
+      padTo2Digits(date.getMonth() + 1),
+      padTo2Digits(date.getDate()),
+    ].join('-') +
+    ' ' +
+    [
+      padTo2Digits(date.getHours()),
+      padTo2Digits(date.getMinutes()),
+      padTo2Digits(date.getSeconds()),
+    ].join(':')
+  );
+}
+
+/* ##### SVG CONVENIENCE METHODS ##### */
+
+
 function create_rectangle(dom_parent, attributes_o = new Object()) {
   var rect = document.createElementNS( SVG_NS, "rect" );
   setAttributes(rect, attributes_o);
@@ -412,792 +360,1595 @@ function create_group_from_array_of_paths(dom_parent, array_of_paths, path_attri
     return group;
 }
 
-////////// INTERFACE COMPONENT CONSTRUCTORS //////////
 
-class Block_Title_Horizontal{
-  constructor(dom_parent, coordinates, title_text) {
-    this.title_text = title_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
-    );
-    this.title_display = create_text(this.container, this.title_text, {class:"status_block_title"});
-    this.set_value(this.title_text); 
+
+
+
+/* ##### NETWORK ##### */
+
+
+
+
+
+
+
+/* ##### DATA ##### */
+
+// DATA HISTORY
+
+class Data_History{
+  constructor(
+        history_length = 12,
+        deviation_threshold = 1.5,
+        deviation_callback = null,
+    ){
+    this.caller_ref = this.caller
+    this.history_length = history_length;
+    this.deviation_threshold = deviation_threshold;
+    this.deviation_callback = deviation_callback;
+    this.array = new Array();
   }
-  set_value(value){
-    let textnode = document.createTextNode(value);
-    this.title_display.replaceChild(textnode, this.title_display.childNodes[0]);
-    let offset_for_right_justify = this.dom_parent.getBBox().width - this.title_display.getBBox().width - 30;
-    this.title_display.setAttribute("transform", `translate(${offset_for_right_justify},0)`);
+  set(val){
+    var new_length = this.array.push(val);
+    while (new_length>10){
+        this.array.shift();
+    }
+    if(this.deviation_callback){
+        var deviation = math.std(this.array)
+        if (deviation >= this.deviation_threshold){
+            this.deviation_callback(deviation,this.caller_ref)
+        }
+    }
+  }
+  clear(){
+    this.array = new Array(); 
+  }
+  get(){
+    return this.array[this.array.length-1];
+  }
+  get_all(){
+    return new Array.from(this.array);
   }
 }
 
-
-class Block_Title_Vertical{
-  constructor(dom_parent, coordinates, title_text) {
-    this.title_text = title_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
-    );
-    this.title_display = create_text(this.container, this.title_text, {class:"status_block_value"});
-    this.set_value(this.title_text); 
-  }
-  set_value(value){
-    let textnode = document.createTextNode(value);
-    this.title_display.replaceChild(textnode, this.title_display.childNodes[0]);
-    let offset_for_right_justify = this.dom_parent.getBBox().width - this.title_display.getBBox().width - 30;
-    this.title_display.setAttribute("transform", `translate(${offset_for_right_justify},0)`);
-  }
+function Data_Machinery_Row(){
+    this.app_git_timestamp = 0;
+    this.app_git_timestamp = 0;
+    this.closed_loop_error_1 = 0;
+    this.closed_loop_error_2 = 0;
+    this.duty_cycle_1 = 0;
+    this.duty_cycle_2 = 0;
+    this.emergency_stop = false;
+    this.encoder_ppr_value_motor1 = 0;
+    this.encoder_ppr_value_motor2 = 0;
+    this.encoder_speed_relative_1 = 0;
+    this.encoder_speed_relative_2 = 0;
+    this.firmware_version = "";
+    this.local_ip = "";
+    this.memory_free = [0/0];
+    this.operating_mode_motor1 = 0;
+    this.operating_mode_motor2 = 0;
+    this.os_version = {};
+    this.pid_proportional_gain_motor1 = 0;
+    this.pid_integral_gain_motor2 = 0;
+    this.pid_differential_gain_motor1 = 0;
+    this.pid_proportional_gain_motor2 = 0;
+    this.pid_integral_gain_motor1 = 0;
+    this.pid_differential_gain_motor2 = 0;
+    this.system_cpu = 0;
+    this.system_disk = [];
+    this.system_runtime = 0;
+    this.system_uptime = 0;
+    this.tb_git_timestamp = 0;
+    this.tb_git_timestamp = 0;
+    this.volts = ["0.0:0.0"];
 }
 
+var Data_Machinery_Rows = {
+    controller:new Data_Machinery_Row(),
+    rotors0102:new Data_Machinery_Row(),
+    rotors0304:new Data_Machinery_Row(),
+    rotors0506:new Data_Machinery_Row(),
+    rotors0708:new Data_Machinery_Row(),
+    rotors0910:new Data_Machinery_Row(),
+    rotors1112:new Data_Machinery_Row(),
+    rotors1314:new Data_Machinery_Row(),
+}
+// MAPPINGS
 
-class Block_Display_Text{
-  constructor(dom_parent, coordinates, display_text, width) {
-    this.display_text = display_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
-      }
-    );
-    this.text_container = create_text(this.container, this.display_text, {class:"status_block_value"});
-    this.set_text(this.display_text);
 
-    this.local_ip_rect  = create_rectangle(
-      this.dom_parent,
-      {
-        class:"cell_static_0",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
+/* ##### INTERFACE COMPONENT CONSTRUCTORS ##### */
+
+// PANEL SET
+class Panel{
+    constructor(
+        dom_parent,
+        panel_x,
+        panel_y,
+        style_class = "panel_set_panel",
     )
-    this.local_ip_rect.setAttribute("style",`width:`+width+`px`);
-    
-  }
-  set_text(value){
-    let textnode = document.createTextNode(value);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  };
-  set_priority(value){ //-1,0,1
-    if (value==0){
-      this.local_ip_rect.setAttribute("class",`cell_static_0`);
+    {
+        this.dom_parent = dom_parent;
+        this.style_class = style_class;
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"panel_set_container",
+            }
+        );
+        this.rectangle = create_rectangle(this.container,{class:style_class})
+        this.rectangle.setAttribute("x",panel_x+"px")
+        this.rectangle.setAttribute("y",panel_y+"px")    
     }
-    if (value==1){
-      this.local_ip_rect.setAttribute("class",`cell_static_1`);
+    set_visibility(v_b){
+        if (v_b){
+            try {
+                this.dom_parent.appendChild(this.container);
+            } catch (error) {
+            }
+            //this.rectangle.setAttribute("visibility",v_b);
+        }else{
+            try {
+                this.dom_parent.removeChild(this.container);
+            } catch (error) {
+            }
+            //this.rectangle.setAttribute("visibility",v_b);
+        }
     }
-  }
 }
 
-class Block_Display_Bool{
-  constructor(dom_parent, coordinates, title_text) {
-    this.title_text = title_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
-    );
-    this.title_display = create_text(this.container, this.title_text, {class:"status_block_value"});
-    this.set_value(this.title_text); 
-  }
-  set_value(value){
-    let textnode = document.createTextNode(value);
-    this.value_display.replaceChild(textnode, this.value_display.childNodes[0]);
-    let offset_for_right_justify = this.dom_parent.getBBox().width - this.value_display.getBBox().width - 30;
-    this.value_display.setAttribute("transform", `translate(${offset_for_right_justify},0)`);
-  }
-}
-
-class Block_Display_Graph{
-  constructor(dom_parent, coordinates, title_text) {
-    this.title_text = title_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
-    );
-    this.title_display = create_text(this.container, this.title_text, {class:"status_block_value"});
-    this.set_value(this.title_text); 
-  }
-  set_value(value){
-    let textnode = document.createTextNode(value);
-    this.value_display.replaceChild(textnode, this.value_display.childNodes[0]);
-    let offset_for_right_justify = this.dom_parent.getBBox().width - this.value_display.getBBox().width - 30;
-    this.value_display.setAttribute("transform", `translate(${offset_for_right_justify},0)`);
-  }
-}
-
-class Block_Push_Button{
-  constructor(dom_parent, hostname, coordinates, action_text, width) {
-    this.action_text = action_text;
-    this.hostname = hostname
-    this.display_text = ""
-    this.dom_parent = dom_parent;
-    this.priority = 0
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
-      }
-    );
-    this.text_container = create_text(this.container, this.display_text, {class:"status_block_value"});
-    this.set_text(this.display_text);
-    this.button_rect  = create_rectangle(
-      this.dom_parent,
-      {
-        class:"cell_button_0",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
+class Panel_Set{
+    constructor(
+        dom_parent,
+        panel_top,
+        panels_params
     )
-    this.button_rect.class_ref = this
-    this.button_rect.setAttribute("style",`width:`+width+`px`);
-    this.button_rect.addEventListener("click",this.handle_click)
-    this.button_rect.addEventListener("mouseover",this.hover_state_on)
-    this.button_rect.addEventListener("mouseout",this.hover_state_off)
-  }
-  handle_click(e){
-    self = e.target.class_ref
-    websocket_send(self.hostname,self.action_text,"")
-  }
-  hover_state_on(e){
-    self = e.target.class_ref
-    self.override_text()
-  }
-  hover_state_off(e){
-    self = e.target.class_ref
-    self.restore_text()
-  }
-  set_text(display_text){
-    this.display_text = display_text
-    let textnode = document.createTextNode(display_text);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  };
-  override_text(){
-    let textnode = document.createTextNode(this.action_text);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  };
-  restore_text(){
-    let textnode = document.createTextNode(this.display_text);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  };
-  set_priority(value){ //-1,0,1
-    if (value==0){
-      this.button_rect.setAttribute("class",`cell_button_0`);
+    {
+        this.dom_parent = dom_parent;
+        this.panels_params = panels_params;
+        this.panels = {}
+        for (var panel_name in this.panels_params) {
+            var params = this.panels_params[panel_name]
+            this.panels[panel_name] = {
+                button:new Toggle_Button_Sync(
+                    this.dom_parent,
+                    panel_name,
+                    params["button_x"],
+                    params["button_y"],
+                    params["button_width_open"],
+                    params["button_width_closed"],
+                    32,
+                    this.handle_button
+                ),
+                panel: new Panel(
+                    this.dom_parent,
+                    0,
+                    panel_top
+                )
+            }
+            this.panels[panel_name].button.set_label(params["label"])
+            this.panels[panel_name].button.panel_set_ref = this;
+        }
+        this.active_panel = panel_name; 
+        this.set_active_panel(panel_name);
     }
-    if (value==1){
-      this.button_rect.setAttribute("class",`cell_button_0`);
+    handle_button(){
+        self = this.panel_set_ref;
+        self.set_active_panel(this.button_name);
     }
-  }
+    set_active_panel(panel_name){
+        for (var panel_key in this.panels){
+            var panel = this.panels[panel_key]
+            if (panel_key==panel_name){
+                panel.button.set_state(true)
+                panel.panel.set_visibility(true)
+            }else{
+                panel.button.set_state(false)
+                panel.panel.set_visibility(false)
+            }
+        }
+    }
 }
-class Block_Toggle_Button{
-  constructor(dom_parent, hostname, listener, coordinates, display_text, width) {
-    this.display_text = display_text;
-    this.dom_parent = dom_parent;
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
-      }
-    );
-    this.text_container = create_text(this.container, this.display_text, {class:"status_block_value"});
-    this.set_text(this.display_text);
-    this.button_rect  = create_rectangle(
-      this.dom_parent,
-      {
-        class:"cell_button_0",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
+
+// SYNC TOGGLE BUTTON
+class Toggle_Button_Sync{
+    constructor(
+        dom_parent,
+        button_name,
+        x,
+        y, 
+        width_open, 
+        width_closed,
+        height,
+        action,
+        style_active = "toggle_button_active",
+        style_inactive = "toggle_button_inactive",
+        style_attention = "toggle_button_attention"
     )
-    this.button_rect.class_ref = exception_details
-    this.button_rect.setAttribute("style",`width:`+width+`px`);
-    this.button_rect.addEventListener("click",listener)
-  }
-  set_text(value){
-    let textnode = document.createTextNode(value);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  };
-  set_priority(value){ //-1,0,1
-    if (value==0){
-      this.button_rect.setAttribute("class",`cell_button_0`);
+    {
+        this.button_name = button_name;
+        this.action = action;
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.width_open = width_open;
+        this.width_closed = width_closed;
+        this.height = height;
+        this.style_active = style_active;
+        this.style_inactive = style_inactive;
+        this.style_attention = style_attention;
+        this.visual_style = this.style_inactive;
+        this.states = ["true_confirmed","true_requested","false_confirmed","false_requested"]
+        this.state = true;
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"toggle_button_container",
+            }
+        );
+        this.button_rect  = create_rectangle(
+            this.container,
+            {
+                class:this.style_inactive,
+            }
+        )
+        this.button_rect.class_ref = this;
+        this.button_rect.setAttribute("x",this.x+"px");
+        this.button_rect.setAttribute("y",this.y+"px");
+        this.button_rect.addEventListener("click",this.handle_click);
+        this.text_container = create_text(this.container, " ", {class:this.style_inactive});
+        this.text_container.setAttribute("x",this.x+"px");
+        this.text_container.setAttribute("y",this.y+"px");
+        this.text_container.class_ref = this;
+        this.text_container.addEventListener("click",this.handle_click);
+        this.button_rect.setAttribute("height", this.height + `px`);
+        this.text_container.setAttribute("height",this.height + `px`);
+        this.set_state(0);
+        this.set_style("inactive");
+        this.set_label(" ");
+        this.set_collapse(false);
     }
-    if (value==1){
-      this.button_rect.setAttribute("class",`cell_button_0`);
+    handle_click(e){
+        self = e.target.class_ref
+        self.set_state(true)
+        self.update_style()
+        self.action(self.button_name)
+        // websocket_send(self.target_name,self.topic,false)
+        // todo: setTimeout to restore button if no response
+        //websocket_send(self.target_name,self.topic,true)
+        // todo: setTimeout to restore button if no response
     }
-  }
+    set_state(state_b){
+        this.state = state_b;
+        this.set_style((state_b?"active":"inactive"));
+        this.update_style();
+    }
+    set_style(style_str){
+        this.visual_style = style_str;
+        this.update_style();
+    }
+    update_style(){
+        // remove all classes
+        this.text_container.setAttribute("class", "");
+        this.text_container.classList.add("text_1");
+        this.button_rect.setAttribute("class", "");
+        switch (this.visual_style){
+            case "active":
+                this.text_container.classList.add(this.style_active);
+                this.button_rect.classList.add(this.style_active);
+                break;
+            case "inactive":
+                this.text_container.classList.add(this.style_inactive);
+                this.button_rect.classList.add(this.style_inactive);
+                break;
+            case "attention":
+                this.text_container.classList.add(this.style_attention);
+                this.button_rect.classList.add(this.style_attention);
+                break;
+            default:
+                break;
+        }
+    }
+    set_label(label_str){
+        let textnode = document.createTextNode(label_str);
+        this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+    }
+    set_collapse(c_b, remove_text = false){
+        if (c_b){ // collapse
+            this.container.setAttribute("width", this.width_closed + `px`);
+            this.button_rect.setAttribute("width", this.width_closed + `px`);
+            if (remove_text) {
+                this.text_container.setAttribute("style",`visibility:hidden`);
+            }
+        }else{
+            this.container.setAttribute("width", this.width_open + `px`);
+            this.button_rect.setAttribute("width", this.width_open + `px`);
+            this.text_container.setAttribute("style",`visibility:visible`);
+        }
+    }
+    get_width(){
+        return parseInt(this.button_rect.setAttribute("width"));
+    }
 }
 
-class Block_Five_State_Button{
-  constructor(target_name, state_classes, state_labels, topic, coordinates) {
-    this.dom_parent = canvas;
-    this.target_name = target_name
-    this.topic = topic
-    this.states = ["inactive","true_confirmed","true_requested","false_confirmed","false_requested"]
-    this.state_classes = state_classes
-    this.state_labels = state_labels
-    this.state = 0
-    this.container = create_group(
-      this.dom_parent,
-      {
-        class:"status_block_name_value",
-        transform:`matrix(1,0,0,1,${coordinates[0]+5},${coordinates[1]+25})`,
-      }
-    );
-    this.text_container = create_text(this.container, " ", {class:"status_block_value"});
-    this.button_rect  = create_rectangle(
-      this.dom_parent,
-      {
-        class:"cell_button_0",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
+// ASYNC TOGGLE BUTTON  
+class Toggle_Button_Async{
+    constructor(
+        dom_parent,
+        target_name,
+        topic,
+        state_labels,
+        x,
+        y, 
+        width_open, 
+        width_closed,
+        height,
+        style_active = "toggle_button_active",
+        style_inactive = "toggle_button_inactive",
+        style_attention = "toggle_button_attention",
+        style_true_requested = "toggle_button_async_true_requested",
+        style_true_confirmed = "toggle_button_async_true_confirmed",
+        style_fasle_requested = "toggle_button_async_fasle_requested",
+        style_false_confirmed = "toggle_button_async_false_confirmed",
     )
-    this.button_rect.class_ref = this
-    this.button_rect.setAttribute("style",`width:`+coordinates[2]+`px`);
-    this.button_rect.addEventListener("click",this.handle_click)
-    this.set_state(0)
-  }
-  handle_click(e){
-    self = e.target.class_ref
-    if (self.state==1){
-      self.set_state(4)
-      websocket_send(self.target_name,self.topic,false)
-      // setTimeout to restore button if no response
+    {
+        this.state_labels = state_labels
+        this.target_name = target_name
+        this.topic = topic
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.width_open = width_open;
+        this.width_closed = width_closed;
+        this.height = height;
+        this.style_active = style_active;
+        this.style_inactive = style_inactive;
+        this.style_attention = style_attention;
+        this.style_true_requested = style_true_requested;
+        this.style_true_confirmed = style_true_confirmed;
+        this.style_fasle_requested = style_fasle_requested;
+        this.style_false_confirmed = style_false_confirmed;
+        this.visual_style = this.style_inactive;
+        this.states = ["true_confirmed","true_requested","false_confirmed","false_requested"]
+        this.state = 0
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"toggle_button_container",
+            }
+        );
+        this.button_rect  = create_rectangle(
+            this.container,
+            {
+                class:this.style_inactive,
+            }
+        )
+        this.button_rect.class_ref = this;
+        this.button_rect.setAttribute("x",this.x+"px");
+        this.button_rect.setAttribute("y",this.y+"px");
+        this.button_rect.addEventListener("click",this.handle_click);
+        this.text_container = create_text(this.container, " ", {class:this.style_inactive});
+        this.text_container.setAttribute("x",this.x+"px");
+        this.text_container.setAttribute("y",this.y+"px");
+        this.text_container.class_ref = this;
+        this.text_container.addEventListener("click",this.handle_click);
+        this.container.setAttribute("height", this.height + `px`);
+        this.button_rect.setAttribute("height", this.height + `px`);
+        this.text_container.setAttribute("height",this.height + `px`);
+        this.set_state(0);
+        this.set_style("inactive");
+        //this.set_label(" ");
+        this.set_collapse(false);
     }
-    if (self.state==3){
-      self.set_state(2)
-      websocket_send(self.target_name,self.topic,true)
-      // setTimeout to restore button if no response
+    handle_click(e){
+        self = e.target.class_ref
+        if (self.state==0){
+            self.set_state(3)
+            //websocket_send(self.target_name,self.topic,false)
+            // todo: setTimeout to restore button if no response
+        }
+        if (self.state==2){
+            self.set_state(1)
+            //websocket_send(self.target_name,self.topic,true)
+            // todo: setTimeout to restore button if no response
+        }
     }
-  }
-  set_state(state_ord){
-    this.state = state_ord
-    this.set_label(state_ord)  
-    this.set_class(state_ord)  
-  }
-  get_state(){
-    return this.state
-  }
-  set_label(label_ord){
-    this.state_label = label_ord
-    let textnode = document.createTextNode(this.state_labels[label_ord]);
-    this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
-  }
-  set_class(class_ord){
-    this.button_rect.setAttribute("class", this.state_classes[class_ord]);
-  }
+    set_state(state_int){
+        this.state = state_int;
+        this.set_label(state_int);
+        this.update_style();
+    }
+    set_style(style_str){
+        this.visual_style = style_str;
+        this.update_style();
+    }
+    update_style(){
+        // remove all classes
+        this.button_rect.setAttribute("class", "");
+        this.text_container.setAttribute("class", "");
+        this.text_container.classList.add("text_1");
+        switch (this.visual_style){
+            case "active":
+                this.text_container.classList.add(this.style_active);
+                this.button_rect.classList.add(this.style_active);
+                break;
+            case "inactive":
+                this.text_container.classList.add(this.style_inactive);
+                this.button_rect.classList.add(this.style_inactive);
+                break;
+            case "attention":
+                this.text_container.classList.add(this.style_attention);
+                this.button_rect.classList.add(this.style_attention);
+                break;
+            default:
+                break;
+        }
+        switch (this.state){
+            case 0:
+                this.text_container.classList.add(this.style_true_confirmed);
+                this.button_rect.classList.add(this.style_true_confirmed);
+                break;
+            case 1:
+                this.text_container.classList.add(this.style_true_requested);
+                this.button_rect.classList.add(this.style_true_requested);
+                break;
+            case 2:
+                this.text_container.classList.add(this.style_false_confirmed);
+                this.button_rect.classList.add(this.style_false_confirmed);
+                break;
+            case 3:
+                this.text_container.classList.add(this.style_fasle_requested);
+                this.button_rect.classList.add(this.style_fasle_requested);
+                break;
+        }
+    }
+    set_label(label_ord){
+        //this.state_label = label_ord
+        let textnode = document.createTextNode(this.state_labels[label_ord]);
+        this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+    }
+    set_collapse(c_b, remove_text = false){
+        if (c_b){ // collapse
+            this.container.setAttribute("width", this.width_closed + `px`);
+            this.button_rect.setAttribute("width", this.width_closed + `px`);
+            if (remove_text) {
+                this.text_container.setAttribute("style",`visibility:hidden`);
+            }
+        }else{
+            this.container.setAttribute("width", this.width_open + `px`);
+            this.button_rect.setAttribute("width", this.width_open + `px`);
+            this.text_container.setAttribute("style",`visibility:visible`);
+        }
+    }
+    get_width(){
+        return parseInt(this.button_rect.getAttribute("width"));
+    }
+    set_position(x,y){
+        var x_str = x + "px";
+        var y_str = y + "px";
+        this.container.setAttribute("x",x_str);
+        this.container.setAttribute("y",y_str);
+        this.button_rect.setAttribute("x",x_str);
+        this.button_rect.setAttribute("y",y_str);
+        this.text_container.setAttribute("x",x_str);
+        this.text_container.setAttribute("y",y_str);
+    }
 }
 
-class Row{
-  constructor(hostname, y_position
-    ) {
-    this.dom_parent = canvas;
-    this.restart = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[1],y_position], "restart", 80)
-    this.reboot = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[2],y_position], "reboot", 80)
-    this.tb_git_time = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[3],y_position], "pull thirtybirds", 200)
-    this.app_git_time = new Block_Push_Button(this.dom_parent, hostname, [block_grid_x[4],y_position], "pull thewhale", 200)
-    this.ip_local = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position], "", 140)
-    this.exceptions = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[7],y_position], "...", 100)
-    this.status = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[8],y_position], "...", 100)
-    this.messages = new Block_Toggle_Button(this.dom_parent, hostname, exception_details.toggle_visibility, [block_grid_x[9],y_position], "...", 100)
-    this.cpu = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position], "?%", 60)
-    this.mem = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position], "?MB", 100)
-    this.disk = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position], "?MB", 100)
-    this.voltage = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position], "?V", 80)
-    this.temp = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position], "?C", 80)
-    this.os_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position], "", 300)
-    this.ts = 0
-  }
-  set_local_ip(value){
-    this.ip_local.set_text(value)
-  }
-  set_timestamp(ts){
-    this.ts = ts
-  }
-  get_timestamp(){
-    return this.ts
-  }
-  set_colors_active(state){
-    this.ip_local.set_priority(state)
-    this.cpu.set_priority(state)
-    this.mem.set_priority(state)
-    this.disk.set_priority(state)
-    this.voltage.set_priority(state)
-    this.temp.set_priority(state)
-    this.os_version.set_priority(state)
-  }
-  check_if_timestamp_is_fresh(){
-    if( Math.abs(this.ts-(Date.now()/1000)) > 8 ){
-      this.set_colors_active(0)
+// SIMPLE DISPLAY BOX  
+class Display_Box_Simple{
+    constructor(
+        dom_parent,
+        action,
+        x,
+        y, 
+        width_open, 
+        width_closed,
+        height,
+        style_active = "display_box_simple_active",
+        style_inactive = "display_box_simple_inactive",
+        style_attention = "display_box_simple_attention")
+    {
+        this.dom_parent = dom_parent;
+        this.action = action;
+        this.x = x;
+        this.y = y;
+        this.width_open = width_open;
+        this.width_closed = width_closed;
+        this.height = height;
+        this.style_active = style_active;
+        this.style_inactive = style_inactive;
+        this.style_attention = style_attention;
+        this.visual_style = this.style_inactive;
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"display_box_simple_container",
+            }
+        );
+        this.button_rect  = create_rectangle(
+            this.container,
+            {
+                class:this.style_inactive,
+            }
+        )
+        this.button_rect.setAttribute("x",this.x+"px");
+        this.button_rect.setAttribute("y",this.y+"px");
+        this.text_container = create_text(this.container, " ", {class:this.style_inactive});
+        this.text_container.setAttribute("x",this.x+"px");
+        this.text_container.setAttribute("y",this.y+"px");
+        this.container.setAttribute("height", this.height + `px`);
+        this.button_rect.setAttribute("height", this.height + `px`);
+        this.text_container.setAttribute("height",this.height + `px`);
+        this.set_style("inactive");
+        this.set_text(" ");
+        this.set_collapse(false);
     }
-  }
+    set_style(style_str){
+        this.text_container.setAttribute("class", "");
+        this.text_container.classList.add("text_1");
+        switch (style_str){
+            case "active":
+                this.text_container.classList.add(this.style_active);
+                break;
+            case "inactive":
+                this.text_container.classList.add(this.style_inactive);
+                break;
+            case "attention":
+                this.text_container.classList.add(this.style_attention);
+                break;
+            default:
+                break;
+        }
+    }
+    set_text(display_text){
+        let textnode = document.createTextNode(display_text);
+        this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+    }
+    set_collapse(c_b, remove_text = false){
+        if (c_b){ // collapse
+            this.container.setAttribute("width", this.width_closed + `px`);
+            this.button_rect.setAttribute("width", this.width_closed + `px`);
+            if (remove_text) {
+                this.text_container.setAttribute("style",`visibility:hidden`);
+            }
+        }else{
+            this.container.setAttribute("width", this.width_open + `px`);
+            this.button_rect.setAttribute("width", this.width_open + `px`);
+            this.text_container.setAttribute("style",`visibility:visible`);
+        }
+    }
+    get_width(){
+        return parseInt(this.button_rect.getAttribute("width"));
+    }
+    set_position(x,y){
+        var x_str = x + "px";
+        var y_str = y + "px";
+        this.container.setAttribute("x",x_str);
+        this.container.setAttribute("y",y_str);
+        this.button_rect.setAttribute("x",x_str);
+        this.button_rect.setAttribute("y",y_str);
+        this.text_container.setAttribute("x",x_str);
+        this.text_container.setAttribute("y",y_str);
+    }
 }
 
-class SDCRow{
-  constructor(hostname, rotor1name, rotor2name, y_position_1, y_position_2
-    ) {
-    this.dom_parent = canvas;
-    this.volts_24 = new Block_Display_Text(this.dom_parent, [block_grid_x[1],y_position_1], "", 80)
-    this.volts_5 = new Block_Display_Text(this.dom_parent, [block_grid_x[2],y_position_1], "", 80)
-    this.emergency_stop = new Block_Five_State_Button(
-        hostname, 
-        ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-        ["unconnected", "emergency stop on confirmed", "emergency stop on requested", "emergency stop off confirmed", "emergency stop off requested"],
-        "request_emergency_stop",
-        [block_grid_x[3],y_position_1,460]
-      )
-    this.idle_speed = new Block_Five_State_Button(
-        hostname, 
-        ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-        ["unconnected", "idle speed confirmed", "idle stop requested", "idles stop confirmed", "idle speed requested"],
-        "request_idle_speed",
-        [block_grid_x[3],y_position_2,460]
-      )
-    this.rotor1name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_1], rotor1name, 100)
-    this.rotor2name = new Block_Display_Text(this.dom_parent, [block_grid_x[5],y_position_2], rotor2name, 100)
-    //this.decrease_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_1], "-", 140)
-    //this.decrease_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[6],y_position_2], "-", 140)
-    //this.requested_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_1], "?", 100)
-    //this.requested_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[7],y_position_2], "?", 100)
-    //this.increase_speed_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_1], "+", 100)
-    //this.increase_speed_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[8],y_position_2], "+", 100)
-    this.decrease_speed_1 = new Block_Push_Button(this.dom_parent, rotor1name, [block_grid_x[6],y_position_1], "decrement", 140)
-    this.decrease_speed_2 = new Block_Push_Button(this.dom_parent, rotor2name, [block_grid_x[6],y_position_2], "decrement", 140)
-    this.requested_speed_1 = new Block_Push_Button(this.dom_parent, rotor1name, [block_grid_x[7],y_position_1], "stop", 100)
-    this.requested_speed_2 = new Block_Push_Button(this.dom_parent, rotor2name, [block_grid_x[7],y_position_2], "stop", 100)
-    this.increase_speed_1 = new Block_Push_Button(this.dom_parent, rotor1name, [block_grid_x[8],y_position_1], "increment", 100)
-    this.increase_speed_2 = new Block_Push_Button(this.dom_parent, rotor2name, [block_grid_x[8],y_position_2], "increment", 100)
-    this.duty_cycle_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_1], "", 100)
-    this.duty_cycle_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[9],y_position_2], "", 100)
-    this.closed_loop_error_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_1], "", 60)
-    this.closed_loop_error_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[10],y_position_2], "", 60)
-    this.encoder_speed_relative_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_1], "", 100)
-    this.encoder_speed_relative_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[11],y_position_2], "", 100)
-    this.pid_1 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_1], "", 100)
-    this.pid_2 = new Block_Display_Text(this.dom_parent, [block_grid_x[12],y_position_2], "", 100)
-    this.operating_mode_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_1], "", 80)
-    this.operating_mode_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[13],y_position_2], "", 80)
-    this.encoder_ppr_value_motor1 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_1], "", 80)
-    this.encoder_ppr_value_motor2 = new Block_Display_Text(this.dom_parent, [block_grid_x[14],y_position_2], "", 80)
-    this.firmware_version = new Block_Display_Text(this.dom_parent, [block_grid_x[15],y_position_1], "", 300)
-  }
-  set_local_ip(value){
-    this.ip_local.set_text(value)
-  }
-  set_timestamp(ts){
-    this.ts = ts
-  }
-  get_timestamp(){
-    return this.ts
-  }
-  set_colors_active(state){
-    this.volts_24.set_priority(state)
-    this.volts_5.set_priority(state)
-    this.pid_1.set_priority(state)
-    this.pid_2.set_priority(state)
-    this.operating_mode_motor1.set_priority(state)
-    this.operating_mode_motor2.set_priority(state)
-    this.encoder_ppr_value_motor1.set_priority(state)
-    this.encoder_ppr_value_motor2.set_priority(state)
-    this.firmware_version.set_priority(state)
-  }
-  check_if_timestamp_is_fresh(){
-    if( Math.abs(this.ts-(Date.now()/1000)) > 10 ){
-      this.set_colors_active(0)
+class Display_Box_Title{
+    constructor(
+        dom_parent,
+        label,
+        action,
+        x,
+        y, 
+        width_open, 
+        width_closed,
+        height,
+        style_active = "display_box_title_active",
+        style_inactive = "display_box_title_inactive",
+        style_attention = "display_box_title_attention")
+    {
+        this.dom_parent = dom_parent;
+        this.action = action;
+        this.x = x;
+        this.y = y;
+        this.width_open = width_open;
+        this.width_closed = width_closed;
+        this.height = height;
+        this.style_active = style_active;
+        this.style_inactive = style_inactive;
+        this.style_attention = style_attention;
+        this.visual_style = this.style_inactive;
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"display_box_title_container",
+            }
+        );
+        this.button_rect  = create_rectangle(
+            this.container,
+            {
+                class:this.style_inactive,
+            }
+        )
+        //this.button_rect.setAttribute("x",this.x+"px");
+        //this.button_rect.setAttribute("y",this.y+"px");
+        this.text_container = create_text(this.container, " ", {class:this.style_inactive});
+        //this.text_container.setAttribute("x",this.x+"px");
+        //this.text_container.setAttribute("y",this.y+"px");
+        this.container.setAttribute("height", this.height + `px`);
+        this.button_rect.setAttribute("height", this.height + `px`);
+        this.text_container.setAttribute("height",this.height + `px`);
+        this.set_position(x,y)
+        this.set_style("active");
+        this.set_text(label);
+        this.set_collapse(false);
     }
-  }
+    set_style(style_str){
+        this.text_container.setAttribute("class", "");
+        this.text_container.classList.add("text_1");
+        switch (style_str){
+            case "active":
+                this.text_container.classList.add(this.style_active);
+                break;
+            case "inactive":
+                this.text_container.classList.add(this.style_inactive);
+                break;
+            case "attention":
+                this.text_container.classList.add(this.style_attention);
+                break;
+            default:
+                break;
+        }
+    }
+    set_text(display_text){
+        let textnode = document.createTextNode(display_text);
+        this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+    }
+    set_collapse(c_b, remove_text = false){
+        if (c_b){ // collapse
+            this.container.setAttribute("width", this.width_closed + `px`);
+            this.button_rect.setAttribute("width", this.width_closed + `px`);
+            if (remove_text) {
+                this.text_container.setAttribute("style",`visibility:hidden`);
+            }
+        }else{
+            this.container.setAttribute("width", this.width_open + `px`);
+            this.button_rect.setAttribute("width", this.width_open + `px`);
+            this.text_container.setAttribute("style",`visibility:visible`);
+        }
+    }
+    set_position(x,y){
+        var x_str = x + "px";
+        var y_str = y + "px";
+        this.container.setAttribute("x",x_str);
+        this.container.setAttribute("y",y_str);
+        this.button_rect.setAttribute("x",x_str);
+        this.button_rect.setAttribute("y",y_str);
+        this.text_container.setAttribute("x",x_str);
+        this.text_container.setAttribute("y",y_str);
+    }
+    get_width(){
+        return parseInt(this.button_rect.getAttribute("width"));
+    }
 }
 
-class Details_Display{
-  constructor(dom_parent,coordinates,classname
-    ) {
-    this.dom_parent = dom_parent;
-    this.background_rect  = create_rectangle(
-      this.dom_parent,
-      {
-        class:"exception_details_rect",
-        transform:`matrix(1,0,0,1,${coordinates[0]},${coordinates[1]})`,
-      }
+class Machinery_Title_Row{
+    constructor(
+        dom_parent,
+        x,
+        y,
+        column_data
     )
-    this.hide()
-  }
-  hide(){
-    this.visible = false;
-    this.dom_parent.removeChild(this.background_rect)
-  }
-  show(){
-    this.visible = true;
-    this.dom_parent.appendChild(this.background_rect)
-  }
-  toggle_visibility(e){
-    self = e.target.class_ref
-    //console.log(e.target.class_ref)
-    if(self.visible){
-      self.hide()
-    }else{
-      self.show()
+    {
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.column_data = column_data;
+        for (var column_data_i in this.column_data){
+            var col = this.column_data[column_data_i];
+            this[col[0]] = new Display_Box_Title(
+                dom_parent,
+                col[1],
+                col[4],
+                x,
+                y,
+                col[2],
+                col[3],
+                32
+            );
+        }
+        this.update_layout()
     }
-  }
+    update_layout(){
+        var _x = parseInt(this.x)
+        for(var column of this.column_data){
+            var column_name = column[0]
+            this[column_name].set_position(_x, this.y);
+            var width = this[column_name].get_width();
+            _x = _x + 4 + width;
+        }
+    }
 }
 
-function toggle_24v_power(e){
-  console.log(e)
+
+class Machinery_Grid_Row{
+    constructor(
+        dom_parent,
+        host_name,
+        rotor_1_name,
+        rotor_2_name,
+        x,
+        y, 
+        column_data
+    )
+    {
+        // add method to change lables of async button
+        // add optional click capture for display box
+        // add height parameter to all buttons
+
+        this.dom_parent = dom_parent;
+        this.host_name = host_name;
+        this.rotor_1_name = rotor_1_name;
+        this.rotor_2_name = rotor_2_name;
+        this.x = x;
+        this.y = y;
+        this.column_data = column_data;
+        //slow, double height
+
+        var _x = parseInt(this.x)
+        for(var column of this.column_data){
+            var column_name = column[0]
+            switch(column_name){
+                case "system_runtime":
+                    this.system_runtime = new Toggle_Button_Async(
+                        this.dom_parent,//dom_parent
+                        this.host_name,//target_name
+                        "",//topic
+                        ["","","","",""],//state_labels
+                        x,//x
+                        y,//y
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68//height
+                    ); // async button
+                    break;
+                case "system_uptime":
+                    this.system_uptime = new Toggle_Button_Async(
+                        this.dom_parent,//dom_parent
+                        this.host_name,//target_name
+                        "",//topic
+                        ["","","","",""],//state_labels
+                        x,//x
+                        y,//y
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68//height
+                    ); // async button
+                    break;
+                case "app_git_timestamp":
+                    this.app_git_timestamp = new Toggle_Button_Async(
+                        this.dom_parent,//dom_parent
+                        this.host_name,//target_name
+                        "",//topic
+                        ["","","","",""],//state_labels
+                        x,//x
+                        y,//y
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68//height
+                    ); // async button
+                    break;
+                case "tb_git_timestamp":
+                    this.tb_git_timestamp =  new Toggle_Button_Async(
+                        this.dom_parent,//dom_parent
+                        this.host_name,//target_name
+                        "",//topic
+                        ["","","","",""],//state_labels
+                        x,//x
+                        y,//y
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68//height
+                    ); // async button
+                    break;
+                case "system_disk":
+                    this.system_disk = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "os_version":
+                    this.os_version = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "local_ip":
+                    this.local_ip = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "hostname":
+                    this.hostname = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    this.hostname.set_text(this.host_name)
+                    break;
+                case "memory_free":
+                    this.memory_free = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "system_cpu":
+                    this.system_cpu = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "errors":
+                    this.errors = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "status":
+                    this.status = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "messages":
+                    this.messages = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    break;
+                case "emergency_stop":
+                    this.emergency_stop = new Toggle_Button_Async(
+                        this.dom_parent,//dom_parent
+                        this.host_name,//target_name
+                        "",//topic
+                        ["","","","",""],//state_labels
+                        x,//x
+                        y,//y
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68//height
+                    ); // async button
+                    if (this.host_name == "controller"){
+                        this.emergency_stop.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "rotor_name":
+                    this.motor_1_name =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    this.motor_1_name.set_text(this.rotor_1_name)
+                    if (this.host_name == "controller"){
+                        this.motor_1_name.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_name =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    this.motor_2_name.set_text(this.rotor_2_name)
+                    if (this.host_name == "controller"){
+                        this.motor_2_name.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_slower_10x":
+                    this.motor_1_slower_10x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_slower_10x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_slower_10x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_slower_10x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_slower_1x":
+                    this.motor_1_slower_1x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_slower_1x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_slower_1x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_slower_1x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_value":
+                    this.motor_1_value =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_value.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_value =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_value.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_faster_1x":
+                    this.motor_1_faster_1x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_faster_1x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_faster_1x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_faster_1x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_faster_10x":
+                    this.motor_1_faster_10x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_faster_10x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_faster_10x =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_faster_10x.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_closed_loop_error":
+                    this.motor_1_closed_loop_error =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_closed_loop_error.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_closed_loop_error =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_closed_loop_error.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_duty_cycle":
+                    this.motor_1_duty_cycle =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_duty_cycle.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_duty_cycle =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_duty_cycle.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_encoder_speed":
+                    this.motor_1_encoder_speed =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_encoder_speed.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_encoder_speed =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_encoder_speed.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_pid_proportional_gain":
+                    this.motor_1_pid_proportional_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_pid_proportional_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_pid_proportional_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_pid_proportional_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_pid_integral_gain":
+                    this.motor_1_pid_integral_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_pid_integral_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_pid_integral_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_pid_integral_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_pid_differential_gain":
+                    this.motor_1_pid_differential_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_pid_differential_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_pid_differential_gain =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_pid_differential_gain.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_operating_mode":
+                    this.motor_1_operating_mode =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_operating_mode.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_operating_mode =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_operating_mode.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "motor_encoder_ppr_value":
+                    this.motor_1_encoder_ppr_value =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_1_encoder_ppr_value.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    this.motor_2_encoder_ppr_value =  new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        32,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.motor_2_encoder_ppr_value.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "volts":
+                    this.volts = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.volts.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                case "firmware_version":
+                    this.firmware_version = new Display_Box_Simple(
+                        this.dom_parent,// dom_parent,
+                        false,// action,
+                        x,// x,
+                        y,// y, 
+                        column[2],//width_open
+                        column[3],//width_closed
+                        68,// height,
+                    ); // display box
+                    if (this.host_name == "controller"){
+                        this.firmware_version.container.setAttribute("style",`visibility:hidden`);
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        this.update_layout()
+    }
+    set_style(style_str){
+
+    }
+    set_collapse(c_b){
+
+    }
+    update_layout(){
+        var _x = parseInt(this.x)
+        for(var column of this.column_data){
+            var column_name = column[0]
+            try{
+                var current_column = this[column_name];
+                this[column_name].set_position(_x, this.y);
+                var width = this[column_name].get_width();
+                _x = _x + 4 + width;
+            }catch (error){
+                switch(column_name){
+                    case "rotor_name":
+                        this.motor_1_name.set_position(_x, this.y);
+                        this.motor_2_name.set_position(_x, this.y+36);
+                        var width = this.motor_1_slower_10x.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_slower_10x":
+                        this.motor_1_slower_10x.set_position(_x, this.y);
+                        this.motor_2_slower_10x.set_position(_x, this.y+36);
+                        var width = this.motor_1_slower_10x.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_slower_1x":
+                        this.motor_1_slower_1x.set_position(_x, this.y);
+                        this.motor_2_slower_1x.set_position(_x, this.y+36);
+                        var width = this.motor_1_slower_1x.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_value":
+                        this.motor_1_value.set_position(_x, this.y);
+                        this.motor_2_value.set_position(_x, this.y+36);
+                        var width = this.motor_1_value.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_faster_1x":
+                        this.motor_1_faster_1x.set_position(_x, this.y);
+                        this.motor_2_faster_1x.set_position(_x, this.y+36);
+                        var width = this.motor_1_faster_1x.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_faster_10x":
+                        this.motor_1_faster_10x.set_position(_x, this.y);
+                        this.motor_2_faster_10x.set_position(_x, this.y+36);
+                        var width = this.motor_1_faster_10x.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_closed_loop_error":
+                        this.motor_1_closed_loop_error.set_position(_x, this.y);
+                        this.motor_2_closed_loop_error.set_position(_x, this.y+36);
+                        var width = this.motor_1_closed_loop_error.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_duty_cycle":
+                        this.motor_1_duty_cycle.set_position(_x, this.y);
+                        this.motor_2_duty_cycle.set_position(_x, this.y+36);
+                        var width = this.motor_1_duty_cycle.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_encoder_speed":
+                        this.motor_1_encoder_speed.set_position(_x, this.y);
+                        this.motor_2_encoder_speed.set_position(_x, this.y+36);
+                        var width = this.motor_1_encoder_speed.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_pid_proportional_gain":
+                        this.motor_1_pid_proportional_gain.set_position(_x, this.y);
+                        this.motor_2_pid_proportional_gain.set_position(_x, this.y+36);
+                        var width = this.motor_1_pid_proportional_gain.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_pid_integral_gain":
+                        this.motor_1_pid_integral_gain.set_position(_x, this.y);
+                        this.motor_2_pid_integral_gain.set_position(_x, this.y+36);
+                        var width = this.motor_1_pid_integral_gain.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_pid_differential_gain":
+                        this.motor_1_pid_differential_gain.set_position(_x, this.y);
+                        this.motor_2_pid_differential_gain.set_position(_x, this.y+36);
+                        var width = this.motor_1_pid_differential_gain.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_operating_mode":
+                        this.motor_1_operating_mode.set_position(_x, this.y);
+                        this.motor_2_operating_mode.set_position(_x, this.y+36);
+                        var width = this.motor_1_operating_mode.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    case "motor_encoder_ppr_value":
+                        this.motor_1_encoder_ppr_value.set_position(_x, this.y);
+                        this.motor_2_encoder_ppr_value.set_position(_x, this.y+36);
+                        var width = this.motor_1_encoder_ppr_value.get_width();
+                        _x = _x + 4 + width;
+                        break;
+                    default:
+                        console.log("error 1: column_name=", column_name, error)
+                }
+            }
+        }
+    }
 }
 
-//high_power_button = new Block_Toggle_Button(document.getElementById( "top_level" ), "", toggle_24v_power, [block_grid_x[1],0], "24V POWER", 200)
+/* ##### MACHINERY TAB ##### */
 
-/* ########### D I S P L A Y S ########### */
+class Machinery_Grid{
+    constructor(
+        dom_parent,
+        x,
+        y, 
+    )
+    {
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.column_data = [
+            ["system_runtime","runtime",100,32,false],
+            ["system_uptime","uptime",100,32,false],
+            ["app_git_timestamp","app git time",140,32,false],
+            ["tb_git_timestamp","tb git time",140,32,false],
+            ["system_disk","disk free",120,32,false],
+            ["os_version","os version",120,32,false],
+            ["local_ip","local ip",120,32,false],
+            ["memory_free","mem free",120,32,false],
+            ["system_cpu","cpu",120,32,false],
+            ["errors","error",68,32,false],
+            ["status","status",68,32,false],
+            ["messages","msgs",68,32,false],
+            ["hostname","hostname",120,32,false],
+            ["emergency_stop","STOP",120,32,false],
+            ["rotor_name","rotor",120,32,false],
+            ["motor_slower_10x","-10",120,32,false],
+            ["motor_slower_1x","-1",120,32,false],
+            ["motor_value","speed",120,32,false],
+            ["motor_faster_1x","+1",120,32,false],
+            ["motor_faster_10x","+10",120,32,false],
+            ["motor_closed_loop_error","pid error",120,32,false],
+            ["motor_duty_cycle","duty cycle",120,32,false],
+            ["motor_encoder_speed","encoder",120,32,false],
+            ["motor_pid_proportional_gain","P",32,32,false],
+            ["motor_pid_integral_gain","I",32,32,false],
+            ["motor_pid_differential_gain","D",32,32,false],
+            ["motor_operating_mode","mode",68,32,false],
+            ["motor_encoder_ppr_value","ppr",68,32,false],
+            ["volts","5V:24",120,32,false],
+            ["firmware_version","firmware",120,32,false],
+        ]
+        var machinery_row_title = new Machinery_Title_Row(this.dom_parent, x,y, this.column_data)
+        var vertical_offset = 40;
+        var vertical_spacing = 78;
+        this.rows = {
+            rotors0102:new Machinery_Grid_Row(this.dom_parent,"rotor0102","rotor01","rotor02",x,y+(vertical_offset+(vertical_spacing*0)), this.column_data),
+            rotors0304:new Machinery_Grid_Row(this.dom_parent,"rotor0304","rotor03","rotor04",x,y+(vertical_offset+(vertical_spacing*1)), this.column_data),
+            rotors0506:new Machinery_Grid_Row(this.dom_parent,"rotor0506","rotor05","rotor06",x,y+(vertical_offset+(vertical_spacing*2)), this.column_data),
+            rotors0708:new Machinery_Grid_Row(this.dom_parent,"rotor0708","rotor07","rotor08",x,y+(vertical_offset+(vertical_spacing*3)), this.column_data),
+            rotors0910:new Machinery_Grid_Row(this.dom_parent,"rotor0910","rotor09","rotor10",x,y+(vertical_offset+(vertical_spacing*4)), this.column_data),
+            rotors1112:new Machinery_Grid_Row(this.dom_parent,"rotor1112","rotor11","rotor12",x,y+(vertical_offset+(vertical_spacing*5)), this.column_data),
+            rotors1314:new Machinery_Grid_Row(this.dom_parent,"rotor1314","rotor13","rotor14",x,y+(vertical_offset+(vertical_spacing*6)), this.column_data),
+            controller:new Machinery_Grid_Row(this.dom_parent,"controller","","",x,y+(vertical_offset+(vertical_spacing*7)), this.column_data),
+        }
+
+    }
+}
+
+// COLUMN TITLES
+
+
+// ROWS
+
+
+
+/* ##### MUSIC TAB ##### */
+
+// KEYBOARD
+
+// CHOOSE MUSIC FILE BUTTON
+
+// TODAY'S MUSIC FILE BUTTON
+
+// FILENAME DISPLAY
+
+// REWIND BUTTON
+
+// PLAY BUTTON
+
+// STEPS DISPLAY
+
+// SLOWER BUTTON
+
+// PLAYBACK SPEED DISPLAY
+
+// FASTER BUTTON
+
+// MUSIC FILE SELECTOR
+
+
+
+/* ##### GUI PARTS ##### */
+
+
+
 function init() {
-  canvas = document.getElementById( "top_level" );
-  var background_rectangle = create_rectangle(canvas,{id:"background_rect"})
-  //interface.mode_title = create_text(canvas, "MODE: WAITING_FOR_CONNECTIONS", {class:"title_text",id:"mode_title"})
+    canvas = document.getElementById( "top_level" );
 
-  exception_details = new Details_Display(canvas, [20,500], "exception_details_rect")
+    // MOTOR POWER BUTTON
+    var high_power_button = new Toggle_Button_Async(
+        canvas,
+        "controller", 
+        "request_high_power",
+        ["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
+        20,
+        20,
+        390,
+        20,
+        32
+    )
 
-  new Block_Title_Horizontal(canvas, [block_grid_x[1],block_grid_y[1]], "runtime")
-  new Block_Title_Horizontal(canvas, [block_grid_x[2],block_grid_y[1]], "uptime")
-  new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[1]], "tb_git")
-  new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[1]], "app_git")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[1]], "computer")
-  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[1]], "ip")
-  new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[1]], "errors")
-  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[1]], "status")
-  new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[1]], "msgs")
-  new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[1]], "cpu")
-  new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[1]], "mem")
-  new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[1]], "disk")
-  new Block_Title_Horizontal(canvas, [block_grid_x[13],block_grid_y[1]], "core")
-  new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[1]], "temp")
-  new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[1]], "OS")
+    // ROTOR IDLE BUTTON
+    var rotor_idle_button = new Toggle_Button_Async(
+        canvas,
+        "controller", 
+        "request_rotor_idle",
+        ["idle (unconnected)", "idle on confirmed", "idle on requested", "idle off confirmed", "idle off requested"],
+        440,
+        20,
+        340,
+        20,
+        32
+    )
 
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[2]], "controller")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[3]], "rotors0102")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[4]], "rotors0304")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[5]], "rotors0506")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[6]], "rotors0708")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[7]], "rotors0910")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[8]], "rotors1112")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[9]], "rotors1314")
+    // TB STATE BUTTON
+    var system_state_display = new Display_Box_Simple(
+        canvas,
+        null,
+        800,
+        20,
+        380,
+        20,
+        32
+    )
+    system_state_display.set_text("no system state data")
 
-  hosts["controller"] = new Row("controller", block_grid_y[2])
-  hosts["rotors0102"] = new Row("rotors0102", block_grid_y[3])
-  hosts["rotors0304"] = new Row("rotors0304", block_grid_y[4])
-  hosts["rotors0506"] = new Row("rotors0506", block_grid_y[5])
-  hosts["rotors0708"] = new Row("rotors0708", block_grid_y[6])
-  hosts["rotors0910"] = new Row("rotors0910", block_grid_y[7])
-  hosts["rotors1112"] = new Row("rotors1112", block_grid_y[8])
-  hosts["rotors1314"] = new Row("rotors1314", block_grid_y[9])
-  //status_details = new Details_Display(canvas, [20,500], "exception_details_rect")
-  //msg_details = new Details_Display(canvas, [20,500], "exception_details_rect")
-
-  new Block_Title_Horizontal(canvas, [block_grid_x[1],block_grid_y[10]], "24V")
-  new Block_Title_Horizontal(canvas, [block_grid_x[2],block_grid_y[10]], "5V")
-  new Block_Title_Horizontal(canvas, [block_grid_x[3],block_grid_y[10]], "emergency stop")
-  //new Block_Title_Horizontal(canvas, [block_grid_x[4],block_grid_y[10]], "emergency stop")
-  new Block_Title_Horizontal(canvas, [block_grid_x[5],block_grid_y[10]], "rotor")
-  new Block_Title_Horizontal(canvas, [block_grid_x[6],block_grid_y[10]], "- - -")
-  new Block_Title_Horizontal(canvas, [block_grid_x[7],block_grid_y[10]], "speed")
-  new Block_Title_Horizontal(canvas, [block_grid_x[8],block_grid_y[10]], "+ + +")
-  new Block_Title_Horizontal(canvas, [block_grid_x[9],block_grid_y[10]], "duty cycle")
-  new Block_Title_Horizontal(canvas, [block_grid_x[10],block_grid_y[10]], "error")
-  new Block_Title_Horizontal(canvas, [block_grid_x[11],block_grid_y[10]], "encoder")
-  new Block_Title_Horizontal(canvas, [block_grid_x[12],block_grid_y[10]], "PID")
-  new Block_Title_Horizontal(canvas, [block_grid_x[13],block_grid_y[10]], "mode")
-  new Block_Title_Horizontal(canvas, [block_grid_x[14],block_grid_y[10]], "ppr")
-  new Block_Title_Horizontal(canvas, [block_grid_x[15],block_grid_y[10]], "driver")
-
-  controllers["rotors0102"] = new SDCRow("rotors0102","rotor01","rotor02", block_grid_y[11], block_grid_y[12])
-  controllers["rotors0304"] = new SDCRow("rotors0304","rotor03","rotor04", block_grid_y[13], block_grid_y[14])
-  controllers["rotors0506"] = new SDCRow("rotors0506","rotor05","rotor06", block_grid_y[15], block_grid_y[16])
-  controllers["rotors0708"] = new SDCRow("rotors0708","rotor07","rotor08", block_grid_y[17], block_grid_y[18])
-  controllers["rotors0910"] = new SDCRow("rotors0910","rotor09","rotor10", block_grid_y[19], block_grid_y[20])
-  controllers["rotors1112"] = new SDCRow("rotors1112","rotor11","rotor12", block_grid_y[21], block_grid_y[22])
-  controllers["rotors1314"] = new SDCRow("rotors1314","rotor13","rotor14", block_grid_y[23], block_grid_y[24])
-
-  high_power_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["unconnected", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
-    "request_high_power",
-    [block_grid_x[1],block_grid_y[0],300]
-  )
-  mode_connection_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["unconnected", "power on confirmed", "power on requested", "waiting for connections", "power off requested"],
-    "request_high_power",
-    [block_grid_x[4],block_grid_y[0],300]
-  )
-  mode_connection_button.set_state(3)
-  mode_midi_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["unconnected", "MIDI Input", "power on requested", "waiting for connections", "power off requested"],
-    "request_high_power",
-    [block_grid_x[6],block_grid_y[0],260]
-  )
-  mode_midi_button.set_state(1)
-  mode_file_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["unconnected", "Music File Input", "power on requested", "waiting for connections", "power off requested"],
-    "request_high_power",
-    [block_grid_x[8],block_grid_y[0],300]
-  )
-  mode_file_button.set_state(1)
-
-  note_C3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "C3 on", "C3_on", "C3 off", "C3_off"],
-    "request_C3",
-    [key_grid_x[1],block_grid_y[25],70]
-  )
-  note_C3_button.set_state(3)
-
-  note_Db3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Db3 on", "Db3_on", "Db3 off", "Db3_off"],
-    "request_Db3",
-    [key_grid_x[2],block_grid_y[25],70]
-  )
-  note_Db3_button.set_state(3)
-
-  note_D3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "D3 on", "D3_on", "D3 off", "D3_off"],
-    "request_D3",
-    [key_grid_x[3],block_grid_y[25],70]
-  )
-  note_D3_button.set_state(3)
-
-  note_Eb3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Db3 on", "Eb3_on", "Eb3 off", "Eb3_off"],
-    "request_Db3",
-    [key_grid_x[4],block_grid_y[25],70]
-  )
-  note_Eb3_button.set_state(3)
-
-  note_E3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "E3 on", "E3_on", "E3 off", "E3_off"],
-    "request_E3",
-    [key_grid_x[5],block_grid_y[25],70]
-  )
-  note_E3_button.set_state(3)
-
-  note_F3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "F3 on", "F3_on", "F3 off", "F3_off"],
-    "request_F3",
-    [key_grid_x[6],block_grid_y[25],70]
-  )
-  note_F3_button.set_state(3)
-
-  note_Gb3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Gb3 on", "Gb3_on", "Gb3 off", "Gb3_off"],
-    "request_Gb3",
-    [key_grid_x[7],block_grid_y[25],70]
-  )
-  note_Gb3_button.set_state(3)
-
-  note_G3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "G3 on", "G3_on", "G3 off", "G3_off"],
-    "request_G3",
-    [key_grid_x[8],block_grid_y[25],70]
-  )
-  note_G3_button.set_state(3)
-
-  note_Ab3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Ab3 on", "Ab3_on", "Ab3 off", "Ab3_off"],
-    "request_Ab3",
-    [key_grid_x[9],block_grid_y[25],70]
-  )
-  note_Ab3_button.set_state(3)
-
-  note_A3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "A3 on", "A3_on", "A3 off", "A3_off"],
-    "request_A3",
-    [key_grid_x[10],block_grid_y[25],70]
-  )
-  note_A3_button.set_state(3)
-
-  note_Bb3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Bb3 on", "Bb3_on", "Bb3 off", "Bb3_off"],
-    "request_Bb3",
-    [key_grid_x[11],block_grid_y[25],70]
-  )
-  note_Bb3_button.set_state(3)
-
-  note_B3_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "B3 on", "B3_on", "B3 off", "B3_off"],
-    "request_B3",
-    [key_grid_x[12],block_grid_y[25],70]
-  )
-  note_B3_button.set_state(3)
+    // BASIC PANELS
+    var panel_set = new Panel_Set(
+        canvas,
+        60,
+        {
+            machinery:{
+                button_x:1200,
+                button_y:30,
+                button_width_open:180,
+                button_width_closed:20,
+                panel_style:"panel_set_panel",
+                label:"machinery"
+            },
+            music:{
+                button_x:1400,
+                button_y:30,
+                button_width_open:180,
+                button_width_closed:20,
+                panel_style:"panel_set_panel", 
+                label:"music src"
+            },
+            keyboard:{
+                button_x:1600,
+                button_y:30,
+                button_width_open:180,
+                button_width_closed:20,
+                panel_style:"panel_set_panel", 
+                label:"keyboard"
+            },
+        }
+    );
+    panel_set.set_active_panel("machinery")
 
 
-  note_C4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "C4 on", "C4_on", "C4 off", "C4_off"],
-    "request_C4",
-    [key_grid_x[13],block_grid_y[25],70]
-  )
-  note_C4_button.set_state(3)
-
-  note_Db4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Db4 on", "Db4_on", "Db4 off", "Db4_off"],
-    "request_Db4",
-    [key_grid_x[14],block_grid_y[25],70]
-  )
-  note_Db4_button.set_state(3)
-
-  note_D4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "D4 on", "D4_on", "D4 off", "D4_off"],
-    "request_D4",
-    [key_grid_x[15],block_grid_y[25],70]
-  )
-  note_D4_button.set_state(3)
-
-  note_Eb4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Eb4 on", "Eb4_on", "Eb4 off", "Eb4_off"],
-    "request_Eb4",
-    [key_grid_x[16],block_grid_y[25],70]
-  )
-  note_Eb4_button.set_state(3)
-
-  note_E4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "E4 on", "E4_on", "E4 off", "E4_off"],
-    "request_E4",
-    [key_grid_x[17],block_grid_y[25],70]
-  )
-  note_E4_button.set_state(3)
-
-  note_F4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "F4 on", "F4_on", "F4 off", "F4_off"],
-    "request_F4",
-    [key_grid_x[18],block_grid_y[25],70]
-  )
-  note_F4_button.set_state(3)
-
-  note_Gb4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Gb4 on", "Gb4_on", "Gb4 off", "Gb4_off"],
-    "request_Gb4",
-    [key_grid_x[19],block_grid_y[25],70]
-  )
-  note_Gb4_button.set_state(3)
-
-  note_G4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "G4 on", "G4_on", "G4 off", "G4_off"],
-    "request_G4",
-    [key_grid_x[20],block_grid_y[25],70]
-  )
-  note_G4_button.set_state(3)
-
-  note_Ab4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Ab4 on", "Ab4_on", "Ab4 off", "Ab4_off"],
-    "request_Ab4",
-    [key_grid_x[21],block_grid_y[25],70]
-  )
-  note_Ab4_button.set_state(3)
-
-  note_A4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "A4 on", "A4_on", "A4 off", "A4_off"],
-    "request_A4",
-    [key_grid_x[22],block_grid_y[25],70]
-  )
-  note_A4_button.set_state(3)
-
-  note_Bb4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "Bb4 on", "Bb4_on", "Bb4 off", "Bb4_off"],
-    "request_Bb4",
-    [key_grid_x[23],block_grid_y[25],70]
-  )
-  note_Bb4_button.set_state(3)
-
-  note_B4_button = new Block_Five_State_Button(
-    "controller", 
-    ["button_five_state_inactive","button_five_state_true_confirmed","button_five_state_true_requested","button_five_state_false_confirmed","button_five_state_false_requested"],
-    ["off", "B4 on", "B4_on", "B4 off", "B4_off"],
-    "request_B4",
-    [key_grid_x[24],block_grid_y[25],70]
-  )
-  note_B4_button.set_state(3)
-
-
+    var machinery_grid = new Machinery_Grid(panel_set.panels["machinery"].panel.container, 20,60)
 
 }
-
-function check_for_stale_rows(){
-  hosts["controller"].check_if_timestamp_is_fresh()
-  hosts["rotors0102"].check_if_timestamp_is_fresh()
-  hosts["rotors0304"].check_if_timestamp_is_fresh()
-  hosts["rotors0506"].check_if_timestamp_is_fresh()
-  hosts["rotors0708"].check_if_timestamp_is_fresh()
-  hosts["rotors0910"].check_if_timestamp_is_fresh()
-  hosts["rotors1112"].check_if_timestamp_is_fresh()
-  hosts["rotors1314"].check_if_timestamp_is_fresh()
-  controllers["rotors0102"].check_if_timestamp_is_fresh()
-  controllers["rotors0304"].check_if_timestamp_is_fresh()
-  controllers["rotors0506"].check_if_timestamp_is_fresh()
-  controllers["rotors0708"].check_if_timestamp_is_fresh()
-  controllers["rotors0910"].check_if_timestamp_is_fresh()
-  controllers["rotors1112"].check_if_timestamp_is_fresh()
-  controllers["rotors1314"].check_if_timestamp_is_fresh()
-}
-
-setInterval(check_for_stale_rows, 3000);

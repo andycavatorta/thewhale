@@ -1,199 +1,169 @@
-
 @import url(http://fonts.googleapis.com/css?family=Jura);
 @import url(http://fonts.googleapis.com/css?family=Play);
 
 svg {
   position: absolute;
+  background-color: black;
 }
 #top_level {
   top:0px;
   height:0px;
-  height:3800px;
-  width:2100px;
+  height:2000px;
+  width:3800px;
 }
 #background_rect{
   top:0px;
   left:0px;
   fill:#222222;
-  width:3800px;
-  height:2100px;
-}
-.title_text{
-  font-family: Jura;
-  font-size: 36px;
-  stroke: #ffffff;
-  stroke-width: 1;
-}
-#mode_title{
-  transform: translate(2000px, 50px);
-}
-#mode_value{
-  transform: translate(50px, 50px);
-}
-#high_power_title{
-  transform: translate(20px,50px);
+  width:3700px;
+  height:2000px;
 }
 
-.carousel_segment{
-  fill:none;
-  stroke:#ffffff;
-  stroke-width:0.228491;
-  stroke-miterlimit:4;
-  stroke-dasharray:none;
-}
+/* DISPLAY BOX SIMPLE*/
 
-.theme_absent{
-  fill:none;
-  stroke:#333333;
-  stroke-width: 5px;
-}
-.theme_present{
-  fill:none;
-  stroke:#554422;
-  stroke-width: 5px;
-}
-.theme_nominal{
-  fill:none;
-  stroke:#225522;
-  stroke-width: 5px;
-}
-.theme_fault{
-  fill:none;
-  stroke:#552222;
-  stroke-width: 5px;
-}
-
-.lit_or_present{
-  fill:#aaaaaa;
-}
-
-.background_lines{
-  stroke-width:0.2;
-  opacity: 1;
-  filter: blur(.25px);
-}
-
-.button_five_state_inactive,
-.button_five_state_true_confirmed,
-.button_five_state_true_requested,
-.button_five_state_false_confirmed,
-.button_five_state_false_requested{
-  width:180px;
-  height:32px;
-  font-family: Jura;
-  font-weight: lighter;
-  font-size: 20px;
-  color:  #cccccc;
-  opacity: 0.20;
-}
-
-.button_five_state_inactive{fill: #333333;}
-.button_five_state_true_confirmed{fill: #aa3333;}
-.button_five_state_true_requested{fill: #333333;}
-.button_five_state_false_confirmed{fill: #33aa33;}
-.button_five_state_false_requested{fill: #333333;}
-
-.status_block_name_value{
-  width:180px;
-  height:10px;
-  font-family: Jura;
-  font-weight: lighter;
-  font-size: 20px;
-  fill: #cccccc;
-}
-
-.status_row{
-  width:1000px;
-  height:10px;
-  font-family: Jura;
-  font-weight: lighter;
-  font-size: 20px;
-  background-color: #ffffff;
-  fill: red;
+.display_box_simple_container{
   alignment-baseline: hanging;
-}
-
-.status_block_name{
-  width:100%;
-  text-anchor: start;
-}
-.status_block_value{
-  width:180px;
-  color:#ffffff;
-}
-
-.status_block{
-  width:180px;
-  fill: none;
-}
-.status_block_rectangle{
-  top: 0px;
-  left: 0px;
-  width:100%;
-  height:100%;
-}
-
-.status_block_title{
-  width:180px;
-  height:20px;
-  font-family: Jura;mode_title
-  font-size: 24px;
-  fill: #cccccc;
-  transform: translate(5px, 5px);
-  alignment-baseline: hanging;
-}
-
-.amps_block_value{
-  width:180px;
-  height:32px;
-  font-family: Jura;
-  font-size: 34px;
-  fill: #cccccc;
-  alignment-baseline: hanging;
-  z-index: 2;
-}
-
-.cell_button_0{
   stroke: white;
-  stroke-width: 2px;
+  stroke-width: 0px;
   top:0px;
   left:0px;
-  width:100px;
-  height:32px;
-  fill: #33ff33;
-  z-index: 1;
-  opacity: 0.10;
+  z-index: 10;
+  cursor: default;
+}
+.display_box_simple_active,
+.display_box_simple_inactive,
+.display_box_simple_attention{
+  alignment-baseline: hanging;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 30px;
+}
+.display_box_simple_active{
+  font-size: 30px;
+  fill: #606060;
+}
+.display_box_simple_inactive{
+  font-size: 26px;
+  fill: #303030;
+}
+.display_box_simple_attention{
+  font-size: 26px;
+  fill: #303030;
+}
+
+/* DISPLAY BOX TITLE*/
+
+.display_box_title_container{
+  alignment-baseline: hanging;
+  stroke: white;
+  stroke-width: 0px;
+  z-index: 10;
+  cursor: default;
+}
+.display_box_title_active,
+.display_box_title_inactive,
+.display_box_title_attention{
+  alignment-baseline: hanging;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 24px;
+}
+.display_box_title_active{
+  fill: #606060;
+}
+.display_box_title_inactive{
+  fill: #303030;
+}
+.display_box_title_attention{
+  fill: #303030;
+}
+
+/* TOGGLE BUTTON */
+
+.toggle_button_active,
+.toggle_button_inactive,
+.toggle_button_attention,
+.toggle_button_async_true_requested,
+.toggle_button_async_true_confirmed,
+.toggle_button_async_fasle_requested,
+.toggle_button_async_false_confirmed{
+  alignment-baseline: hanging;
+  font-family: Jura;
+  font-weight: lighter;
+  font-size: 30px;
+}
+
+.toggle_button_active{
+  font-size: 30px;
+  fill: #606060;
+}
+.toggle_button_inactive{
+  font-size: 26px;
+  fill: #303030;
+}
+
+.toggle_button_container{
+  alignment-baseline: hanging;
+  stroke: white;
+  stroke-width: 0px;
+  top:0px;
+  left:0px;
+  z-index: 10;
   cursor: default;
 }
 
-.cell_button_0:hover {
-  opacity: 0.20;
-  cursor: pointer;
+.text_1{
+  alignment-baseline: hanging;
+  font-family: Jura;
+  stroke-width: .1px;
+  stroke: #ffffff;
+  fill: #ffffff;
+  color: white;
 }
 
-.cell_static_0{
-  top:0px;
-  left:0px;
-  width:100px;
-  height:32px;
-  fill: #666666;
-  z-index: 1;
-  opacity: 0.10;
+/*
+toggle_button_active
+toggle_button_inactive
+toggle_button_attention
+toggle_button_async_true_requested
+toggle_button_async_true_confirmed
+toggle_button_async_fasle_requested
+toggle_button_async_false_confirmed
+
+toggle_button_container
+*/
+
+/* PANEL */
+
+.panel_set_panel{
+  top:50px;
+  left:50px;
+  width:3700px;
+  height:1850px;
 }
-.cell_static_1{
+.panel_set_container{
+  
+}
+/*
+panel_set_panel
+panel_set_button
+grid_cell_simple
+*/
+
+
+.grid_cell_simple{
+  alignment-baseline: hanging;
+  stroke: white;
+  stroke-width: .1px;
   top:0px;
   left:0px;
-  width:100px;
   height:32px;
-  fill: #33ff33;
+  fill: #333333;
   z-index: 1;
-  opacity: 0.10;
+  cursor: default;
+  opacity: .6;
 }
 
-.exception_details_rect{
-  width:1960px;
-  height:600px;
-  fill: #33ff33;
-  z-index: -1;
-  opacity: 0.10;
-}
+
+
+
