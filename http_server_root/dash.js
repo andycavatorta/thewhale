@@ -1713,8 +1713,8 @@ class Machinery_Grid_Row{
                 this.hostname
                 break;
             case "memory_free":
-                let used = (parseInt(data[0])/1000000).toFixed(2);
-                let total = (parseInt(data[1])/1000000).toFixed(2);
+                let used = parseInt(data[0]/1000000);
+                let total = parseInt(data[1]/1000000);
                 this.memory_free.set_text(used + "/" + total)
                 break;
             case "system_cpu":
@@ -1949,7 +1949,7 @@ class Machinery_Grid{
             ["system_disk","disk free",120,32,false],
             ["os_version","os version",120,32,false],
             ["local_ip","local ip",120,32,false],
-            ["memory_free","mem free",120,32,false],
+            ["memory_free","mem free",180,32,false],
             ["system_cpu","cpu",120,32,false],
             ["errors","error",68,32,false],
             ["status","status",68,32,false],
