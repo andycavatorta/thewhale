@@ -4,58 +4,10 @@
 var SVG_NS ="http://www.w3.org/2000/svg";
 var canvas = null;
 var websocket;
-
+var machinery_grid
 
 /* ##### NETWORK ##### */
 
-/*
-topics:
-    deadman
-    response_sdc_start_status
-        firmware_version
-        encoder_ppr_value_motor1
-        encoder_ppr_value_motor2
-        operating_mode_motor1
-        operating_mode_motor2
-        pid_differential_gain_motor1
-        pid_integral_gain_motor1
-        pid_proportional_gain_motor1
-        pid_differential_gain_motor2
-        pid_integral_gain_motor2
-        pid_proportional_gain_motor2
-    response_sdc_runtime_status
-        emergency_stop
-        volts
-        closed_loop_error_1
-        closed_loop_error_2
-        duty_cycle_1
-        duty_cycle_2
-        encoder_speed_relative_1
-        encoder_speed_relative_2
-        motor_command_applied_1
-        motor_command_applied_2
-        current_time
-    response_computer_start_status
-        local_ip
-        tb_git_timestamp
-        app_git_timestamp
-        os_version
-        system_uptime
-        system_runtime
-        system_disk
-    response_computer_runtime_status
-        core_temp
-        system_cpu
-        memory_free
-        current_time
-    response_high_power
-    response_emergency_stop
-    response_motor_command_applied
-
-    response_idle_speeds
-    response_system_state [unconnected, waiting_for_connections, ready, playing_file, ]
-
-*/
 
 function websocket_connect() {
     console.log("connecting to wesockets")
@@ -108,105 +60,110 @@ function sendTrigger(command) {
 function websocket_message_handler(evt) {
     //console.log(">> data received" + evt.data)
     var topic_data_origin = JSON.parse(evt.data);
-    //console.log(topic_data_origin)
     var topic = topic_data_origin[0];
     var message = topic_data_origin[1];
     var origin = topic_data_origin[2];
     console.log(topic, message, origin)
     return
     switch (topic) {
-      case "deadman":
-          break;
-      case "response_sdc_start_status":
-          //
-          var _keys_ = Object.keys(message)
-          if(_keys_.length==0){
+        case "deadman":
+            break;
+        case "response_sdc_start_status":
+            /*
+            var _keys_ = Object.keys(message)
+            if(_keys_.length==0){
             return
-          }
-          controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
-          controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
-          controllers[origin].firmware_version.set_text(message["firmware_version"])
-          controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
-          controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
-          var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
-          var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
-          controllers[origin].pid_1.set_text(pid_1_str)
-          controllers[origin].pid_2.set_text(pid_2_str)
-          break;
-      case "response_sdc_runtime_status":
-          var _keys_ = Object.keys(message)
-          if(_keys_.length==0){
-            return
-          }
-          controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
-          controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
-          controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
-          controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
-          controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
-          controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
-          if(message["emergency_stop"]==true){
-            controllers[origin].emergency_stop.set_state(1)
-            controllers[origin].idle_speed.set_state(1)
-          }else{
-            controllers[origin].emergency_stop.set_state(3)
-            controllers[origin].idle_speed.set_state(3)
-          }
-          var volts_a = message["volts"].split(":")
-          controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
-          controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
-          controllers[origin].set_timestamp(parseInt(message["current_time"]))
-          controllers[origin].set_colors_active(1)
-          break;
-      case "response_computer_start_status":
-          hosts[origin].ip_local.set_text(message["local_ip"])
-          let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
-          hosts[origin].tb_git_time.set_text( formatDate(tb_date))
-          let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
-          hosts[origin].app_git_time.set_text( formatDate(app_date))
-          let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
-          hosts[origin].os_version.set_text(os_version_str)
-          //console.log("online_status",message["online_status"])
-          //console.log("connections",message["connections"]) //[true, {"controller": true}]
-          //console.log("os_version",message["os_version"]) // {"name": "ubuntu", "version": "22.04"}
-          hosts[origin].set_colors_active(1)
-        break;
-      case "response_computer_runtime_status":
-          hosts[origin].temp.set_text(message["core_temp"])
-          hosts[origin].voltage.set_text(message["core_voltage"])
-          hosts[origin].cpu.set_text( parseFloat( message["system_cpu"] + "%").toFixed(2) )
-          hosts[origin].reboot.set_text( ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
-          hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
-          hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000000).toFixed(2) + "GB")//[37196000.0, 926900000.0]
-          hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
-          hosts[origin].set_timestamp(parseInt(message["current_time"]))
-          hosts[origin].set_colors_active(1)
-        break;
-      case "response_high_power":
-          if (message==true){
-            high_power_button.set_state(1)
-          }
-          else{
-            high_power_button.set_state(3)
-          }
-        break;
-      case "response_emergency_stop":
-          if (message==true){
-            controllers[origin].emergency_stop.set_state(1)
-          }
-          else{
-            controllers[origin].emergency_stop.set_state(3)
-          }
-        break;
-      case "response_motor_command_applied":
-          var motor_number = message[0]
-          var command = message[1]
-          if (motor_number==1){
-            controllers[origin].requested_speed_1.set_text(command)
-          }
-          if (motor_number==2){
-            controllers[origin].requested_speed_2.set_text(command)
-          }
-        break;
+            }
+            controllers[origin].encoder_ppr_value_motor1.set_text(message["encoder_ppr_value_motor1"])
+            controllers[origin].encoder_ppr_value_motor2.set_text(message["encoder_ppr_value_motor2"])
+            controllers[origin].firmware_version.set_text(message["firmware_version"])
+            controllers[origin].operating_mode_motor1.set_text(message["operating_mode_motor1"])
+            controllers[origin].operating_mode_motor2.set_text(message["operating_mode_motor2"])
+            var pid_1_str = message["pid_differential_gain_motor1"]+","+message["pid_integral_gain_motor1"]+","+message["pid_proportional_gain_motor1"]
+            var pid_2_str = message["pid_differential_gain_motor2"]+","+message["pid_integral_gain_motor2"]+","+message["pid_proportional_gain_motor2"]
+            controllers[origin].pid_1.set_text(pid_1_str)
+            controllers[origin].pid_2.set_text(pid_2_str)
+            */
+            break;
+        case "response_sdc_runtime_status":
+            /*
+            var _keys_ = Object.keys(message)
+            if(_keys_.length==0){
+                return
+            }
+            controllers[origin].closed_loop_error_1.set_text(message["closed_loop_error_1"])
+            controllers[origin].closed_loop_error_2.set_text(message["closed_loop_error_2"])
+            controllers[origin].duty_cycle_1.set_text(message["duty_cycle_1"])
+            controllers[origin].duty_cycle_2.set_text(message["duty_cycle_2"])
+            controllers[origin].encoder_speed_relative_1.set_text(message["encoder_speed_relative_1"])
+            controllers[origin].encoder_speed_relative_2.set_text(message["encoder_speed_relative_2"])
+            if(message["emergency_stop"]==true){
+                controllers[origin].emergency_stop.set_state(1)
+                controllers[origin].idle_speed.set_state(1)
+            }else{
+                controllers[origin].emergency_stop.set_state(3)
+                controllers[origin].idle_speed.set_state(3)
+            }
+            var volts_a = message["volts"].split(":")
+            controllers[origin].volts_24.set_text(parseFloat(volts_a[1])/10)
+            controllers[origin].volts_5.set_text(parseFloat(volts_a[2])/1000)
+            controllers[origin].set_timestamp(parseInt(message["current_time"]))
+            controllers[origin].set_colors_active(1)
+            */
+            break;
+        case "response_computer_start_status":
+            /*
+            hosts[origin].ip_local.set_text(message["local_ip"])
+            let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
+            hosts[origin].tb_git_time.set_text( formatDate(tb_date))
+            let app_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
+            hosts[origin].app_git_time.set_text( formatDate(app_date))
+            let os_version_str = message["os_version"]["name"] + " " + message["os_version"]["version"]
+            hosts[origin].os_version.set_text(os_version_str)
+            hosts[origin].set_colors_active(1)
+            */
+            break;
+        case "response_computer_runtime_status":
+            Data_Machinery_Rows[origin].system_cpu = message["system_cpu"]
+            machinery_grid.rows[origin]["memory_free"].set_text(message["system_cpu"])
+            /*
+            hosts[origin].temp.set_text(message["core_temp"])
+            hosts[origin].voltage.set_text(message["core_voltage"])
+            hosts[origin].cpu.set_text( parseFloat( message["system_cpu"] + "%").toFixed(2) )
+            hosts[origin].reboot.set_text( ( parseFloat( message["system_uptime"] )/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
+            hosts[origin].restart.set_text( ( parseFloat( message["system_runtime"])/3600).toFixed(2) + "h")// "2022-06-30 21:05:37"
+            hosts[origin].disk.set_text( (parseInt(message["system_disk"][0])/1000000000).toFixed(2) + "GB")//[37196000.0, 926900000.0]
+            hosts[origin].mem.set_text( (parseInt(message["memory_free"][0])/1000000).toFixed(2) + "MB")//[37196000.0, 926900000.0]
+            hosts[origin].set_timestamp(parseInt(message["current_time"]))
+            hosts[origin].set_colors_active(1)
+            */
+            break;
+        case "response_high_power":
+            if (message==true){
+                high_power_button.set_state(1)
+            }
+            else{
+                high_power_button.set_state(3)
+            }
+            break;
+        case "response_emergency_stop":
+            if (message==true){
+                controllers[origin].emergency_stop.set_state(1)
+            }
+            else{
+                controllers[origin].emergency_stop.set_state(3)
+            }
+            break;
+        case "response_motor_command_applied":
+            var motor_number = message[0]
+            var command = message[1]
+            if (motor_number==1){
+                controllers[origin].requested_speed_1.set_text(command)
+            }
+            if (motor_number==2){
+                controllers[origin].requested_speed_2.set_text(command)
+            }
+            break;
     }
 }
 
@@ -412,6 +369,59 @@ class Data_History{
     return new Array.from(this.array);
   }
 }
+
+
+/*
+topics:
+    deadman
+    response_sdc_start_status
+        firmware_version
+        encoder_ppr_value_motor1
+        encoder_ppr_value_motor2
+        operating_mode_motor1
+        operating_mode_motor2
+        pid_differential_gain_motor1
+        pid_integral_gain_motor1
+        pid_proportional_gain_motor1
+        pid_differential_gain_motor2
+        pid_integral_gain_motor2
+        pid_proportional_gain_motor2
+    response_sdc_runtime_status
+        emergency_stop
+        volts
+        closed_loop_error_1
+        closed_loop_error_2
+        duty_cycle_1
+        duty_cycle_2
+        encoder_speed_relative_1
+        encoder_speed_relative_2
+        motor_command_applied_1
+        motor_command_applied_2
+        current_time
+    response_computer_start_status
+        local_ip
+        tb_git_timestamp
+        app_git_timestamp
+        os_version
+        system_uptime
+        system_runtime
+        system_disk
+    response_computer_runtime_status
+        core_temp
+        system_cpu
+        memory_free
+        current_time
+    response_high_power
+    response_emergency_stop
+    response_motor_command_applied
+    response_idle_speeds
+    response_system_state [unconnected, waiting_for_connections, ready, playing_file, ]
+*/
+
+
+
+
+
 
 function Data_Machinery_Row(){
     this.app_git_timestamp = 0;
@@ -1951,6 +1961,6 @@ function init() {
     panel_set.set_active_panel("machinery")
 
 
-    var machinery_grid = new Machinery_Grid(panel_set.panels["machinery"].panel.container, 20,60)
+    machinery_grid = new Machinery_Grid(panel_set.panels["machinery"].panel.container, 20,60)
 
 }
