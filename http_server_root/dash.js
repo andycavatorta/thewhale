@@ -1714,7 +1714,7 @@ class Machinery_Grid_Row{
                 this.memory_free
                 break;
             case "system_cpu":
-                this.system_cpu.set_text(data + "%")
+                this.system_cpu.set_text(parseFloat(data).toFixed(2) + "%")
                 break;
             case "errors":
                 this.errors
