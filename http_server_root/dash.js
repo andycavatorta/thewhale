@@ -111,6 +111,9 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_computer_start_status":
+            console.log(">>>",topic, message, origin)
+            Data_Machinery_Rows[origin].system_uptime = message["system_uptime"]
+            machinery_grid.rows[origin].update_data("system_uptime",message["system_uptime"])
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -123,12 +126,11 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_computer_runtime_status":
-            console.log(">>>",topic, message, origin)
+            Data_Machinery_Rows[origin].current_time = message["current_time"]
             Data_Machinery_Rows[origin].system_cpu = message["system_cpu"]
             machinery_grid.rows[origin].update_data("system_cpu",message["system_cpu"])
             Data_Machinery_Rows[origin].memory_free = message["memory_free"]
             machinery_grid.rows[origin].update_data("memory_free",message["memory_free"])
-
             /*
             hosts[origin].temp.set_text(message["core_temp"])
             hosts[origin].voltage.set_text(message["core_voltage"])
@@ -431,6 +433,7 @@ function Data_Machinery_Row(){
     this.app_git_timestamp = 0;
     this.closed_loop_error_1 = 0;
     this.closed_loop_error_2 = 0;
+    this.current_time = 0;
     this.duty_cycle_1 = 0;
     this.duty_cycle_2 = 0;
     this.emergency_stop = false;
@@ -1692,7 +1695,8 @@ class Machinery_Grid_Row{
                 this.system_runtime.set_text(data)
                 break;
             case "system_uptime":
-                this.system_uptime
+                let uptime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
+                this.system_uptime.set_text(uptime_str)
                 break;
             case "app_git_timestamp":
                 this.app_git_timestamp
@@ -1715,7 +1719,7 @@ class Machinery_Grid_Row{
             case "memory_free":
                 let used = parseInt(data[0]/1000000);
                 let total = parseInt(data[1]/1000000);
-                this.memory_free.set_text(used + "/" + total)
+                this.memory_free.set_text(used + "MB/" + total + "MB")
                 break;
             case "system_cpu":
                 this.system_cpu.set_text(parseFloat(data).toFixed(2) + "%")
@@ -1949,7 +1953,7 @@ class Machinery_Grid{
             ["system_disk","disk free",120,32,false],
             ["os_version","os version",120,32,false],
             ["local_ip","local ip",120,32,false],
-            ["memory_free","mem free",180,32,false],
+            ["memory_free","mem free",150,32,false],
             ["system_cpu","cpu",120,32,false],
             ["errors","error",68,32,false],
             ["status","status",68,32,false],
