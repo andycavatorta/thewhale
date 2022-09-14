@@ -128,7 +128,7 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("system_cpu",message["system_cpu"])
             Data_Machinery_Rows[origin].memory_free = message["memory_free"]
             machinery_grid.rows[origin].update_data("memory_free",message["memory_free"])
-            
+
             /*
             hosts[origin].temp.set_text(message["core_temp"])
             hosts[origin].voltage.set_text(message["core_voltage"])
@@ -1713,7 +1713,9 @@ class Machinery_Grid_Row{
                 this.hostname
                 break;
             case "memory_free":
-                this.memory_free.set_text(data)
+                let used = (parseInt(data[0])/1000000).toFixed(2);
+                let total = (parseInt(data[1])/1000000).toFixed(2);
+                this.memory_free.set_text(used + "/" + total)
                 break;
             case "system_cpu":
                 this.system_cpu.set_text(parseFloat(data).toFixed(2) + "%")
