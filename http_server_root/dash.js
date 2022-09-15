@@ -97,8 +97,6 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("motor_1_duty_cycle",message["duty_cycle_1"])
             Data_Machinery_Rows[origin].motor_2_duty_cycle = message["duty_cycle_2"]
             machinery_grid.rows[origin].update_data("motor_2_duty_cycle",message["duty_cycle_2"])
-            Data_Machinery_Rows[origin].encoder_speed_relative_2 = message["encoder_speed_relative_2"]
-            machinery_grid.rows[origin].update_data("encoder_speed_relative_2",message["encoder_speed_relative_2"])
             Data_Machinery_Rows[origin].motor_1_encoder_speed = message["encoder_speed_relative_1"]
             machinery_grid.rows[origin].update_data("motor_1_encoder_speed",message["encoder_speed_relative_1"])
             Data_Machinery_Rows[origin].motor_2_encoder_speed = message["encoder_speed_relative_2"]
