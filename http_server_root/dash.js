@@ -1799,10 +1799,10 @@ class Machinery_Grid_Row{
                 this.motor_2_slower_1x
                 break;
             case "motor_1_value":
-                this.motor_1_value
+                this.motor_1_value.set_text(data)
                 break;
             case "motor_2_value":
-                this.motor_2_value
+                this.motor_2_value.set_text(data)
                 break;
             case "motor_1_faster_1x":
                 this.motor_1_faster_1x
@@ -1823,16 +1823,16 @@ class Machinery_Grid_Row{
                 this.motor_2_closed_loop_error.set_text(data)
                 break;
             case "motor_1_duty_cycle":
-                this.motor_1_duty_cycle
+                this.motor_1_duty_cycle.set_text(data)
                 break;
             case "motor_2_duty_cycle":
-                this.motor_2_duty_cycle
+                this.motor_2_duty_cycle.set_text(data)
                 break;
             case "motor_1_encoder_speed":
-                this.motor_1_encoder_speed
+                this.motor_1_encoder_speed.set_text(data)
                 break;
             case "motor_2_encoder_speed":
-                this.motor_2_encoder_speed
+                this.motor_2_encoder_speed.set_text(data)
                 break;
             case "motor_1_pid_proportional_gain":
                 this.motor_1_pid_proportional_gain
@@ -1865,10 +1865,10 @@ class Machinery_Grid_Row{
                 this.motor_2_encoder_ppr_value
                 break;
             case "volts":
-                this.volts
+                this.volts.set_text(data)
                 break;
             case "firmware_version":
-                this.firmware_version
+                this.firmware_version.set_text(data)
                 break;
             default:
                 console.log("error 1: column_name=", cell_name,data)
