@@ -347,9 +347,22 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.app_pull_from_github()
                         if topic=="request_high_power":
-                            print("+++run",)
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
+                        if topic=="request_rotor_idle":
+                            if self.high_power.get_state():
+                                if self.rotor_idle_state: # if idling
+                                    self.rotor_idle_state = False;
+                                    for rotor_name in settings.Rotors.idle_speeds_low:
+                                        self.tb.publish("request_motor_speed", 0, rotor_name)
+                                else: 
+                                    self.rotor_idle_state = True;
+                                    for rotor_name in settings.Rotors.idle_speeds_low:
+                                        self.tb.publish("request_motor_speed", settings.Rotors.idle_speeds_low[rotor_name], rotor_name)
+                                self.dashboard("response_rotor_idle", self.rotor_idle_state, "controller", "controller")
+                            else:
+                                self.dashboard("response_rotor_idle", False, "controller", "controller")
+                            
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
@@ -366,8 +379,8 @@ class Main(threading.Thread):
                             self.tb.publish("request_increment", message, destination)
                         if topic=="request_emergency_stop":
                             self.tb.publish("request_emergency_stop", message, destination)
-                        if topic=="request_idle_speed":
-                            self.tb.publish("request_idle_speed", message, destination)
+                        #if topic=="request_idle_speed":
+                        #    self.tb.publish("request_idle_speed", message, destination)
                         if topic=="restart":
                             self.tb.publish("restart", destination)
                         if topic=="reboot":

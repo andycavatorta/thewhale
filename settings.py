@@ -45,22 +45,21 @@ class Rotors():
         "rotor14":["rotors1314",2],
     }
     idle_speeds_low={
-        "rotor01":100,
-        "rotor02":98,
-        "rotor03":96,
-        "rotor04":94,
-        "rotor05":0, #150, need to fix chain
-        "rotor06":92,
-        "rotor07":0, # wrong
-        "rotor08":0, # wrong
-        "rotor09":94,
-        "rotor10":96,
-        "rotor11":98,
-        "rotor12":100,
-        "rotor13":102,
-        "rotor14":104,
+        "rotor01":60,
+        "rotor02":55,
+        "rotor03":50,
+        "rotor04":45,
+        "rotor05":50, 
+        "rotor06":55,
+        "rotor07":60, 
+        "rotor08":65, 
+        "rotor09":70,
+        "rotor10":75,
+        "rotor11":80,
+        "rotor12":85,
+        "rotor13":90,
+        "rotor14":95,
     }
-
     idle_speeds_high={
         "rotor01":160,
         "rotor02":180,
