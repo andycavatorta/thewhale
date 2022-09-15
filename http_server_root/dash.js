@@ -1432,7 +1432,7 @@ class Machinery_Grid_Row{
                     this.motor_1_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "-10",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_1_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
@@ -1445,7 +1445,7 @@ class Machinery_Grid_Row{
                     this.motor_2_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "-10",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_1_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
@@ -1460,7 +1460,7 @@ class Machinery_Grid_Row{
                     this.motor_1_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "-1",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_1_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
@@ -1473,7 +1473,7 @@ class Machinery_Grid_Row{
                     this.motor_2_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "-1",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_2_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
@@ -1544,7 +1544,7 @@ class Machinery_Grid_Row{
                     this.motor_1_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "+10",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_1_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
@@ -1557,7 +1557,7 @@ class Machinery_Grid_Row{
                     this.motor_2_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
                         "+10",// action_text,
-                        this.host_name,// action_data,
+                        this.rotor_2_name,// action_data,
                         x,// x,
                         y,// y, 
                         column[2],//width_open
