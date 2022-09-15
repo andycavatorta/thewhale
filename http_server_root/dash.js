@@ -1695,12 +1695,11 @@ class Machinery_Grid_Row{
         switch(cell_name){
             case "system_uptime":
                 let uptime_str = data[0] + "\n" + data[1];
-                this.system_uptime.set_label(uptime_str)
+                //this.system_uptime.set_label(uptime_str)
                 break;
             case "system_runtime":
-                console.log(">>>>>>>>> 2", data)
                 let runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
-                this.system_runtime.set_label(data)
+                this.system_runtime.set_label(runtime_str)
                 break;
             case "app_git_timestamp":
                 this.app_git_timestamp
