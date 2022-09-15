@@ -1711,8 +1711,9 @@ class Machinery_Grid_Row{
                 this.app_git_timestamp.set_label(date_a[0] | "\n" + date_a[1])
                 break;
             case "tb_git_timestamp":
-                var date_str = new Date(parseInt(data)*1000);
-                this.tb_git_timestamp.set_label(formatDate(date_str))
+                var date_str = formatDate(new Date(parseInt(data)*1000));
+                var date_a = date_str.split(" ")
+                this.tb_git_timestamp.set_label(date_a[0] | "\n" + date_a[1])
                 break;
             case "system_disk":
                 this.system_disk
