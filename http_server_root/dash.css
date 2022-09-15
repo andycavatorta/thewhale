@@ -90,15 +90,15 @@ svg {
   alignment-baseline: hanging;
   font-family: Jura;
   font-weight: lighter;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .toggle_button_active{
-  font-size: 30px;
+  font-size: 20px;
   fill: #606060;
 }
 .toggle_button_inactive{
-  font-size: 26px;
+  font-size: 18px;
   fill: #303030;
 }
 
