@@ -924,7 +924,6 @@ class Toggle_Button_Async{
 class Display_Box_Simple{
     constructor(
         dom_parent,
-        action,
         action_text,
         action_data,
         x,
@@ -937,7 +936,6 @@ class Display_Box_Simple{
         style_attention = "display_box_simple_attention")
     {
         this.dom_parent = dom_parent;
-        this.action = action;
         this.action_text = action_text;
         this.action_data = action_data;
         this.x = x;
@@ -969,7 +967,7 @@ class Display_Box_Simple{
         this.container.setAttribute("height", this.height + `px`);
         this.button_rect.setAttribute("height", this.height + `px`);
         this.text_container.setAttribute("height",this.height + `px`);
-        if (this.action != false) {
+        if (this.action_text != false) {
             this.text_container.class_ref = this
             this.button_rect.class_ref = this
             this.text_container.addEventListener("click",this.handle_click)
