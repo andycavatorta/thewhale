@@ -108,7 +108,6 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_computer_start_status":
-            console.log(">>>",topic, message, origin)
             Data_Machinery_Rows[origin].system_uptime = message["system_uptime"]
             machinery_grid.rows[origin].update_data("system_uptime",message["system_uptime"])
             Data_Machinery_Rows[origin].system_runtime = message["system_runtime"]
