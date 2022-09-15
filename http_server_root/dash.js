@@ -183,9 +183,6 @@ function websocket_message_handler(evt) {
     }
 }
 
-
-
-
 function websocket_error_handler(evt) {
     console.log("websocket_error_handler", evt)
     if (timers.retry_connection == false) {
@@ -771,6 +768,7 @@ class Toggle_Button_Async{
     }
     handle_click(e){
         self = e.target.class_ref
+        console.log(handle_click("handle_click",self.state))
         if (self.state==0){
             self.set_state(3)
             websocket_send(self.target_name,self.topic,false)
