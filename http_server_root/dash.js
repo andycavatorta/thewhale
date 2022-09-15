@@ -670,6 +670,7 @@ class Toggle_Button_Sync{
         }
     }
     set_label(label_str){
+        console.log(">>>>>>>> 1 ", label_str)
         let textnode = document.createTextNode(label_str);
         this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
     }
@@ -1698,6 +1699,7 @@ class Machinery_Grid_Row{
                 this.system_uptime.set_label(uptime_str)
                 break;
             case "system_runtime":
+                console.log(">>>>>>>>> 2", data)
                 let runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
                 this.system_runtime.set_label(data)
                 break;
