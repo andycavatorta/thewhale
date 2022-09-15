@@ -110,7 +110,6 @@ function websocket_message_handler(evt) {
             Data_Machinery_Rows[origin].emergency_stop = message["emergency_stop"]
             machinery_grid.rows[origin].update_data("emergency_stop",message["emergency_stop"])
             Data_Machinery_Rows[origin].current_time = message["current_time"]
-            machinery_grid.rows[origin].update_data("current_time",message["current_time"])
 
             /*
             var _keys_ = Object.keys(message)
@@ -1778,7 +1777,7 @@ class Machinery_Grid_Row{
                 this.messages
                 break;
             case "emergency_stop":
-                this.emergency_stop
+                this.emergency_stop.set_text(data)
                 break;
             case "motor_1_name":
                 this.motor_1_name
