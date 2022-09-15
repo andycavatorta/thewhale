@@ -1706,11 +1706,12 @@ class Machinery_Grid_Row{
                 this.system_runtime.set_label(runtime_str)
                 break;
             case "app_git_time":
-                formatDate(data)
-                this.app_git_timestamp.set_label(formatDate(data))
+                let date_str = new Date(parseInt(data)*1000);
+                this.app_git_timestamp.set_label(formatDate(date_str))
                 break;
             case "tb_git_time":
-                this.tb_git_timestamp.set_label(formatDate(data))
+                let date_str = new Date(parseInt(data)*1000);
+                this.tb_git_timestamp.set_label(formatDate(date_str))
                 break;
             case "system_disk":
                 this.system_disk
