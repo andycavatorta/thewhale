@@ -1777,7 +1777,7 @@ class Machinery_Grid_Row{
                 this.messages
                 break;
             case "emergency_stop":
-                this.emergency_stop.set_text(data)
+                this.emergency_stop.set_label(data)
                 break;
             case "motor_1_name":
                 this.motor_1_name
