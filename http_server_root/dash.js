@@ -122,6 +122,10 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("app_git_timestamp",message["app_git_timestamp"])
             Data_Machinery_Rows[origin].system_disk = message["system_disk"]
             machinery_grid.rows[origin].update_data("system_disk",message["system_disk"])
+            Data_Machinery_Rows[origin].os_version = message["os_version"]
+            machinery_grid.rows[origin].update_data("os_version",message["os_version"])
+
+            os_version
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
