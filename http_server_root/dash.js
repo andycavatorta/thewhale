@@ -65,6 +65,7 @@ function websocket_message_handler(evt) {
         case "deadman":
             break;
         case "response_sdc_start_status":
+            console.log(">> data received" + evt.data)
             /*
             var _keys_ = Object.keys(message)
             if(_keys_.length==0){
@@ -82,6 +83,7 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_sdc_runtime_status":
+            console.log(">> data received" + evt.data)
             /*
             var _keys_ = Object.keys(message)
             if(_keys_.length==0){
@@ -154,7 +156,6 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_high_power":
-            console.log(">> data received" + evt.data)
             if (message==true){
                 high_power_button.set_state(1)
             }
