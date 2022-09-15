@@ -76,6 +76,10 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("motor_1_operating_mode",message["operating_mode_motor1"])
             Data_Machinery_Rows[origin].motor_2_operating_mode = message["pid_integral_gain_motor2"]
             machinery_grid.rows[origin].update_data("motor_2_operating_mode",message["pid_integral_gain_motor2"])
+
+
+
+
             Data_Machinery_Rows[origin].motor_1_pid_proportional_gain = message["pid_proportional_gain_motor1"]
             machinery_grid.rows[origin].update_data("motor_1_pid_proportional_gain",message["pid_proportional_gain_motor1"])
             Data_Machinery_Rows[origin].motor_1_pid_integral_gain = message["pid_integral_gain_motor1"]
@@ -1858,34 +1862,34 @@ class Machinery_Grid_Row{
                 this.motor_2_encoder_speed.set_text(data)
                 break;
             case "motor_1_pid_proportional_gain":
-                this.motor_1_pid_proportional_gain
+                this.motor_1_pid_proportional_gain.set_text(data)
                 break;
             case "motor_2_pid_proportional_gain":
-                this.motor_2_pid_proportional_gain
+                this.motor_2_pid_proportional_gain.set_text(data)
                 break;
             case "motor_1_pid_integral_gain":
-                this.motor_1_pid_integral_gain
+                this.motor_1_pid_integral_gain.set_text(data)
                 break;
             case "motor_2_pid_integral_gain":
-                this.motor_2_pid_integral_gain
+                this.motor_2_pid_integral_gain.set_text(data)
                 break;
             case "motor_1_pid_differential_gain":
-                this.motor_1_pid_differential_gain
+                this.motor_1_pid_differential_gain.set_text(data)
                 break;
             case "motor_2_pid_differential_gain":
-                this.motor_2_pid_differential_gain
+                this.motor_2_pid_differential_gain.set_text(data)
                 break;
             case "motor_1_operating_mode":
-                this.motor_1_operating_mode
+                this.motor_1_operating_mode.set_text(data)
                 break;
             case "motor_2_operating_mode":
-                this.motor_2_operating_mode
+                this.motor_2_operating_mode.set_text(data)
                 break;
             case "motor_1_encoder_ppr_value":
-                this.motor_1_encoder_ppr_value
+                this.motor_1_encoder_ppr_value.set_text(data)
                 break;
             case "motor_2_encoder_ppr_value":
-                this.motor_2_encoder_ppr_value
+                this.motor_2_encoder_ppr_value.set_text(data)
                 break;
             case "volts":
                 var volts_a = data.split(":");
