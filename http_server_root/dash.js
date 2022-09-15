@@ -768,7 +768,7 @@ class Toggle_Button_Async{
     }
     handle_click(e){
         self = e.target.class_ref
-        console.log(handle_click("handle_click",self.state))
+        console.log("handle_click",self.state)
         if (self.state==0){
             self.set_state(3)
             websocket_send(self.target_name,self.topic,false)
