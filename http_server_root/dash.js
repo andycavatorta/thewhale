@@ -116,10 +116,10 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("system_uptime",message["system_uptime"])
             Data_Machinery_Rows[origin].system_runtime = message["system_runtime"]
             machinery_grid.rows[origin].update_data("system_runtime",message["system_runtime"])
-            Data_Machinery_Rows[origin].tb_git_time = message["tb_git_time"]
-            machinery_grid.rows[origin].update_data("tb_git_time",message["tb_git_time"])
-            Data_Machinery_Rows[origin].app_git_time = message["app_git_time"]
-            machinery_grid.rows[origin].update_data("app_git_time",message["app_git_time"])
+            Data_Machinery_Rows[origin].tb_git_time = message["tb_git_timestamp"]
+            machinery_grid.rows[origin].update_data("tb_git_timestamp",message["tb_git_timestamp"])
+            Data_Machinery_Rows[origin].app_git_time = message["app_git_timestamp"]
+            machinery_grid.rows[origin].update_data("app_git_timestamp",message["app_git_timestamp"])
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -1705,7 +1705,7 @@ class Machinery_Grid_Row{
                 var runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
                 this.system_runtime.set_label(runtime_str)
                 break;
-            case "app_git_time":
+            case "app_git_timestamp":
                 console.log(data)
                 console.log(parseInt(data)*1000)
                 console.log(new Date(parseInt(data)*1000))
@@ -1714,7 +1714,7 @@ class Machinery_Grid_Row{
                 var date_str = new Date(parseInt(data)*1000);
                 this.app_git_timestamp.set_label(formatDate(date_str))
                 break;
-            case "tb_git_time":
+            case "tb_git_timestamp":
                 var date_str = new Date(parseInt(data)*1000);
                 this.tb_git_timestamp.set_label(formatDate(date_str))
                 break;
