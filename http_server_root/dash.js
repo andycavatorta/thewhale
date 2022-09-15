@@ -116,6 +116,10 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("system_uptime",message["system_uptime"])
             Data_Machinery_Rows[origin].system_runtime = message["system_runtime"]
             machinery_grid.rows[origin].update_data("system_runtime",message["system_runtime"])
+            Data_Machinery_Rows[origin].tb_git_time = message["tb_git_time"]
+            machinery_grid.rows[origin].update_data("tb_git_time",message["tb_git_time"])
+            Data_Machinery_Rows[origin].app_git_time = message["app_git_time"]
+            machinery_grid.rows[origin].update_data("app_git_time",message["app_git_time"])
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -1702,10 +1706,11 @@ class Machinery_Grid_Row{
                 this.system_runtime.set_label(runtime_str)
                 break;
             case "app_git_timestamp":
-                this.app_git_timestamp
+                formatDate(data)
+                this.app_git_timestamp.set_label(formatDate(data))
                 break;
             case "tb_git_timestamp":
-                this.tb_git_timestamp
+                this.tb_git_timestamp.set_label(formatDate(data))
                 break;
             case "system_disk":
                 this.system_disk
