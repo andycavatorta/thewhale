@@ -1864,6 +1864,8 @@ class Machinery_Grid_Row{
                 this.motor_2_encoder_ppr_value
                 break;
             case "volts":
+                var volts_a = data.split(":");
+                var volts_str = volts_a[0] + "V, " + volts_a[1] + "V"
                 this.volts.set_text(data)
                 break;
             case "firmware_version":
