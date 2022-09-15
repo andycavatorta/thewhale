@@ -36,18 +36,18 @@ svg {
   alignment-baseline: hanging;
   font-family: Jura;
   font-weight: lighter;
-  font-size: 30px;
+  font-size: 18px;
 }
 .display_box_simple_active{
-  font-size: 30px;
+  font-size: 18px;
   fill: #606060;
 }
 .display_box_simple_inactive{
-  font-size: 26px;
+  font-size: 18px;
   fill: #303030;
 }
 .display_box_simple_attention{
-  font-size: 26px;
+  font-size: 18px;
   fill: #303030;
 }
 
