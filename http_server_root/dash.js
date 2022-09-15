@@ -3,6 +3,7 @@ var canvas = null;
 var websocket;
 var machinery_grid;
 var high_power_button;
+var rotor_idle_button;
 
 /* ##### NETWORK ##### */
 
@@ -215,6 +216,7 @@ function websocket_message_handler(evt) {
             }
             else{
                 high_power_button.set_state(3)
+                rotor_idle_button.set_state(3)
             }
             break;
         case "response_emergency_stop":
@@ -2199,7 +2201,7 @@ function init() {
     )
 
     // ROTOR IDLE BUTTON
-    var rotor_idle_button = new Toggle_Button_Async(
+    rotor_idle_button = new Toggle_Button_Async(
         canvas,
         "controller", 
         "request_rotor_idle",

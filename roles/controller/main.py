@@ -51,9 +51,7 @@ from roles.controller.mode_waiting_for_connections import Mode_Waiting_For_Conne
 from roles.controller.mode_system_tests import Mode_System_Tests
 from http_server_root import dashboard
 
-
 #role_module.GPIO.output(8, GPIO.HIGH)
-
 
 DASHBOARD_NOTES_TOPICS = [
     "request_C3",
@@ -160,7 +158,6 @@ class Main(threading.Thread):
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
         self.hosts = Hosts.Hosts(self.tb)
-
 
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
@@ -362,14 +359,12 @@ class Main(threading.Thread):
                                 self.dashboard("response_rotor_idle", self.rotor_idle_state, "controller", "controller")
                             else:
                                 self.dashboard("response_rotor_idle", False, "controller", "controller")
-                            
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
                             host, motor_number = self.map_rotor_to_host_and_motor_number(rotor)
                             self.tb.publish("request_motor_speed", [motor_number, speed], host)
                             self.tb.publish("request_dashboard_button", message, host)
-
                     else:
                         if topic=="decrement":
                             self.tb.publish("request_decrement", message, destination)

@@ -226,14 +226,15 @@ class Main(threading.Thread):
                 if topic==b"request_motor_speed":
                     if destination == self.hostname:
                         motor_number, speed = message
+                        print("request_motor_speed",motor_number, speed)
                         if motor_number == 1:
                             #self.sdc.motor_1.go_to_speed_or_relative_position(speed)
                             #status = self.sdc.motor_1.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[1,speed])
+                            #self.tb.publish("response_motor_command_applied",[1,speed])
                         if motor_number == 2:
                             #self.sdc.motor_2.go_to_speed_or_relative_position(speed)
                             #status = self.sdc.motor_2.get_motor_command_applied()
-                            self.tb.publish("response_motor_command_applied",[2,speed])
+                            #self.tb.publish("response_motor_command_applied",[2,speed])
 
                 if topic==b"request_stop":
                     hostname,motor_number = settings.Rotors.hosts[destination]
