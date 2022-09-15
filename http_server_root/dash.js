@@ -83,7 +83,37 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_sdc_runtime_status":
+            var _keys_ = Object.keys(message)
+            if(_keys_.length==0){
+                return
+            }
             console.log(">> data received" + evt.data)
+            Data_Machinery_Rows[origin].mcu_current_time = message["current_time"]
+            Data_Machinery_Rows[origin].motor_1_closed_loop_error = message["closed_loop_error_1"]
+            machinery_grid.rows[origin].update_data("motor_1_closed_loop_error",message["closed_loop_error_1"])
+            Data_Machinery_Rows[origin].motor_2_closed_loop_error = message["closed_loop_error_2"]
+            machinery_grid.rows[origin].update_data("motor_2_closed_loop_error",message["closed_loop_error_2"])
+            Data_Machinery_Rows[origin].motor_1_duty_cycle = message["duty_cycle_1"]
+            machinery_grid.rows[origin].update_data("motor_1_duty_cycle",message["duty_cycle_1"])
+            Data_Machinery_Rows[origin].motor_2_duty_cycle = message["duty_cycle_2"]
+            machinery_grid.rows[origin].update_data("motor_2_duty_cycle",message["duty_cycle_2"])
+            Data_Machinery_Rows[origin].encoder_speed_relative_2 = message["encoder_speed_relative_2"]
+            machinery_grid.rows[origin].update_data("encoder_speed_relative_2",message["encoder_speed_relative_2"])
+            Data_Machinery_Rows[origin].motor_1_encoder_speed = message["encoder_speed_relative_1"]
+            machinery_grid.rows[origin].update_data("motor_1_encoder_speed",message["encoder_speed_relative_1"])
+            Data_Machinery_Rows[origin].motor_2_encoder_speed = message["encoder_speed_relative_2"]
+            machinery_grid.rows[origin].update_data("motor_2_encoder_speed",message["encoder_speed_relative_2"])
+            Data_Machinery_Rows[origin].motor_1_value = message["motor_command_applied_1"]
+            machinery_grid.rows[origin].update_data("motor_1_value",message["motor_command_applied_1"])
+            Data_Machinery_Rows[origin].motor_2_value = message["motor_command_applied_2"]
+            machinery_grid.rows[origin].update_data("motor_2_value",message["motor_command_applied_2"])
+            Data_Machinery_Rows[origin].volts = message["volts"]
+            machinery_grid.rows[origin].update_data("volts",message["volts"])
+            Data_Machinery_Rows[origin].emergency_stop = message["emergency_stop"]
+            machinery_grid.rows[origin].update_data("emergency_stop",message["emergency_stop"])
+            Data_Machinery_Rows[origin].current_time = message["current_time"]
+            machinery_grid.rows[origin].update_data("current_time",message["current_time"])
+
             /*
             var _keys_ = Object.keys(message)
             if(_keys_.length==0){
@@ -125,7 +155,6 @@ function websocket_message_handler(evt) {
             Data_Machinery_Rows[origin].local_ip = message["local_ip"]
             machinery_grid.rows[origin].update_data("local_ip",message["local_ip"])
 
-
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -138,7 +167,7 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_computer_runtime_status":
-            Data_Machinery_Rows[origin].current_time = message["current_time"]
+            Data_Machinery_Rows[origin].computer_current_time = message["current_time"]
             Data_Machinery_Rows[origin].system_cpu = message["system_cpu"]
             machinery_grid.rows[origin].update_data("system_cpu",message["system_cpu"])
             Data_Machinery_Rows[origin].memory_free = message["memory_free"]
@@ -442,7 +471,7 @@ function Data_Machinery_Row(){
     this.app_git_timestamp = 0;
     this.closed_loop_error_1 = 0;
     this.closed_loop_error_2 = 0;
-    this.current_time = 0;
+    this.computer_current_time = 0;
     this.duty_cycle_1 = 0;
     this.duty_cycle_2 = 0;
     this.emergency_stop = false;
@@ -452,6 +481,7 @@ function Data_Machinery_Row(){
     this.encoder_speed_relative_2 = 0;
     this.firmware_version = "";
     this.local_ip = "";
+    this.mcu_current_time = 0;
     this.memory_free = [0/0];
     this.operating_mode_motor1 = 0;
     this.operating_mode_motor2 = 0;
@@ -1789,10 +1819,10 @@ class Machinery_Grid_Row{
                 this.motor_2_faster_10x
                 break;
             case "motor_1_closed_loop_error":
-                this.motor_1_closed_loop_error
+                this.motor_1_closed_loop_error.set_text(data)
                 break;
             case "motor_2_closed_loop_error":
-                this.motor_2_closed_loop_error
+                this.motor_2_closed_loop_error.set_text(data)
                 break;
             case "motor_1_duty_cycle":
                 this.motor_1_duty_cycle
