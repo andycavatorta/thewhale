@@ -1719,7 +1719,8 @@ class Machinery_Grid_Row{
                 this.system_disk.set_text((parseInt(data[0])/1000000000).toFixed(2) + "GB")
                 break;
             case "os_version":
-                this.os_version
+                var os_version_str = data["name"] + " " + data["version"]
+                this.os_version.set_text(os_version_str)
                 break;
             case "local_ip":
                 this.local_ip
