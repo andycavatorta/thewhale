@@ -670,7 +670,6 @@ class Toggle_Button_Sync{
         }
     }
     set_label(label_str){
-        console.log(">>>>>>>> 1 ", label_str)
         let textnode = document.createTextNode(label_str);
         this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
     }
@@ -823,9 +822,9 @@ class Toggle_Button_Async{
                 break;
         }
     }
-    set_label(label_ord){
+    set_label(label_str){
         //this.state_label = label_ord
-        let textnode = document.createTextNode(this.state_labels[label_ord]);
+        let textnode = document.createTextNode(label_str);
         this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
     }
     set_collapse(c_b, remove_text = false){
