@@ -767,15 +767,17 @@ class Toggle_Button_Async{
         this.set_collapse(false);
     }
     handle_click(e){
+
+        //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
         self = e.target.class_ref
         console.log("handle_click",self.state)
-        if (self.state==0){
-            self.set_state(3)
+        if (self.state==1){
+            self.set_state(4)
             websocket_send(self.target_name,self.topic,false)
             // todo: setTimeout to restore button if no response
         }
-        if (self.state==2){
-            self.set_state(1)
+        if (self.state==3){
+            self.set_state(2)
             websocket_send(self.target_name,self.topic,true)
             // todo: setTimeout to restore button if no response
         }
