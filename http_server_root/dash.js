@@ -60,7 +60,7 @@ function websocket_message_handler(evt) {
     var topic = topic_data_origin[0];
     var message = topic_data_origin[1];
     var origin = topic_data_origin[2];
-    console.log(topic, message, origin)
+    //console.log(topic, message, origin)
     switch (topic) {
         case "deadman":
             break;
@@ -154,6 +154,7 @@ function websocket_message_handler(evt) {
             */
             break;
         case "response_high_power":
+            console.log(">> data received" + evt.data)
             if (message==true){
                 high_power_button.set_state(1)
             }
