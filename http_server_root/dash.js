@@ -1835,7 +1835,7 @@ class Machinery_Grid_Row{
                 this.firmware_version
                 break;
             default:
-                console.log("error 1: column_name=", column_name, error)
+                console.log("error 1: column_name=", cell_name,data)
         }
     }
     update_layout(){
