@@ -228,10 +228,12 @@ class Main(threading.Thread):
                         motor_number, speed = message
                         print("request_motor_speed",motor_number, speed)
                         if motor_number == 1:
+                            pass
                             #self.sdc.motor_1.go_to_speed_or_relative_position(speed)
                             #status = self.sdc.motor_1.get_motor_command_applied()
                             #self.tb.publish("response_motor_command_applied",[1,speed])
                         if motor_number == 2:
+                            pass
                             #self.sdc.motor_2.go_to_speed_or_relative_position(speed)
                             #status = self.sdc.motor_2.get_motor_command_applied()
                             #self.tb.publish("response_motor_command_applied",[2,speed])
