@@ -1866,7 +1866,7 @@ class Machinery_Grid_Row{
             case "volts":
                 var volts_a = data.split(":");
                 var volts_str = volts_a[0] + "V, " + volts_a[1] + "V"
-                this.volts.set_text(data)
+                this.volts.set_text(volts_str)
                 break;
             case "firmware_version":
                 this.firmware_version.set_text(data)
