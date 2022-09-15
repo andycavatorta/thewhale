@@ -984,7 +984,7 @@ class Display_Box_Simple{
     }
     handle_click(e){
         self = e.target.class_ref
-        console.log(self.action_data,self.action_text,self.action)
+        console.log(self.action_data,self.action_text)
         //websocket_send(self.hostname,self.action_text,"")
     }
     hover_state_on(e){
