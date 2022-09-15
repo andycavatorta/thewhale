@@ -1705,11 +1705,11 @@ class Machinery_Grid_Row{
                 let runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
                 this.system_runtime.set_label(runtime_str)
                 break;
-            case "app_git_timestamp":
+            case "app_git_time":
                 formatDate(data)
                 this.app_git_timestamp.set_label(formatDate(data))
                 break;
-            case "tb_git_timestamp":
+            case "tb_git_time":
                 this.tb_git_timestamp.set_label(formatDate(data))
                 break;
             case "system_disk":
