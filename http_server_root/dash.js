@@ -1,13 +1,10 @@
-
-
-
 var SVG_NS ="http://www.w3.org/2000/svg";
 var canvas = null;
 var websocket;
-var machinery_grid
+var machinery_grid;
+var high_power_button;
 
 /* ##### NETWORK ##### */
-
 
 function websocket_connect() {
     console.log("connecting to wesockets")
@@ -126,7 +123,7 @@ function websocket_message_handler(evt) {
             machinery_grid.rows[origin].update_data("os_version",message["os_version"])
             Data_Machinery_Rows[origin].local_ip = message["local_ip"]
             machinery_grid.rows[origin].update_data("local_ip",message["local_ip"])
-            
+
 
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
@@ -159,10 +156,10 @@ function websocket_message_handler(evt) {
             break;
         case "response_high_power":
             if (message==true){
-                //high_power_button.set_state(1)
+                high_power_button.set_state(1)
             }
             else{
-                //high_power_button.set_state(3)
+                high_power_button.set_state(3)
             }
             break;
         case "response_emergency_stop":
@@ -776,12 +773,12 @@ class Toggle_Button_Async{
         self = e.target.class_ref
         if (self.state==0){
             self.set_state(3)
-            //websocket_send(self.target_name,self.topic,false)
+            websocket_send(self.target_name,self.topic,false)
             // todo: setTimeout to restore button if no response
         }
         if (self.state==2){
             self.set_state(1)
-            //websocket_send(self.target_name,self.topic,true)
+            websocket_send(self.target_name,self.topic,true)
             // todo: setTimeout to restore button if no response
         }
     }
@@ -2053,7 +2050,7 @@ function init() {
     canvas = document.getElementById( "top_level" );
 
     // MOTOR POWER BUTTON
-    var high_power_button = new Toggle_Button_Async(
+    high_power_button = new Toggle_Button_Async(
         canvas,
         "controller", 
         "request_high_power",
