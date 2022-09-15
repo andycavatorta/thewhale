@@ -157,6 +157,7 @@ class Main(threading.Thread):
         )
         self.queue = queue.Queue()
         self.safety_enable = Safety_Enable.Safety_Enable(self.safety_enable_handler)
+        self.rotor_idle_state = False
         self.hosts = Hosts.Hosts(self.tb)
 
         ##### SUBSCRIPTIONS #####
