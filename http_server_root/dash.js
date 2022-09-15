@@ -1431,7 +1431,7 @@ class Machinery_Grid_Row{
                 case "motor_slower_10x":
                     this.motor_1_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "-10",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1444,7 +1444,7 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "-10",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1459,7 +1459,7 @@ class Machinery_Grid_Row{
                 case "motor_slower_1x":
                     this.motor_1_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "-1",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1472,7 +1472,7 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "-1",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1528,7 +1528,7 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_faster_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "+1",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1543,7 +1543,7 @@ class Machinery_Grid_Row{
                 case "motor_faster_10x":
                     this.motor_1_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "+10",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1556,7 +1556,7 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action_text,
+                        "+10",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
