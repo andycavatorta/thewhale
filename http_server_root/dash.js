@@ -1698,19 +1698,19 @@ class Machinery_Grid_Row{
     update_data(cell_name,data){
         switch(cell_name){
             case "system_uptime":
-                let uptime_str = data[0] + "\n" + data[1];
+                var uptime_str = data[0] + "\n" + data[1];
                 //this.system_uptime.set_label(uptime_str)
                 break;
             case "system_runtime":
-                let runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
+                var runtime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
                 this.system_runtime.set_label(runtime_str)
                 break;
             case "app_git_time":
-                let date_str = new Date(parseInt(data)*1000);
+                var date_str = new Date(parseInt(data)*1000);
                 this.app_git_timestamp.set_label(formatDate(date_str))
                 break;
             case "tb_git_time":
-                let date_str = new Date(parseInt(data)*1000);
+                var date_str = new Date(parseInt(data)*1000);
                 this.tb_git_timestamp.set_label(formatDate(date_str))
                 break;
             case "system_disk":
@@ -1726,8 +1726,8 @@ class Machinery_Grid_Row{
                 this.hostname
                 break;
             case "memory_free":
-                let used = parseInt(data[0]/1000000);
-                let total = parseInt(data[1]/1000000);
+                var used = parseInt(data[0]/1000000);
+                var total = parseInt(data[1]/1000000);
                 this.memory_free.set_text(used + "MB/" + total + "MB")
                 break;
             case "system_cpu":
