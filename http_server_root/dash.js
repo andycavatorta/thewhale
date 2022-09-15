@@ -1716,7 +1716,7 @@ class Machinery_Grid_Row{
                 this.tb_git_timestamp.set_label(formatDate(date_str))
                 break;
             case "system_disk":
-                this.system_disk..set_text((parseInt(data[0])/1000000000).toFixed(2) + "GB")
+                this.system_disk.set_text((parseInt(data[0])/1000000000).toFixed(2) + "GB")
                 break;
             case "os_version":
                 this.os_version
