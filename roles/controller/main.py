@@ -334,7 +334,7 @@ class Main(threading.Thread):
                     self.safety_enable.add_to_queue(topic, message, origin, destination)
                     continue
                 if origin == "dashboard":
-                    #print("<<<<<<<<<<", topic, message, origin, destination)
+                    print("<<<<<<<<<<", topic, message, origin, destination)
                     if destination=="controller":
                         if topic=="restart":
                             self.tb.restart("thewhale")
@@ -348,17 +348,25 @@ class Main(threading.Thread):
                             self.high_power.set_state(message)
                             self.dashboard("response_high_power", message, "controller", "controller")
                         if topic=="request_rotor_idle":
+                            print(">>>>>>>>>1",self.high_power.get_state())
                             if self.high_power.get_state():
+                                print(">>>>>>>>>2",self.rotor_idle_state)
                                 if self.rotor_idle_state: # if idling
+                                    print(">>>>>>>>>3",self.rotor_idle_state)
                                     self.rotor_idle_state = False;
                                     for rotor_name in settings.Rotors.idle_speeds_low:
+                                        print(">>>>>>>>>4",rotor_name)
                                         self.tb.publish("request_motor_speed", 0, rotor_name)
                                 else: 
+                                    print(">>>>>>>>>5")
                                     self.rotor_idle_state = True;
                                     for rotor_name in settings.Rotors.idle_speeds_low:
+                                        print(">>>>>>>>>6", rotor_name, settings.Rotors.idle_speeds_low[rotor_name])
                                         self.tb.publish("request_motor_speed", settings.Rotors.idle_speeds_low[rotor_name], rotor_name)
+                                print(">>>>>>>>>7")
                                 self.dashboard("response_rotor_idle", self.rotor_idle_state, "controller", "controller")
                             else:
+                                print(">>>>>>>>>8")
                                 self.dashboard("response_rotor_idle", False, "controller", "controller")
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
