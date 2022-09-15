@@ -66,6 +66,30 @@ function websocket_message_handler(evt) {
             break;
         case "response_sdc_start_status":
             console.log(">> data received" + evt.data)
+            Data_Machinery_Rows[origin].motor_1_encoder_ppr_value = message["encoder_ppr_value_motor1"]
+            machinery_grid.rows[origin].update_data("motor_1_encoder_ppr_value",message["encoder_ppr_value_motor1"])
+            Data_Machinery_Rows[origin].motor_2_encoder_ppr_value = message["encoder_ppr_value_motor2"]
+            machinery_grid.rows[origin].update_data("motor_2_encoder_ppr_value",message["encoder_ppr_value_motor2"])
+            Data_Machinery_Rows[origin].firmware_version = message["firmware_version"]
+            machinery_grid.rows[origin].update_data("firmware_version",message["firmware_version"])
+            Data_Machinery_Rows[origin].motor_1_operating_mode = message["operating_mode_motor1"]
+            machinery_grid.rows[origin].update_data("motor_1_operating_mode",message["operating_mode_motor1"])
+            Data_Machinery_Rows[origin].motor_2_operating_mode = message["pid_integral_gain_motor2"]
+            machinery_grid.rows[origin].update_data("motor_2_operating_mode",message["pid_integral_gain_motor2"])
+            Data_Machinery_Rows[origin].motor_1_pid_proportional_gain = message["pid_proportional_gain_motor1"]
+            machinery_grid.rows[origin].update_data("motor_1_pid_proportional_gain",message["pid_proportional_gain_motor1"])
+            Data_Machinery_Rows[origin].motor_1_pid_integral_gain = message["pid_integral_gain_motor1"]
+            machinery_grid.rows[origin].update_data("motor_1_pid_integral_gain",message["pid_integral_gain_motor1"])
+            Data_Machinery_Rows[origin].motor_1_pid_differential_gain = message["pid_differential_gain_motor1"]
+            machinery_grid.rows[origin].update_data("motor_1_pid_differential_gain",message["pid_differential_gain_motor1"])
+            Data_Machinery_Rows[origin].motor_2_pid_proportional_gain = message["pid_proportional_gain_motor2"]
+            machinery_grid.rows[origin].update_data("motor_2_pid_proportional_gain",message["pid_proportional_gain_motor2"])
+            Data_Machinery_Rows[origin].motor_2_pid_integral_gain = message["pid_integral_gain_motor2"]
+            machinery_grid.rows[origin].update_data("motor_2_pid_integral_gain",message["pid_integral_gain_motor2"])
+            Data_Machinery_Rows[origin].motor_2_pid_differential_gain = message["pid_differential_gain_motor2"]
+            machinery_grid.rows[origin].update_data("motor_2_pid_differential_gain",message["pid_differential_gain_motor2"])
+
+
             /*
             var _keys_ = Object.keys(message)
             if(_keys_.length==0){
