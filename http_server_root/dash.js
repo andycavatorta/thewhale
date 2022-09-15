@@ -114,6 +114,8 @@ function websocket_message_handler(evt) {
             console.log(">>>",topic, message, origin)
             Data_Machinery_Rows[origin].system_uptime = message["system_uptime"]
             machinery_grid.rows[origin].update_data("system_uptime",message["system_uptime"])
+            Data_Machinery_Rows[origin].system_runtime = message["system_runtime"]
+            machinery_grid.rows[origin].update_data("system_runtime",message["system_runtime"])
             /*
             hosts[origin].ip_local.set_text(message["local_ip"])
             let tb_date = new Date(parseInt(message["tb_git_timestamp"])*1000)
@@ -1696,7 +1698,7 @@ class Machinery_Grid_Row{
                 this.system_runtime.set_label(runtime_str)
                 break;
             case "system_uptime":
-                let uptime_str = ( parseFloat(data)/3600).toFixed(2) + "h";
+                let uptime_str = data[0] + "\n" + data[1];
                 this.system_uptime.set_label(uptime_str)
                 break;
             case "app_git_timestamp":
