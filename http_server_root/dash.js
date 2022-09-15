@@ -1706,6 +1706,11 @@ class Machinery_Grid_Row{
                 this.system_runtime.set_label(runtime_str)
                 break;
             case "app_git_time":
+                console.log(data)
+                console.log(parseInt(data)*1000)
+                console.log(new Date(parseInt(data)*1000))
+                console.log(formatDate(new Date(parseInt(data)*1000)))
+                new Date(parseInt(data)*1000)
                 var date_str = new Date(parseInt(data)*1000);
                 this.app_git_timestamp.set_label(formatDate(date_str))
                 break;
