@@ -986,7 +986,7 @@ class Display_Box_Simple{
     }
     handle_click(e){
         self = e.target.class_ref
-        console.log(self.action_data,self.action_text,"")
+        console.log(self.action_data,self.action_text,self.action)
         //websocket_send(self.hostname,self.action_text,"")
     }
     hover_state_on(e){
@@ -1278,7 +1278,6 @@ class Machinery_Grid_Row{
                 case "system_disk":
                     this.system_disk = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1291,7 +1290,6 @@ class Machinery_Grid_Row{
                 case "os_version":
                     this.os_version = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1304,7 +1302,6 @@ class Machinery_Grid_Row{
                 case "local_ip":
                     this.local_ip = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1317,7 +1314,6 @@ class Machinery_Grid_Row{
                 case "hostname":
                     this.hostname = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1331,7 +1327,6 @@ class Machinery_Grid_Row{
                 case "memory_free":
                     this.memory_free = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1344,7 +1339,6 @@ class Machinery_Grid_Row{
                 case "system_cpu":
                     this.system_cpu = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1357,7 +1351,6 @@ class Machinery_Grid_Row{
                 case "errors":
                     this.errors = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1370,7 +1363,6 @@ class Machinery_Grid_Row{
                 case "status":
                     this.status = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1383,7 +1375,6 @@ class Machinery_Grid_Row{
                 case "messages":
                     this.messages = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1412,7 +1403,6 @@ class Machinery_Grid_Row{
                 case "rotor_name":
                     this.motor_1_name =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1427,7 +1417,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_name =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1444,7 +1433,6 @@ class Machinery_Grid_Row{
                 case "motor_slower_10x":
                     this.motor_1_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1458,7 +1446,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_slower_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1474,7 +1461,6 @@ class Machinery_Grid_Row{
                 case "motor_slower_1x":
                     this.motor_1_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1488,7 +1474,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_slower_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1504,7 +1489,6 @@ class Machinery_Grid_Row{
                 case "motor_value":
                     this.motor_1_value =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1518,7 +1502,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_value =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1534,8 +1517,7 @@ class Machinery_Grid_Row{
                 case "motor_faster_1x":
                     this.motor_1_faster_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
-                        false,// action_text,
+                        "+1",// action_text,
                         this.host_name,// action_data,
                         x,// x,
                         y,// y, 
@@ -1548,7 +1530,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_faster_1x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1564,7 +1545,6 @@ class Machinery_Grid_Row{
                 case "motor_faster_10x":
                     this.motor_1_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1578,7 +1558,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_faster_10x =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1594,7 +1573,6 @@ class Machinery_Grid_Row{
                 case "motor_closed_loop_error":
                     this.motor_1_closed_loop_error =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1608,7 +1586,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_closed_loop_error =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1624,7 +1601,6 @@ class Machinery_Grid_Row{
                 case "motor_duty_cycle":
                     this.motor_1_duty_cycle =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1638,7 +1614,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_duty_cycle =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1654,7 +1629,6 @@ class Machinery_Grid_Row{
                 case "motor_encoder_speed":
                     this.motor_1_encoder_speed =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1668,7 +1642,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_encoder_speed =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1684,7 +1657,6 @@ class Machinery_Grid_Row{
                 case "motor_pid_proportional_gain":
                     this.motor_1_pid_proportional_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1698,7 +1670,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_pid_proportional_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1714,7 +1685,6 @@ class Machinery_Grid_Row{
                 case "motor_pid_integral_gain":
                     this.motor_1_pid_integral_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1728,7 +1698,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_pid_integral_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1744,7 +1713,6 @@ class Machinery_Grid_Row{
                 case "motor_pid_differential_gain":
                     this.motor_1_pid_differential_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1758,7 +1726,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_pid_differential_gain =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1774,7 +1741,6 @@ class Machinery_Grid_Row{
                 case "motor_operating_mode":
                     this.motor_1_operating_mode =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1788,7 +1754,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_operating_mode =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1804,7 +1769,6 @@ class Machinery_Grid_Row{
                 case "motor_encoder_ppr_value":
                     this.motor_1_encoder_ppr_value =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1818,7 +1782,6 @@ class Machinery_Grid_Row{
                     }
                     this.motor_2_encoder_ppr_value =  new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1834,7 +1797,6 @@ class Machinery_Grid_Row{
                 case "volts":
                     this.volts = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -1850,7 +1812,6 @@ class Machinery_Grid_Row{
                 case "firmware_version":
                     this.firmware_version = new Display_Box_Simple(
                         this.dom_parent,// dom_parent,
-                        false,// action,
                         false,// action_text,
                         this.host_name,// action_data,
                         x,// x,
@@ -2255,7 +2216,6 @@ function init() {
     // TB STATE BUTTON
     var system_state_display = new Display_Box_Simple(
         canvas,
-        false,
         false,
         this.host_name,// action_data,
         800,
