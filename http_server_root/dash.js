@@ -939,24 +939,6 @@ class Toggle_Button_Async{
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // ASYNC TOGGLE BUTTON  
 class Keyboard_Key{
     constructor(
@@ -1033,13 +1015,14 @@ class Keyboard_Key{
         self = e.target.class_ref
         console.log("handle_click",self.target_name,self.topic, [self.midi_pitch,self.state])
         return
-        if (self.state==1){
-            self.set_state(4)
+        if (self.state){
+            self.set_state(false)
+            self.set_style("inactive")
             websocket_send(self.target_name,self.topic,false)
             // todo: setTimeout to restore button if no response
-        }
-        if (self.state==3){
-            self.set_state(2)
+        }else{
+            self.set_state(true)
+            self.set_style("active")
             websocket_send(self.target_name,self.topic,true)
             // todo: setTimeout to restore button if no response
         }
@@ -1108,27 +1091,6 @@ class Keyboard_Key{
         this.text_container.setAttribute("y",y_str);
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -2401,7 +2363,7 @@ class Keyboard{
             this.buttons[button_data[0]] = new Keyboard_Key(
                 this.dom_parent,
                 "controller", 
-                "play_midi_pitch",
+                "request_midi_pitch",
                 button_data[0],
                 button_data[1],
                 x_offset + (54*column_i), 
