@@ -219,6 +219,18 @@ function websocket_message_handler(evt) {
                 rotor_idle_button.set_state(3)
             }
             break;
+
+
+        case "response_rotor_idle":
+            if (message==true){
+                rotor_idle_button.set_state(1)
+            }
+            else{
+                rotor_idle_button.set_state(3)
+            }
+            break;
+
+            
         case "response_emergency_stop":
             if (message==true){
                 controllers[origin].emergency_stop.set_state(1)
