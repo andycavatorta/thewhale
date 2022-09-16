@@ -360,6 +360,10 @@ class Main(threading.Thread):
                                 self.dashboard("response_rotor_idle", self.rotor_idle_state, "controller", "controller")
                             else:
                                 self.dashboard("response_rotor_idle", False, "controller", "controller")
+
+                        if topic=="request_midi_pitch":
+                            print(message)
+
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
                             rotor,speed = self.map_pitch_to_rotor_and_speed(midi_pitch)
