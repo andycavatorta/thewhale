@@ -2202,16 +2202,19 @@ class Keyboard{
         for (var column_i in this.column_data){
             var button_data = this.column_data[column_i]
             console.log(button_data)
-            this.buttons[button_data[0]] = new Display_Box_Title(
+
+            this.buttons[button_data[0]] = new Display_Box_Simple(
                 this.dom_parent,
-                button_data[0],
-                false,
+                "play_midi_pitch",
+                button_data[1],
                 x_offset + (54*column_i), 
                 200,
                 50, 
                 50,
                 100
             )
+            this.buttons[button_data[0]].set_text(button_data[0])
+
         }
     }
 }
