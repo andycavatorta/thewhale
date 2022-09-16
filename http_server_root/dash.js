@@ -2199,7 +2199,7 @@ class Keyboard{
             ["C6", 60],
         ]
         var y_offset = 40
-        for (var column_i of this.column_data){
+        for (var column_i in this.column_data){
             var button_data = this.column_data[column_i]
             console.log(button_data)
             this.buttons[button_data[0]] = new Display_Box_Title(
