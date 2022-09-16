@@ -993,8 +993,7 @@ class Keyboard_Key{
         this.style_fasle_requested = style_fasle_requested;
         this.style_false_confirmed = style_false_confirmed;
         this.visual_style = this.style_inactive;
-        this.states = ["true_confirmed","true_requested","false_confirmed","false_requested"]
-        this.state = 0
+        this.state = false
         this.container = create_group(
             this.dom_parent,
             {
@@ -1030,7 +1029,7 @@ class Keyboard_Key{
     handle_click(e){
         //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
         self = e.target.class_ref
-        console.log("handle_click",self.state)
+        console.log("handle_click",self.target_name,self.topic, self.state)
         return
         if (self.state==1){
             self.set_state(4)
