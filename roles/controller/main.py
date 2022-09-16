@@ -29,6 +29,7 @@ note-to-motor-command interface
 
 import codecs
 import glob
+import mido
 import os
 import queue
 import RPi.GPIO as GPIO 
