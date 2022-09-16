@@ -66,7 +66,7 @@ function websocket_message_handler(evt) {
         case "deadman":
             break;
         case "response_sdc_start_status":
-            console.log(">> data received" + evt.data)
+            //console.log(">> data received" + evt.data)
             Data_Machinery_Rows[origin].motor_1_encoder_ppr_value = message["encoder_ppr_value_motor1"]
             machinery_grid.rows[origin].update_data("motor_1_encoder_ppr_value",message["encoder_ppr_value_motor1"])
             Data_Machinery_Rows[origin].motor_2_encoder_ppr_value = message["encoder_ppr_value_motor2"]
@@ -116,7 +116,7 @@ function websocket_message_handler(evt) {
             if(_keys_.length==0){
                 return
             }
-            console.log(">> data received" + evt.data)
+            //console.log(">> data received" + evt.data)
             Data_Machinery_Rows[origin].mcu_current_time = message["current_time"]
             Data_Machinery_Rows[origin].motor_1_closed_loop_error = message["closed_loop_error_1"]
             machinery_grid.rows[origin].update_data("motor_1_closed_loop_error",message["closed_loop_error_1"])
@@ -965,7 +965,8 @@ class Keyboard_Key{
         topic,
         label,
         x,
-        y, 
+        y,
+        width, 
         height,
         style_active = "toggle_button_active",
         style_inactive = "toggle_button_inactive",
@@ -982,8 +983,7 @@ class Keyboard_Key{
         this.dom_parent = dom_parent;
         this.x = x;
         this.y = y;
-        this.width_open = width_open;
-        this.width_closed = width_closed;
+        this.width = width;
         this.height = height;
         this.style_active = style_active;
         this.style_inactive = style_inactive;
@@ -1019,6 +1019,10 @@ class Keyboard_Key{
         this.container.setAttribute("height", this.height + `px`);
         this.button_rect.setAttribute("height", this.height + `px`);
         this.text_container.setAttribute("height",this.height + `px`);
+        this.container.setAttribute("width", this.width + `px`);
+        this.button_rect.setAttribute("width", this.width + `px`);
+        this.text_container.setAttribute("style",`visibility:visible`);
+
         this.set_state(0);
         this.set_style("inactive");
         this.set_label(this.label);
@@ -2394,7 +2398,6 @@ class Keyboard{
         for (var column_i in this.column_data){
             var button_data = this.column_data[column_i]
             console.log(button_data)
-
             this.buttons[button_data[0]] = new Keyboard_Key(
                 this.dom_parent,
                 "controller", 
@@ -2403,7 +2406,6 @@ class Keyboard{
                 x_offset + (54*column_i), 
                 y,
                 50, 
-                50,
                 100
             )
         }
