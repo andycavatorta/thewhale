@@ -15,6 +15,18 @@ class Deadman():
     DURATION = 0.1
     GPIO = 8
 
+class Hosts():
+    rotors={
+        "rotors0102":["rotor01","rotor02"],
+        "rotors0304":["rotor03","rotor04"],
+        "rotors0506":["rotor05","rotor06"],
+        "rotors0708":["rotor07","rotor08"],
+        "rotors0910":["rotor09","rotor10"],
+        "rotors1112":["rotor11","rotor12"],
+        "rotors1314":["rotor13","rotor14"],
+    }
+
+
 class Roles():
     hosts={
         "controller":"controller",
@@ -60,6 +72,7 @@ class Rotors():
         "rotor13":90,
         "rotor14":95,
     }
+
     idle_speeds_high={
         "rotor01":160,
         "rotor02":180,

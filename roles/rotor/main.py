@@ -40,6 +40,8 @@ class Main(threading.Thread):
         )
         self.queue = queue.Queue()
         self.hostname = self.tb.get_hostname()
+        self.rotor_name = settings.Hosts.rotors[self.hostname]
+
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
@@ -224,7 +226,7 @@ class Main(threading.Thread):
                             self.tb.publish("response_motor_command_applied",[2,status-1])
 
                 if topic==b"request_motor_speed":
-                    if destination == self.hostname:
+                    if destination in self.rotor_name:
                         motor_number, speed = message
                         print("request_motor_speed",motor_number, speed)
                         if motor_number == 1:
