@@ -2210,7 +2210,8 @@ class Keyboard{
                 y_offset + (44*column_i), 
                 40, 
                 40,
-                40,
+                40
+            )
         }
     }
 }
