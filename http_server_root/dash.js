@@ -964,6 +964,7 @@ class Keyboard_Key{
         target_name,
         topic,
         label,
+        midi_pitch,
         x,
         y,
         width, 
@@ -978,6 +979,7 @@ class Keyboard_Key{
     )
     {
         this.label = label
+        this.midi_pitch = midi_pitch
         this.target_name = target_name
         this.topic = topic
         this.dom_parent = dom_parent;
@@ -1029,7 +1031,7 @@ class Keyboard_Key{
     handle_click(e){
         //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
         self = e.target.class_ref
-        console.log("handle_click",self.target_name,self.topic, [self.label,self.state])
+        console.log("handle_click",self.target_name,self.topic, [self.midi_pitch,self.state])
         return
         if (self.state==1){
             self.set_state(4)
@@ -2401,6 +2403,7 @@ class Keyboard{
                 "controller", 
                 "play_midi_pitch",
                 button_data[0],
+                button_data[1],
                 x_offset + (54*column_i), 
                 y,
                 50, 
