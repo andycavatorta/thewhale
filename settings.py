@@ -74,20 +74,20 @@ class Rotors():
     }
 
     idle_speeds_high={
-        "rotor01":160,
-        "rotor02":180,
+        "rotor01":150,
+        "rotor02":170,
         "rotor03":100,
-        "rotor04":90,
-        "rotor05":0, #150, need to fix chain
-        "rotor06":160,
-        "rotor07":0, # wrong
-        "rotor08":0, # wrong
-        "rotor09":180,
-        "rotor10":200,
-        "rotor11":200,
-        "rotor12":160,
-        "rotor13":170,
-        "rotor14":220,
+        "rotor04":85,
+        "rotor05":100, 
+        "rotor06":140,
+        "rotor07":140, 
+        "rotor08":180,
+        "rotor09":190,
+        "rotor10":205,
+        "rotor11":180,
+        "rotor12":100,
+        "rotor13":150,
+        "rotor14":200,
     }
 
 class Pitch_To_Rotor_Map():
@@ -121,31 +121,31 @@ class Pitch_To_Rotor_Map():
     }
     midi=[
         ["rotor04",50], #38, D3
-        ["rotor05",65], #39 D#3
-        ["rotor03",100], #40 E3
-        ["rotor06",105], #41
-        ["rotor07",150], #42
-        ["rotor01",140], #43
-        ["rotor08",130], #44
-        ["rotor09",140], #45
-        ["rotor10",165], #46
-        [], #47
-        ["rotor11",135], #48
-        ["rotor12",140], #49
-        ["rotor0",], #          50
-        ["rotor0",], #51
-        ["rotor0",], #52
-        ["rotor0",], #53
-        ["rotor0",], #54
-        ["rotor0",], #55
-        ["rotor0",], #56
-        ["rotor0",], #57
-        ["rotor0",], #58
-        ["rotor0",], #59
-        ["rotor0",], #60
-        ["rotor0",], #61
-        ["rotor0",], #62
-        ["rotor0",], #63
+        ["rotor05",65], #39 Eb3
+        ["rotor03",100], #40 E3 NO VOICE
+        ["rotor06",105], #41 F3
+        ["rotor07",105], #42 Gb3
+        ["rotor02",140], #43 G3
+        ["rotor08",130], #44 Ab3
+        ["rotor09",140], #45 A3
+        ["rotor10",165], #46 Bb3
+        ["rotor11",135], #47 B3
+        ["rotor12",150], #48 C4
+        ["rotor13",200], #49 Db4
+        ["rotor01",180], #50 D4
+        ["rotor14",240], #51 Eb4
+        ["rotor03",135], #52 E4
+        ["rotor06",200], #53 F4
+        ["rotor07",200], #54 Gb4
+        ["rotor02",215], #55 G4
+        ["rotor08",240], #56 Ab4
+        ["rotor09",250], #57 A4
+        ["rotor10",280], #58 Bb4
+        ["rotor11",275], #59 B4
+        #["rotor",], #60 C5
+        #["rotor",], #61 Db5
+        #["rotor",], #62 D5
+        #["rotor",], #63 Eb4    
     ]
 
 

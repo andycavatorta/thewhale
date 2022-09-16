@@ -362,7 +362,16 @@ class Main(threading.Thread):
                                 self.dashboard("response_rotor_idle", False, "controller", "controller")
 
                         if topic=="request_midi_pitch":
-                            print(message)
+                            midi_pitch, on_off = message
+                            if midi_pitch >= 38 and midi_pitch <= 59:
+                                rotor_name, playing_speed = settings.Pitch_To_Rotor_Map.midi[midi_pitch-38]
+                                if on_off: # if playing
+                                    print(">>>> 1", playing_speed, rotor_name)
+                                    #self.tb.publish("request_motor_speed", playing_speed, rotor_name)
+                                else: #if idling
+                                    print(">>>> 2", playing_speed, rotor_name)
+                                    idle_speed_high = settings.Rotors.idle_speeds_high[rotor_name]
+                                    #self.tb.publish("request_motor_speed", idle_speed_high, rotor_name)
 
                         if topic in DASHBOARD_NOTES_TOPICS:
                             midi_pitch = self.convert_dashboard_notes_to_midi(topic, message, origin, destination)
