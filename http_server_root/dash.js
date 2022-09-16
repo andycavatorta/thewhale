@@ -2203,18 +2203,17 @@ class Keyboard{
             var button_data = this.column_data[column_i]
             console.log(button_data)
 
-            this.buttons[button_data[0]] = new Display_Box_Simple(
+            this.buttons[button_data[0]] = new Toggle_Button_Async(
                 this.dom_parent,
-                button_data[0],
+                "controller", 
                 "play_midi_pitch",
+                [button_data[0],button_data[0],button_data[0],button_data[0],button_data[0]],
                 x_offset + (54*column_i), 
-                200,
+                y,
                 50, 
                 50,
                 100
             )
-            this.buttons[button_data[0]].set_text(button_data[0])
-
         }
     }
 }
