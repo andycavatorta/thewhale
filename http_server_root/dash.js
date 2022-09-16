@@ -2205,8 +2205,8 @@ class Keyboard{
 
             this.buttons[button_data[0]] = new Display_Box_Simple(
                 this.dom_parent,
+                button_data[0],
                 "play_midi_pitch",
-                button_data[1],
                 x_offset + (54*column_i), 
                 200,
                 50, 
