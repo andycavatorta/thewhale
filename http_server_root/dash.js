@@ -1022,14 +1022,14 @@ class Keyboard_Key{
         this.button_rect.setAttribute("width", this.width + `px`);
         this.text_container.setAttribute("style",`visibility:visible`);
 
-        this.set_state(0);
+        this.set_state(false);
         this.set_style("inactive");
         this.set_label(this.label);
     }
     handle_click(e){
         //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
         self = e.target.class_ref
-        console.log("handle_click",self.target_name,self.topic, self.state)
+        console.log("handle_click",self.target_name,self.topic, [self.label,self.state])
         return
         if (self.state==1){
             self.set_state(4)
