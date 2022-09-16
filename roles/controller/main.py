@@ -369,8 +369,8 @@ class Main(threading.Thread):
                                     print(">>>> 1", playing_speed, rotor_name)
                                     #self.tb.publish("request_motor_speed", playing_speed, rotor_name)
                                 else: #if idling
-                                    print(">>>> 2", playing_speed, rotor_name)
                                     idle_speed_high = settings.Rotors.idle_speeds_high[rotor_name]
+                                    print(">>>> 2", idle_speed_high, rotor_name)
                                     #self.tb.publish("request_motor_speed", idle_speed_high, rotor_name)
 
                         if topic in DASHBOARD_NOTES_TOPICS:
