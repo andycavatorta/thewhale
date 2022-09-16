@@ -1014,7 +1014,6 @@ class Keyboard_Key{
         //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
         self = e.target.class_ref
         console.log("handle_click",self.target_name,self.topic, [self.midi_pitch,self.state])
-        return
         if (self.state){
             self.set_state(false)
             self.set_style("inactive")
