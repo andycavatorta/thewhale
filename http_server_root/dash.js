@@ -230,7 +230,7 @@ function websocket_message_handler(evt) {
             }
             break;
 
-            
+
         case "response_emergency_stop":
             if (message==true){
                 controllers[origin].emergency_stop.set_state(1)
@@ -240,13 +240,15 @@ function websocket_message_handler(evt) {
             }
             break;
         case "response_motor_command_applied":
-            var motor_number = message[0]
-            var command = message[1]
+            var motor_number = message[0];
+            var command = message[1];
             if (motor_number==1){
-                controllers[origin].requested_speed_1.set_text(command)
+                Data_Machinery_Rows[origin].motor_1_value = command
+                machinery_grid.rows[origin].update_data("motor_1_value",command)
             }
             if (motor_number==2){
-                controllers[origin].requested_speed_2.set_text(command)
+                Data_Machinery_Rows[origin].motor_2_value = command
+                machinery_grid.rows[origin].update_data("motor_2_value",command)
             }
             break;
     }
@@ -522,6 +524,8 @@ function Data_Machinery_Row(){
     this.local_ip = "";
     this.mcu_current_time = 0;
     this.memory_free = [0/0];
+    this.motor_1_value = 0;
+    this.motor_2_value = 0;
     this.operating_mode_motor1 = 0;
     this.operating_mode_motor2 = 0;
     this.os_version = {};
