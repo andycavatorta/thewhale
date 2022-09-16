@@ -220,7 +220,6 @@ function websocket_message_handler(evt) {
             }
             break;
 
-
         case "response_rotor_idle":
             if (message==true){
                 rotor_idle_button.set_state(1)
@@ -230,7 +229,6 @@ function websocket_message_handler(evt) {
             }
             break;
 
-
         case "response_emergency_stop":
             if (message==true){
                 controllers[origin].emergency_stop.set_state(1)
@@ -239,6 +237,7 @@ function websocket_message_handler(evt) {
                 controllers[origin].emergency_stop.set_state(3)
             }
             break;
+
         case "response_motor_command_applied":
             var motor_number = message[0];
             var command = message[1];
@@ -2163,6 +2162,59 @@ class Machinery_Grid{
     }
 }
 
+class Keyboard{
+    constructor(
+        dom_parent,
+        x,
+        y, 
+    )
+    {
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.buttons = {}
+        this.column_data = [
+            ["D4", 38],
+            ["Eb4",39],
+            ["E4", 40],
+            ["F4", 41],
+            ["Gb4",42],
+            ["G4", 43],
+            ["Ab4",44],
+            ["A4", 45],
+            ["Bb4",46],
+            ["B4", 47],
+            ["C5", 48],
+            ["Db5",49],
+            ["D5", 50],
+            ["Eb5",51],
+            ["E5", 52],
+            ["F5", 53],
+            ["Gb5",54],
+            ["G5", 55],
+            ["Ab5",56],
+            ["A5", 57],
+            ["Bb5",58],
+            ["B5", 59],
+            ["C6", 60],
+        ]
+        var y_offset = 40
+        for (var column_i of this.column_data){
+            var button_data = this.column_data[column_i]
+            console.log(button_data)
+            this.buttons[button_data[0]] = new Display_Box_Title(
+                this.dom_parent,
+                button_data[0],
+                false,
+                200,
+                y_offset + (44*column_i), 
+                40, 
+                40,
+                40,
+        }
+    }
+}
+
 // COLUMN TITLES
 
 
@@ -2274,8 +2326,9 @@ function init() {
         }
     );
     panel_set.set_active_panel("machinery")
-
-
     machinery_grid = new Machinery_Grid(panel_set.panels["machinery"].panel.container, 20,60)
+
+
+    keyboard = new Keyboard()
 
 }
