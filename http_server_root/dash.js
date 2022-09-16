@@ -1017,12 +1017,12 @@ class Keyboard_Key{
         if (self.state){
             self.set_state(false)
             self.set_style("inactive")
-            websocket_send(self.target_name,self.topic,false)
+            websocket_send(self.target_name,self.topic,[self.midi_pitch,self.state])
             // todo: setTimeout to restore button if no response
         }else{
             self.set_state(true)
             self.set_style("active")
-            websocket_send(self.target_name,self.topic,true)
+            websocket_send(self.target_name,self.topic,[self.midi_pitch,self.state])
             // todo: setTimeout to restore button if no response
         }
     }
