@@ -2330,6 +2330,6 @@ function init() {
     machinery_grid = new Machinery_Grid(panel_set.panels["machinery"].panel.container, 20,60)
 
 
-    keyboard = new Keyboard()
+    keyboard = new Keyboard(panel_set.panels["keyboard"].panel.container, 20,60)
 
 }
