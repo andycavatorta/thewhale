@@ -2206,11 +2206,11 @@ class Keyboard{
                 this.dom_parent,
                 button_data[0],
                 false,
-                x_offset + (44*column_i), 
+                x_offset + (54*column_i), 
                 200,
-                40, 
-                40,
-                40
+                50, 
+                50,
+                100
             )
         }
     }
