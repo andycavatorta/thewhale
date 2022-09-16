@@ -139,6 +139,16 @@ class High_Power():
         self.dashboard_ref("response_high_power", self.state_bool, "controller", "controller")
         return self.state_bool
 
+class Play_Midi_File():
+    def __init__(self, tb):
+        self.tb = tb
+        self.file_name = "midi/Whale_Bone_pastor_Tallis_smooshed_div_8.mid"
+    def run(self):
+        for msg in mido.MidiFile(self.file_name).play():
+            if msg.type in ["note_on", "note_off"]:
+                print(msg.type, msg.note)
+
+
 class Main(threading.Thread):
     class mode_names:
         ERROR = "error"
