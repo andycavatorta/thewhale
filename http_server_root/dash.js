@@ -2198,7 +2198,7 @@ class Keyboard{
             ["B5", 59],
             ["C6", 60],
         ]
-        var y_offset = 40
+        var x_offset = 40
         for (var column_i in this.column_data){
             var button_data = this.column_data[column_i]
             console.log(button_data)
@@ -2206,8 +2206,8 @@ class Keyboard{
                 this.dom_parent,
                 button_data[0],
                 false,
+                x_offset + (44*column_i), 
                 200,
-                y_offset + (44*column_i), 
                 40, 
                 40,
                 40
