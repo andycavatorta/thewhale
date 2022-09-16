@@ -1026,7 +1026,6 @@ class Keyboard_Key{
         this.set_state(0);
         this.set_style("inactive");
         this.set_label(this.label);
-        this.set_collapse(false);
     }
     handle_click(e){
         //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
