@@ -139,15 +139,15 @@ class High_Power():
         self.dashboard_ref("response_high_power", self.state_bool, "controller", "controller")
         return self.state_bool
 
-class Play_Midi_File():
+class Play_Midi_File(threading.Thread):
     def __init__(self, tb):
+        threading.Thread.__init__(self)
         self.tb = tb
         self.file_name = "midi/Whale_Bone_pastor_Tallis_smooshed_div_8.mid"
     def run(self):
         for msg in mido.MidiFile(self.file_name).play():
             if msg.type in ["note_on", "note_off"]:
                 print(msg.type, msg.note)
-
 
 class Main(threading.Thread):
     class mode_names:
@@ -249,6 +249,7 @@ class Main(threading.Thread):
         self.high_power = High_Power(self.dashboard)
         self.start()
         self.poller = Poller(self.tb, self.add_to_queue)
+        self.play_midi_file = Play_Midi_File(self.tb)
 
 
     def convert_dashboard_notes_to_midi(self, topic, message, origin, destination):
