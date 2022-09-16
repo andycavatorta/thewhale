@@ -937,6 +937,198 @@ class Toggle_Button_Async{
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// ASYNC TOGGLE BUTTON  
+class Keyboard_Key{
+    constructor(
+        dom_parent,
+        target_name,
+        topic,
+        label,
+        x,
+        y, 
+        height,
+        style_active = "toggle_button_active",
+        style_inactive = "toggle_button_inactive",
+        style_attention = "toggle_button_attention",
+        style_true_requested = "toggle_button_async_true_requested",
+        style_true_confirmed = "toggle_button_async_true_confirmed",
+        style_fasle_requested = "toggle_button_async_fasle_requested",
+        style_false_confirmed = "toggle_button_async_false_confirmed",
+    )
+    {
+        this.label = label
+        this.target_name = target_name
+        this.topic = topic
+        this.dom_parent = dom_parent;
+        this.x = x;
+        this.y = y;
+        this.width_open = width_open;
+        this.width_closed = width_closed;
+        this.height = height;
+        this.style_active = style_active;
+        this.style_inactive = style_inactive;
+        this.style_attention = style_attention;
+        this.style_true_requested = style_true_requested;
+        this.style_true_confirmed = style_true_confirmed;
+        this.style_fasle_requested = style_fasle_requested;
+        this.style_false_confirmed = style_false_confirmed;
+        this.visual_style = this.style_inactive;
+        this.states = ["true_confirmed","true_requested","false_confirmed","false_requested"]
+        this.state = 0
+        this.container = create_group(
+            this.dom_parent,
+            {
+                class:"toggle_button_container",
+            }
+        );
+        this.button_rect  = create_rectangle(
+            this.container,
+            {
+                class:this.style_inactive,
+            }
+        )
+        this.button_rect.class_ref = this;
+        this.button_rect.setAttribute("x",this.x+"px");
+        this.button_rect.setAttribute("y",this.y+"px");
+        this.button_rect.addEventListener("click",this.handle_click);
+        this.text_container = create_text(this.container, " ", {class:this.style_inactive});
+        this.text_container.setAttribute("x",this.x+"px");
+        this.text_container.setAttribute("y",this.y+"px");
+        this.text_container.class_ref = this;
+        this.text_container.addEventListener("click",this.handle_click);
+        this.container.setAttribute("height", this.height + `px`);
+        this.button_rect.setAttribute("height", this.height + `px`);
+        this.text_container.setAttribute("height",this.height + `px`);
+        this.set_state(0);
+        this.set_style("inactive");
+        this.set_label(this.label);
+        this.set_collapse(false);
+    }
+    handle_click(e){
+        //["power (unconnected)", "power on confirmed", "power on requested", "power off confirmed", "power off requested"],
+        self = e.target.class_ref
+        console.log("handle_click",self.state)
+        return
+        if (self.state==1){
+            self.set_state(4)
+            websocket_send(self.target_name,self.topic,false)
+            // todo: setTimeout to restore button if no response
+        }
+        if (self.state==3){
+            self.set_state(2)
+            websocket_send(self.target_name,self.topic,true)
+            // todo: setTimeout to restore button if no response
+        }
+    }
+    set_state(state_int){
+        this.state = state_int;
+        this.update_style();
+    }
+    set_style(style_str){
+        this.visual_style = style_str;
+        this.update_style();
+    }
+    update_style(){
+        // remove all classes
+        this.button_rect.setAttribute("class", "");
+        this.text_container.setAttribute("class", "");
+        this.text_container.classList.add("text_1");
+        switch (this.visual_style){
+            case "active":
+                this.text_container.classList.add(this.style_active);
+                this.button_rect.classList.add(this.style_active);
+                break;
+            case "inactive":
+                this.text_container.classList.add(this.style_inactive);
+                this.button_rect.classList.add(this.style_inactive);
+                break;
+            case "attention":
+                this.text_container.classList.add(this.style_attention);
+                this.button_rect.classList.add(this.style_attention);
+                break;
+            default:
+                break;
+        }
+        switch (this.state){
+            case 0:
+                this.text_container.classList.add(this.style_true_confirmed);
+                this.button_rect.classList.add(this.style_true_confirmed);
+                break;
+            case 1:
+                this.text_container.classList.add(this.style_true_requested);
+                this.button_rect.classList.add(this.style_true_requested);
+                break;
+            case 2:
+                this.text_container.classList.add(this.style_false_confirmed);
+                this.button_rect.classList.add(this.style_false_confirmed);
+                break;
+            case 3:
+                this.text_container.classList.add(this.style_fasle_requested);
+                this.button_rect.classList.add(this.style_fasle_requested);
+                break;
+        }
+    }
+    set_label(label_str){
+        //this.state_label = label_ord
+        let textnode = document.createTextNode(label_str);
+        this.text_container.replaceChild(textnode, this.text_container.childNodes[0]);
+    }
+    set_position(x,y){
+        var x_str = x + "px";
+        var y_str = y + "px";
+        this.container.setAttribute("x",x_str);
+        this.container.setAttribute("y",y_str);
+        this.button_rect.setAttribute("x",x_str);
+        this.button_rect.setAttribute("y",y_str);
+        this.text_container.setAttribute("x",x_str);
+        this.text_container.setAttribute("y",y_str);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // SIMPLE DISPLAY BOX  
 class Display_Box_Simple{
     constructor(
@@ -2203,11 +2395,11 @@ class Keyboard{
             var button_data = this.column_data[column_i]
             console.log(button_data)
 
-            this.buttons[button_data[0]] = new Toggle_Button_Async(
+            this.buttons[button_data[0]] = new Keyboard_Key(
                 this.dom_parent,
                 "controller", 
                 "play_midi_pitch",
-                [button_data[0],button_data[0],button_data[0],button_data[0],button_data[0]],
+                button_data[0],
                 x_offset + (54*column_i), 
                 y,
                 50, 
