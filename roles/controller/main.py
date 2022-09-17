@@ -145,10 +145,26 @@ class Play_Midi_File(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.file_name = "midi/Whale_Bone_pastor_Tallis_smooshed_div_8.mid"
+    def send_midi_to_rotors(self, on_off, midi_pitch):
+        if midi_pitch >= 38 and midi_pitch <= 59:
+            rotor_name, playing_speed = settings.Pitch_To_Rotor_Map.midi[midi_pitch-38]
+            if on_off: # if playing
+                #print(">>>> 1", playing_speed, rotor_name)
+                self.tb.publish("request_motor_speed", playing_speed, rotor_name)
+            else: #if idling
+                idle_speed_high = settings.Rotors.idle_speeds_high[rotor_name]
+                #print(">>>> 2", idle_speed_high, rotor_name)
+                self.tb.publish("request_motor_speed", idle_speed_high, rotor_name)
+
     def run(self):
         for msg in mido.MidiFile(self.file_name).play():
-            if msg.type in ["note_on", "note_off"]:
+            if msg.type == "note_on":
+                self.send_midi_to_rotors(self, True, midi_pitch):
                 print(msg.type, msg.note)
+            if msg.type == "note_off":
+                self.send_midi_to_rotors(self, False, midi_pitch):
+                print(msg.type, msg.note)
+
 
 class Main(threading.Thread):
     class mode_names:
