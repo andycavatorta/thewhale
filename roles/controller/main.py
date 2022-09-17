@@ -157,13 +157,15 @@ class Play_Midi_File(threading.Thread):
                 self.tb.publish("request_motor_speed", idle_speed_high, rotor_name)
 
     def run(self):
-        for msg in mido.MidiFile(self.file_name).play():
-            if msg.type == "note_on":
-                self.send_midi_to_rotors(True, msg.note)
-                print(msg.type, msg.note)
-            if msg.type == "note_off":
-                self.send_midi_to_rotors(False, msg.note)
-                print(msg.type, msg.note)
+        while True:
+            for msg in mido.MidiFile(self.file_name).play():
+                if msg.type == "note_on":
+                    self.send_midi_to_rotors(True, msg.note)
+                    print(msg.type, msg.note)
+                if msg.type == "note_off":
+                    self.send_midi_to_rotors(False, msg.note)
+                    print(msg.type, msg.note)
+            time.sleep(60)
 
 
 class Main(threading.Thread):
