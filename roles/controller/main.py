@@ -159,10 +159,10 @@ class Play_Midi_File(threading.Thread):
     def run(self):
         for msg in mido.MidiFile(self.file_name).play():
             if msg.type == "note_on":
-                self.send_midi_to_rotors(self, True, msg.note)
+                self.send_midi_to_rotors(True, msg.note)
                 print(msg.type, msg.note)
             if msg.type == "note_off":
-                self.send_midi_to_rotors(self, False, msg.note)
+                self.send_midi_to_rotors(False, msg.note)
                 print(msg.type, msg.note)
 
 
