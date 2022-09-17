@@ -144,7 +144,7 @@ class Play_Midi_File(threading.Thread):
     def __init__(self, tb):
         threading.Thread.__init__(self)
         self.tb = tb
-        self.file_name = "midi/Whale_Bone_pastor_Tallis_smooshed_div_8.mid"
+        self.file_name = "midi/Qui_vult_venire_Lasso_mod2.mid"
     def send_midi_to_rotors(self, on_off, midi_pitch):
         if midi_pitch >= 38 and midi_pitch <= 59:
             rotor_name, playing_speed = settings.Pitch_To_Rotor_Map.midi[midi_pitch-38]
