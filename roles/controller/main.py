@@ -146,7 +146,7 @@ class Play_Midi_File(threading.Thread):
         self.tb = tb
         self.file_name_1 = "midi/Qui_vult_venire_Lasso_mod2.mid"
         self.file_name_2 = "midi/Br-640.mid"
-        self.file_name_3 = "midi/Br-Br-640_first_harmonic.mid"
+        self.file_name_3 = "midi/Br-640_first_harmonic.mid"
     def send_midi_to_rotors(self, on_off, midi_pitch):
         if midi_pitch >= 38 and midi_pitch <= 59:
             rotor_name, playing_speed = settings.Pitch_To_Rotor_Map.midi[midi_pitch-38]
