@@ -145,7 +145,8 @@ class Play_Midi_File(threading.Thread):
         threading.Thread.__init__(self)
         self.tb = tb
         self.file_name_1 = "midi/Qui_vult_venire_Lasso_mod2.mid"
-        self.file_name_1 = "midi/Br-640.mid"
+        self.file_name_2 = "midi/Br-640.mid"
+        self.file_name_3 = "midi/Br-Br-640_first_harmonic.mid"
     def send_midi_to_rotors(self, on_off, midi_pitch):
         if midi_pitch >= 38 and midi_pitch <= 59:
             rotor_name, playing_speed = settings.Pitch_To_Rotor_Map.midi[midi_pitch-38]
@@ -159,6 +160,14 @@ class Play_Midi_File(threading.Thread):
 
     def run(self):
         while True:
+            for msg in mido.MidiFile(self.file_name_3).play():
+                if msg.type == "note_on":
+                    self.send_midi_to_rotors(True, msg.note)
+                    print(msg.type, msg.note)
+                if msg.type == "note_off":
+                    self.send_midi_to_rotors(False, msg.note)
+                    print(msg.type, msg.note)
+            time.sleep(60)
             for msg in mido.MidiFile(self.file_name_1).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
@@ -174,6 +183,7 @@ class Play_Midi_File(threading.Thread):
                 if msg.type == "note_off":
                     self.send_midi_to_rotors(False, msg.note)
                     print(msg.type, msg.note)
+            time.sleep(60)
 
 
 class Main(threading.Thread):
