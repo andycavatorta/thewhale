@@ -406,6 +406,8 @@ class Main(threading.Thread):
                                     for rotor_name in settings.Rotors.idle_speeds_low:
                                         self.tb.publish("request_motor_speed", settings.Rotors.idle_speeds_low[rotor_name], rotor_name)
                                 self.dashboard("response_rotor_idle", self.rotor_idle_state, "controller", "controller")
+                                time.sleep(3)
+                                self.play_midi_file.start()
                             else:
                                 self.dashboard("response_rotor_idle", False, "controller", "controller")
 
