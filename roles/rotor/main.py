@@ -127,20 +127,14 @@ class Main(threading.Thread):
     def get_sdc_runtime_status(self):
         if self.sdc.get_firmware_version() is None:
             return {}
+        if not self.sdc.get_device_connected():
+            return {}
         flags_sdc = []
         fault_flags_d = self.sdc.get_runtime_fault_flags()
         if fault_flags_d is not None:
             for key_value in fault_flags_d.items():
                 if key_value[1] == True:
                     flags_sdc.append(key_value[0])
-            #fault_flags_d = self.sdc.motor_1.get_runtime_status_flags()
-            #for key_value in fault_flags_d.items():
-            #    if key_value[1] == True:
-            #        flags_motor1.append(key_value[0])
-            #fault_flags_d = self.sdc.motor_2.get_runtime_status_flags()
-            #for key_value in fault_flags_d.items():
-            #    if key_value[1] == True:
-            #        flags_motor2.append(key_value[0])
         emergency_stop = True if "emergency_stop" in flags_sdc else False
         return {
             "emergency_stop":emergency_stop,
