@@ -193,36 +193,38 @@ class Play_Midi_File(threading.Thread):
 
     def run(self):
         while True:
+            """
             for msg in mido.MidiFile(self.file_name_0).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
                 if msg.type == "note_off":
                     self.send_midi_to_rotors(False, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
+            """
             for msg in mido.MidiFile(self.file_name_3).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
                 if msg.type == "note_off":
                     self.send_midi_to_rotors(False, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
             time.sleep(60)
             for msg in mido.MidiFile(self.file_name_1).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
                 if msg.type == "note_off":
                     self.send_midi_to_rotors(False, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
             time.sleep(60)
             for msg in mido.MidiFile(self.file_name_2).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
                 if msg.type == "note_off":
                     self.send_midi_to_rotors(False, msg.note)
-                    print(msg.type, msg.note)
+                    #print(msg.type, msg.note)
             time.sleep(60)
 
 class System_Status():
@@ -622,7 +624,8 @@ class Main(threading.Thread):
                         self.tb.publish("request_motor_speed", 0, "rotor13")
                         self.tb.publish("request_motor_speed", 0, "rotor14")
                     if topic == b"response_motor_command_applied":
-                        print(topic, message, origin, destination)
+                        pass
+                        #print(topic, message, origin, destination)
                     if topic == b"request_computer_start_status":
                         self.get_computer_start_status()
                     if topic == b"request_computer_runtime_status":
