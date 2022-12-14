@@ -1,4 +1,11 @@
 """
+solve crash when motor power starts
+
+if host error, cut power, stop sending commands
+if host missing, stop sending commands
+
+"""
+"""
 systems:
 
 local system report
@@ -22,6 +29,12 @@ local MIDI spooler
     test sequence loader
 
 note-to-motor-command interface
+
+
+if host error, cut power, stop sending commands
+if host missing, stop sending commands
+add states [ waiting | all connected] [power off|power on] [stop|idle|play]
+event_error
 
 """
 
@@ -53,6 +66,7 @@ from roles.controller.mode_system_tests import Mode_System_Tests
 from http_server_root import dashboard
 
 #role_module.GPIO.output(8, GPIO.HIGH)
+
 
 DASHBOARD_NOTES_TOPICS = [
     "request_C3",
@@ -144,6 +158,7 @@ class Play_Midi_File(threading.Thread):
     def __init__(self, tb):
         threading.Thread.__init__(self)
         self.tb = tb
+        self.file_name_0 = "Tallis-salve_intemerata_transposed_x4.mid"
         self.file_name_1 = "midi/Qui_vult_venire_Lasso_mod2.mid"
         self.file_name_2 = "midi/Br-640.mid"
         self.file_name_3 = "midi/Br-640_first_harmonic.mid"
@@ -158,8 +173,33 @@ class Play_Midi_File(threading.Thread):
                 #print(">>>> 2", idle_speed_high, rotor_name)
                 self.tb.publish("request_motor_speed", idle_speed_high, rotor_name)
 
+    def rewind(self):
+        pass
+
+    def play(self):
+        self.start()
+
+    def pause(self):
+        pass
+        # stop thread or flip bool?
+    def set_state(self, play_str):
+        if play_str == "PLAY":
+            self.play()
+        if play_str == "STOP":
+            self.rewind()
+            self.pause()
+        if play_str == "PAUSE":
+            self.pause()
+
     def run(self):
         while True:
+            for msg in mido.MidiFile(self.file_name_0).play():
+                if msg.type == "note_on":
+                    self.send_midi_to_rotors(True, msg.note)
+                    print(msg.type, msg.note)
+                if msg.type == "note_off":
+                    self.send_midi_to_rotors(False, msg.note)
+                    print(msg.type, msg.note)
             for msg in mido.MidiFile(self.file_name_3).play():
                 if msg.type == "note_on":
                     self.send_midi_to_rotors(True, msg.note)
@@ -185,6 +225,113 @@ class Play_Midi_File(threading.Thread):
                     print(msg.type, msg.note)
             time.sleep(60)
 
+class System_Status():
+    """
+    singleton class because Main is crowded
+    this tracks status and does not take action
+    """
+    def __init__(
+            self,
+            callback_motor_power,
+            callback_playing,
+        ):
+        self.callback_motor_power = callback_motor_power
+        self.callback_playing = callback_playing
+        self.STOP = "STOP"
+        self.IDLE = "IDLE"
+        self.PLAY = "PLAY"
+        self.host_connection_status = {
+            "rotors0102":False,
+            "rotors0304":False,
+            "rotors0506":False,
+            "rotors0708":False,
+            "rotors0910":False,
+            "rotors1112":False,
+            "rotors1314":False,
+        }
+        self.sdc_connection_status = {
+            "rotors0102":False,
+            "rotors0304":False,
+            "rotors0506":False,
+            "rotors0708":False,
+            "rotors0910":False,
+            "rotors1112":False,
+            "rotors1314":False,
+        }
+        self.status_hosts_connected = False
+        self.status_sdcs_connected = False
+        self.status_motor_power = False
+        self.status_playing = False
+        self.status_error = False
+
+    def update_hosts_connected(self, name, status):
+        # on transition from all to not all
+        if self.status_hosts_connected and not status:
+            self.status_sdcs_connected = False
+            self.status_motor_power = False
+            self.status_playing = self.STOP
+            self.callback_playing(self.status_playing)
+            self.callback_motor_power(self.status_motor_power)
+        self.status_hosts_connected = self.host_connection_status.all()
+        self.host_connection_status[hostname] = status
+        return self.status_hosts_connected
+
+    def set_motor_power(self, bool):
+        if self.status_error:
+            self.status_motor_power = False
+            self.status_playing = self.STOP
+            self.callback_motor_power(self.status_motor_power)
+            self.callback_playing(self.status_playing)
+            return self.status_motor_power
+        if bool:
+            if self.status_hosts_connected:
+                self.status_motor_power = True
+            else:
+                self.status_motor_power = False
+        else:
+            self.status_motor_power = False
+        self.callback_motor_power(self.status_motor_power)
+        return self.status_motor_power
+
+    def update_sdcs_connected(self, name, status):
+        # on transition from all to not all
+        if self.status_sdcs_connected and not status:
+            self.status_motor_power = False
+            self.status_playing = self.STOP
+            self.callback_playing(self.status_playing)
+            self.callback_motor_power(self.status_motor_power)
+        self.status_sdcs_connected = self.sdc_connection_status.all()
+        self.sdc_connection_status[hostname] = status
+        return self.status_sdcs_connected
+
+    def set_playing(self, play_mode):
+        if self.status_error:
+            self.status_motor_power = False
+            self.callback_motor_power(self.status_motor_power)
+            return self.status_motor_power
+        if play_mode == self.STOP:
+            self.status_playing = self.STOP
+        if play_mode == self.IDLE:
+            if self.status_hosts_connected and self.status_sdcs_connected and self.status_motor_power:
+                self.status_playing = self.IDLE
+            else:
+                self.status_playing = self.STOP
+        if play_mode == self.PLAY:
+            if self.status_hosts_connected and self.status_sdcs_connected and self.status_motor_power:
+                self.status_playing = self.PLAY
+            else:
+                self.status_playing = self.STOP
+        self.callback_playing(self.status_playing)
+        return self.status_playing
+
+    def set_error (self, bool):
+        if bool:
+            self.status_motor_power = False
+            self.status_playing = self.STOP
+            self.callback_playing(self.status_playing)
+            self.callback_motor_power(self.status_motor_power)
+        self.status_error = bool
+        return self.status_error
 
 class Main(threading.Thread):
     class mode_names:
@@ -207,17 +354,24 @@ class Main(threading.Thread):
         self.rotor_idle_state = False
         self.hosts = Hosts.Hosts(self.tb)
 
+
         ##### SUBSCRIPTIONS #####
         # CONNECTIVITY
         self.tb.subscribe_to_topic("connected")
         self.tb.subscribe_to_topic("deadman")
+        self.tb.subscribe_to_topic("event_app_git_timestamp")
         self.tb.subscribe_to_topic("event_brushless_sensor_fault")
         self.tb.subscribe_to_topic("event_controller_connected")
         self.tb.subscribe_to_topic("event_controller_connected")
+        self.tb.subscribe_to_topic("event_core_temp")
+        self.tb.subscribe_to_topic("event_core_voltage")
         self.tb.subscribe_to_topic("event_default_configuration_loaded_at_startup")
         self.tb.subscribe_to_topic("event_emergency_stop")
+        self.tb.subscribe_to_topic("event_error")
         self.tb.subscribe_to_topic("event_exceptions")
+        self.tb.subscribe_to_topic("event_ip")
         self.tb.subscribe_to_topic("event_last_deadman")
+        self.tb.subscribe_to_topic("event_memory_free")
         self.tb.subscribe_to_topic("event_messages")
         self.tb.subscribe_to_topic("event_MOSFET_failure")
         self.tb.subscribe_to_topic("event_motor_1_amps_limit_activated")
@@ -246,30 +400,27 @@ class Main(threading.Thread):
         self.tb.subscribe_to_topic("event_motor_2_reverse_limit_triggered")
         self.tb.subscribe_to_topic("event_motor_2_safety_stop_active")
         self.tb.subscribe_to_topic("event_motor_2_temperature")
+        self.tb.subscribe_to_topic("event_os_version")
         self.tb.subscribe_to_topic("event_overheat")
         self.tb.subscribe_to_topic("event_overvoltage")
-        self.tb.subscribe_to_topic("event_short_circuit")
-        self.tb.subscribe_to_topic("event_status")
-        self.tb.subscribe_to_topic("event_undervoltage")
-        self.tb.subscribe_to_topic("event_app_git_timestamp")
-        self.tb.subscribe_to_topic("event_core_temp")
-        self.tb.subscribe_to_topic("event_core_voltage")
-        self.tb.subscribe_to_topic("event_ip")
-        self.tb.subscribe_to_topic("event_memory_free")
-        self.tb.subscribe_to_topic("event_os_version")
         self.tb.subscribe_to_topic("event_query_details")
         self.tb.subscribe_to_topic("event_ready")
         self.tb.subscribe_to_topic("event_runtime")
+        self.tb.subscribe_to_topic("event_short_circuit")
+        self.tb.subscribe_to_topic("event_status")
         self.tb.subscribe_to_topic("event_system_cpu")
         self.tb.subscribe_to_topic("event_system_disk")
         self.tb.subscribe_to_topic("event_tb_git_timestamp")
+        self.tb.subscribe_to_topic("event_undervoltage")
         self.tb.subscribe_to_topic("event_uptime")
-        self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_computer_runtime_status")
+        self.tb.subscribe_to_topic("response_computer_start_status")
         self.tb.subscribe_to_topic("response_emergency_stop")
         self.tb.subscribe_to_topic("response_motor_command_applied")
-        self.tb.subscribe_to_topic("response_sdc_start_status")
         self.tb.subscribe_to_topic("response_sdc_runtime_status")
+        self.tb.subscribe_to_topic("response_sdc_start_status")
+        self.tb.subscribe_to_topic("tb_exception")
+        self.tb.subscribe_to_topic("tb_status")
         """
         self.modes = {
             "error":Mode_Error(self.tb, self.hosts, self.set_current_mode, self.safety_enable.set_active),
@@ -288,6 +439,10 @@ class Main(threading.Thread):
         self.poller = Poller(self.tb, self.add_to_queue)
         self.play_midi_file = Play_Midi_File(self.tb)
 
+        self.system_status = System_Status(
+            self.high_power.set_state,
+            self.play_midi_file.set_state
+        )
 
     def convert_dashboard_notes_to_midi(self, topic, message, origin, destination):
         print("handle_dashboard_note_buttons", topic, message, origin, destination)
@@ -449,6 +604,23 @@ class Main(threading.Thread):
                         if topic=="pull thewhale":
                             self.tb.publish("pull_thewhale", destination)
                 else:
+                    if topic == "event_error":
+                        self.high_power.set_state(False)
+                        self.play_midi_file.pause()
+                        self.tb.publish("request_motor_speed", 0, "rotor01")
+                        self.tb.publish("request_motor_speed", 0, "rotor02")
+                        self.tb.publish("request_motor_speed", 0, "rotor03")
+                        self.tb.publish("request_motor_speed", 0, "rotor04")
+                        self.tb.publish("request_motor_speed", 0, "rotor05")
+                        self.tb.publish("request_motor_speed", 0, "rotor06")
+                        self.tb.publish("request_motor_speed", 0, "rotor07")
+                        self.tb.publish("request_motor_speed", 0, "rotor08")
+                        self.tb.publish("request_motor_speed", 0, "rotor09")
+                        self.tb.publish("request_motor_speed", 0, "rotor10")
+                        self.tb.publish("request_motor_speed", 0, "rotor11")
+                        self.tb.publish("request_motor_speed", 0, "rotor12")
+                        self.tb.publish("request_motor_speed", 0, "rotor13")
+                        self.tb.publish("request_motor_speed", 0, "rotor14")
                     if topic == b"response_motor_command_applied":
                         print(topic, message, origin, destination)
                     if topic == b"request_computer_start_status":
@@ -457,6 +629,8 @@ class Main(threading.Thread):
                         self.get_computer_runtime_status()
                         # find a better place for this
                         self.high_power.get_state()
+                    if topic == b"response_host_connected":
+                        pass
                     self.dashboard(codecs.decode(topic,'UTF-8'), message, origin, destination)
                     self.hosts.dispatch(topic, message, origin, destination)
                     #self.current_mode.add_to_queue(topic, message, origin, destination)
