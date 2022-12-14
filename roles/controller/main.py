@@ -158,7 +158,7 @@ class Play_Midi_File(threading.Thread):
     def __init__(self, tb):
         threading.Thread.__init__(self)
         self.tb = tb
-        self.file_name_0 = "Tallis-salve_intemerata_transposed_x4.mid"
+        self.file_name_0 = "Tallis_salve_intemerata_transposed_x4.mid"
         self.file_name_1 = "midi/Qui_vult_venire_Lasso_mod2.mid"
         self.file_name_2 = "midi/Br-640.mid"
         self.file_name_3 = "midi/Br-640_first_harmonic.mid"
